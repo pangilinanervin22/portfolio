@@ -1,0 +1,38 @@
+/* Outer circle */
+.cursor {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid black;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lens {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    pointer-events: none;
+    backdrop-filter: invert(1);
+    mix-blend-mode: difference;
+    z-index: -1;
+}
+
+
+/* Center dot (tracks instantly) */
+.center-dot {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    background-color: black;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 10000;
+}
