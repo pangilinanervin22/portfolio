@@ -4,10 +4,11 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    border: 2px solid black;
+    border: 2px solid var(--color-primary);
     transform: translate(-50%, -50%);
     pointer-events: none;
     z-index: 9999;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -19,18 +20,15 @@
     height: 100%;
     border-radius: 50%;
     pointer-events: none;
-    backdrop-filter: invert(1);
-    mix-blend-mode: difference;
-    z-index: -1;
+    backdrop-filter: blur(1px);
+    background: rgba(255, 255, 255, 0.1);
 }
 
-
-/* Center dot (tracks instantly) */
 .center-dot {
     position: fixed;
     width: 6px;
     height: 6px;
-    background-color: black;
+    background-color: var(--color-primary);
     border-radius: 50%;
     transform: translate(-50%, -50%);
     pointer-events: none;

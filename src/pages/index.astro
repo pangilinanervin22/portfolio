@@ -2,22 +2,22 @@
 import Welcome from "../components/Welcome.astro";
 import Layout from "../layouts/Layout.astro";
 import Navbar from "../components/NavBar.astro";
-import ShowCase from "../components/ShowCase.astro";
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
 <Layout>
-        <!-- <SplashCursor
-                client:idle
-                SHADING={true}
-                TRANSPARENT={false}
-                SPLAT_FORCE={3000}
-                DENSITY_DISSIPATION={2.5}
-                BACK_COLOR={{ r: 1, g: 1, b: 1 }}
-        /> -->
-        <Navbar />
-        <Welcome />
-        <br />
+        <main>
+                <Navbar />
+                <Welcome />
+        </main>
 </Layout>
+
+<style lang="scss">
+        main {
+                display: flex;
+                flex-direction: column;
+                justify-items: center;
+                width: 100vw;
+                height: 100vh;
+                gap: auto;
+        }
+</style>

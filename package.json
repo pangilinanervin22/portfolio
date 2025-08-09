@@ -9,15 +9,17 @@
                 "astro": "astro"
         },
         "dependencies": {
-                "@astrojs/mdx": "^4.3.1",
+                "@astrojs/mdx": "^4.3.3",
                 "@astrojs/react": "^4.3.0",
                 "@astrojs/rss": "^4.0.12",
                 "@astrojs/sitemap": "^3.4.2",
+                "@fontsource-variable/playfair-display": "^5.2.6",
+                "@fontsource/great-vibes": "^5.2.6",
                 "@types/react": "^19.1.9",
                 "@types/react-dom": "^19.1.7",
-                "astro": "^5.12.5",
+                "astro": "^5.12.8",
                 "react": "^19.1.1",
                 "react-dom": "^19.1.1",
-                "sass": "^1.89.2"
+                "sass": "^1.90.0"
         }
 }

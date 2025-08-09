@@ -1,0 +1,22 @@
+---
+import astroLogo from "../assets/astro.svg";
+---
+
+<div>
+        <h1>Sample</h1>
+        <img src={astroLogo.src} alt="Astro Logo" />;
+</div>
+
+<style lang="scss">
+        @use "../../styles/variables" as *;
+        div {
+                padding: 20px;
+                background-color: #f0f0f0;
+                border-radius: 5px;
+        }
+
+        // h1 {
+        //         color: $color-background;
+        //         font-size: 24px;
+        // }
+</style>

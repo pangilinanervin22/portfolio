@@ -1,3 +1,6 @@
+ @use './theme';
+ @use './theme_dark';
+
  html,
  body {
  	margin: 0;
@@ -7,7 +10,7 @@
  	overflow-x: hidden;
  	display: block;
  	width: 100vw;
- 	// background-color: hsl(0deg 0% 3.14%);
+ 	background-color: var(--color-background);
  	box-sizing: border-box;
 
  	cursor: none;
@@ -28,7 +31,7 @@
  	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
  		Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
  		"Helvetica Neue", sans-serif;
- 	color: white;
+ 	color: var(--color-text-primary);
  }
 
  html {
@@ -160,4 +163,12 @@
  	padding: 0;
  }
 
- /* Removed cursor: none; to allow default cursor to show */
+ .switch_button {
+ 	background: red;
+ 	border: none;
+ 	color: inherit;
+ 	cursor: pointer;
+ 	padding: 0;
+ 	font: inherit;
+ 	overflow: visible;
+ }

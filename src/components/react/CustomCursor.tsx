@@ -1,10 +1,9 @@
-import { useEffect, useRef } from 'react'
-import '../../styles/CustomCursor.scss'
+import { useEffect, useRef } from 'react';
+import '../../styles/CustomCursor.scss';
 
 const CustomCursor: React.FC = () => {
     const cursorRef = useRef<HTMLDivElement | null>(null);
     const dotRef = useRef<HTMLDivElement | null>(null);
-    const lensRef = useRef<HTMLDivElement | null>(null);
 
     const mouse = useRef({ x: 0, y: 0 });
     const cursorPos = useRef({ x: 0, y: 0 });
@@ -17,11 +16,6 @@ const CustomCursor: React.FC = () => {
             if (dotRef.current) {
                 dotRef.current.style.left = `${e.clientX}px`;
                 dotRef.current.style.top = `${e.clientY}px`;
-            }
-
-            if (lensRef.current) {
-                lensRef.current.style.left = `${e.clientX}px`;
-                lensRef.current.style.top = `${e.clientY}px`;
             }
         };
 
@@ -53,7 +47,7 @@ const CustomCursor: React.FC = () => {
     return (
         <>
             <div ref={cursorRef} className="cursor">
-                <div className="dot" />
+                <div className="lens" />
             </div>
             <div ref={dotRef} className="center-dot" />
         </>

@@ -1,24 +1,96 @@
 ---
-import astroLogo from "../assets/astro.svg";
-import background from "../assets/background.svg";
+import Border from "./_common/Border.astro";
 ---
 
-<div id="container">
-        <div id="content">
-                <h1>ERVIN PANGILINAN</h1>
-                <p>Ready to build something amazing?</p>
-                <img src={astroLogo.src} alt="Astro Logo" />
+<div class="main-container">
+        <Border />
+        <div class="content-container">
+                <div class="content">
+                        <h1>Ervin Pangilinan Portfolio</h1>
+                        <p>
+                                Developer: Making tech feel simple, one
+                                complicated feature at a time.
+                        </p>
+
+                        <!-- Place your CV file at /public/cv.pdf or update the href below -->
+                        <div class="actions">
+                                <a
+                                        class="btn"
+                                        href="/cv.pdf"
+                                        download
+                                        aria-label="Download CV"
+                                >
+                                        Download CV
+                                </a>
+                        </div>
+                </div>
         </div>
+        <Border />
 </div>
 
-<style>
-        #container {
-                height: 80vh;
+<style lang="scss">
+        .main-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-items: center;
+                height: 100%;
+                padding: 16px 0;
+        }
+        .content-container {
+                height: 100%;
                 width: 100%;
-                /* background-color: hsl(0deg 0% 3.14%); */
-                background: red;
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center;
+                padding: 1rem;
+        }
+
+        .content {
+                text-align: center;
+                h1 {
+                        font-size: clamp(2.2rem, 4vw, 4rem);
+                        line-height: 1.1;
+                        margin-bottom: 0.75rem;
+                        letter-spacing: 0.05em;
+                        color: var(--color-primary);
+                        font-weight: 500;
+                        font-family: "Playfair Display", serif;
+                }
+                p {
+                        font-size: clamp(1rem, 0.6vw + 0.9rem, 1.35rem);
+                        line-height: 1.5;
+                        margin-top: 0.5rem;
+                        color: var(--color-secondary);
+                }
+
+                .actions {
+                        margin-top: 1.25rem;
+                }
+
+                .btn {
+                        display: inline-block;
+                        padding: 1rem 1.75rem;
+                        font-size: clamp(0.95rem, 0.5vw + 0.85rem, 1.05rem);
+                        font-weight: 600;
+                        color: var(--color-background);
+                        background: var(--color-primary);
+                        border-radius: 16px;
+                        border: none;
+                        text-decoration: none;
+                        transition:
+                                transform 0.15s ease,
+                                filter 0.15s ease;
+                }
+                .btn:hover {
+                        filter: brightness(1.05);
+                        transform: translateY(-1px);
+                }
+                .btn:active {
+                        transform: translateY(0);
+                }
         }
 </style>

@@ -1,0 +1,27 @@
+---
+const { gap = "2rem" } = Astro.props; // default gap if not passed
+---
+
+<div class="dashed-lines" style={`--gap: ${gap};`}>
+        <hr />
+        <hr />
+</div>
+
+<style lang="scss">
+        .dashed-lines {
+                width: 100%;
+                background: transparent;
+                display: flex;
+                flex-direction: column;
+                gap: var(--gap);
+
+                hr {
+                        width: 100%;
+                        border: none;
+                        border-top: 2px dashed var(--color-text-primary);
+                        margin: 0;
+                        background: transparent;
+                        opacity: 0.2;
+                }
+        }
+</style>

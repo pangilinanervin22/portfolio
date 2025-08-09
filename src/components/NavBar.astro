@@ -1,57 +1,188 @@
 ---
-// No frontmatter needed for a simple navbar
+// Put correct import path for your component
+import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
 ---
 
 <nav class="navbar">
         <div class="navbar-title">
-                <span class="navbar-main-title">My Portfolio</span>
+                <span class="navbar-main-title">EP</span>
         </div>
+
+        <!-- Hidden checkbox toggles the menu (CSS-only) -->
+        <input
+                id="nav-toggle"
+                class="nav-toggle"
+                type="checkbox"
+                aria-hidden="true"
+        />
+
+        <!-- Label acts as the hamburger button -->
+        <label
+                for="nav-toggle"
+                class="menu-btn"
+                aria-label="Toggle menu"
+                role="button"
+                tabindex="0"
+        >
+                <span class="hamburger" aria-hidden="true"></span>
+        </label>
 
         <ul class="nav-list">
                 <li><a href="/">Home</a></li>
                 <li><a href="/about">About</a></li>
                 <li><a href="/projects">Projects</a></li>
                 <li><a href="/contact">Contact</a></li>
+                <li class="theme-switch"><SwitchTheme client:load /></li>
         </ul>
 </nav>
 
 <style>
+        /* Basic navbar layout */
         .navbar {
-                background: #222;
-                padding: 1rem 0;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                padding: 12px 24px;
+                padding: clamp(12px, 2vh, 24px) clamp(16px, 4vw, 48px);
+                width: 100%;
+                position: relative;
+                z-index: 40;
         }
+
         .navbar-title {
                 display: flex;
                 align-items: center;
-                gap: 1rem;
-                justify-content: center;
-                margin-bottom: 0.5rem;
         }
         .navbar-main-title {
-                color: #fff;
+                color: var(--color-text-primary);
                 font-size: 1.5rem;
-                font-weight: bold;
+                font-weight: 700;
                 letter-spacing: 1px;
+                font-family: "Great Vibes", cursive;
         }
+
+        /* hide the checkbox visually but keep it accessible */
+        .nav-toggle {
+                position: absolute !important;
+                opacity: 0 !important;
+                width: 0 !important;
+                height: 0 !important;
+                pointer-events: none !important;
+        }
+
+        /* Hamburger button (hidden on desktop) */
+        .menu-btn {
+                display: none;
+                background: none;
+                border: none;
+                cursor: pointer;
+                padding: 6px;
+                margin-left: 12px;
+                align-items: center;
+                justify-content: center;
+        }
+
+        .hamburger {
+                display: block;
+                width: 22px;
+                height: 2px;
+                background: var(--color-text-primary);
+                position: relative;
+                transition: transform 160ms ease-in-out;
+        }
+        .hamburger::before,
+        .hamburger::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                width: 22px;
+                height: 2px;
+                background: var(--color-text-primary);
+                transition:
+                        transform 160ms ease-in-out,
+                        top 160ms ease-in-out,
+                        opacity 160ms;
+        }
+        .hamburger::before {
+                top: -7px;
+        }
+        .hamburger::after {
+                top: 7px;
+        }
+
+        /* Desktop nav (flex row) */
         .nav-list {
                 display: flex;
                 gap: 2rem;
                 list-style: none;
-                justify-content: center;
                 margin: 0;
                 padding: 0;
+                align-items: center;
         }
         .nav-list a {
-                color: #fff;
+                color: var(--color-text-primary);
                 text-decoration: none;
                 font-weight: 500;
-                transition: color 0.2s;
+                transition: color 0.15s;
         }
-        .nav-list a:hover {
-                color: #1e90ff;
+        .theme-switch {
+                display: flex;
+                align-items: center;
+        }
+
+        /* Mobile behavior */
+        @media (max-width: 768px) {
+                .menu-btn {
+                        display: flex;
+                }
+
+                /* start hidden and absolute so it floats beneath the navbar */
+                .nav-list {
+                        display: none;
+                        position: absolute;
+                        top: calc(100% + 8px);
+                        right: 12px;
+                        flex-direction: column;
+                        gap: 12px;
+                        padding: 12px;
+                        min-width: 180px;
+                        border-radius: 8px;
+                        background: var(--color-background);
+                }
+
+                /* When checkbox is checked -> show menu */
+                .nav-toggle:checked ~ .nav-list {
+                        display: flex;
+                }
+
+                /* animate hamburger -> X */
+                .nav-toggle:checked + .menu-btn .hamburger {
+                        background: transparent;
+                }
+                .nav-toggle:checked + .menu-btn .hamburger::before {
+                        transform: rotate(45deg);
+                        top: 0;
+                }
+                .nav-toggle:checked + .menu-btn .hamburger::after {
+                        transform: rotate(-45deg);
+                        top: 0;
+                }
+
+                /* optional: make links full width inside the menu */
+                .nav-list li {
+                        width: 100%;
+                }
+                .nav-list a {
+                        display: block;
+                        padding: 8px 4px;
+                }
+                .theme-switch {
+                        padding-left: 4px;
+                }
+        }
+
+        /* small focus-visible for keyboard */
+        .menu-btn:focus {
+                outline: 2px solid rgba(0, 0, 0, 0.12);
+                border-radius: 6px;
         }
 </style>
