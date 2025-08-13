@@ -1,10 +1,72 @@
 :root[data-theme='dark'] {
-    --color-background: #000000;
-    --color-primary: #ffffff;
-    --color-secondary: #bbbbbb;
-    --color-text-primary: #eeeeee;
-    --color-link: #ffffff;
-    --color-link-hover: #bbbbbb;
-    --color-icon: #d1d5db;
+    /* Grayscale scale (keep same canonical values) */
+    --gray-0: #ffffff;
+    --gray-50: #f7f7f7;
+    --gray-100: #f0f0f0;
+    --gray-200: #e0e0e0;
+    --gray-300: #c8c8c8;
+    --gray-400: #a3a3a3;
+    --gray-500: #808080;
+    --gray-600: #666666;
+    --gray-700: #4d4d4d;
+    --gray-750: #3d3d3d;
+    --gray-800: #2b2b2b;
+    --gray-850: #1d1d1d;
+    --gray-900: #111111;
+    --gray-950: #0a0a0a;
+    --gray-1000: #000000;
 
+    /* Base */
+    --color-background: var(--gray-950);
+    --color-background-alt: var(--gray-900);
+    --color-surface: var(--gray-850);
+    --color-surface-alt: var(--gray-800);
+    --color-surface-muted: var(--gray-750);
+    --color-border: var(--gray-700);
+
+    /* Primary / semantic (inverted vs light theme) */
+    --color-primary: var(--gray-0);
+    --color-primary-80: var(--gray-200);
+    --color-primary-60: var(--gray-400);
+    --color-primary-40: var(--gray-600);
+    --color-primary-20: var(--gray-800);
+    --color-primary-10: var(--gray-900);
+
+    --color-secondary: var(--gray-800);
+    --color-secondary-alt: var(--gray-750);
+
+    /* Text */
+    --color-text-primary: var(--gray-0);
+    --color-text-secondary: var(--gray-300);
+    --color-text-muted: var(--gray-400);
+    --color-text-faint: var(--gray-500);
+    --color-text-inverse: var(--gray-1000);
+
+    /* Links */
+    --color-link: var(--gray-0);
+    --color-link-hover: var(--gray-300);
+    --color-link-active: var(--gray-0);
+    --color-link-visited: var(--gray-200);
+    --color-link-underline: var(--gray-500);
+
+    /* Icons */
+    --color-icon: var(--gray-300);
+    --color-icon-muted: var(--gray-600);
+    --color-icon-inverse: var(--gray-1000);
+
+    /* States */
+    --color-focus-ring: var(--gray-0);
+    --color-outline: var(--gray-300);
+    --color-selection-bg: var(--gray-0);
+    --color-selection-text: var(--gray-1000);
+
+    /* Shadows / depth (stronger opacity for dark surfaces) */
+    --color-shadow-soft: rgba(0, 0, 0, 0.30);
+    --color-shadow: rgba(0, 0, 0, 0.45);
+    --color-shadow-strong: rgba(0, 0, 0, 0.60);
+    --color-backdrop: rgba(0, 0, 0, 0.70);
+
+    /* Gradients */
+    --gradient-soft: linear-gradient(180deg, var(--gray-850), var(--gray-950));
+    --gradient-inset: linear-gradient(180deg, var(--gray-800), var(--gray-900));
 }

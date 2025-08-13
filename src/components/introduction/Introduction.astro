@@ -1,0 +1,165 @@
+---
+import introImage from "../../assets/intro.jpg";
+import SkillCard from "./skill_card.astro";
+---
+
+<div class="introduction-container">
+        <div class="introduction-content">
+                <div class="introduction-main">
+                        <h1>ABOUT ME</h1>
+                        <p>
+                                I started coding as a hobby in 2021 and quickly
+                                fell in enjoy with building purposeful web apps.
+                                Curiosity became disciplined problem‑solving and
+                                user‑focused design. Real project work taught me
+                                the full lifecycle requirements, features,
+                                reviews, performance. As a Computer Science
+                                student I keep sharpening fundamentals to ship
+                                cleaner architecture and better usability.
+                        </p>
+                </div>
+
+                <div class="introduction-skills">
+                        <SkillCard
+                                title="Web Applications"
+                                content="Design end‑to‑end apps: clear flows, reusable components, secure data, fast accessible pages."
+                                icon="🌐"
+                        />
+                        <SkillCard
+                                title="Mobile Applications"
+                                content="Build native-feel apps: offline data, smooth navigation, continuous reliable updates."
+                                icon="📱"
+                        />
+                        <SkillCard
+                                title="DevOps Basics"
+                                content="Automate build/test/deploy, containerize, monitor health, enable quick safe rollbacks."
+                                icon="⚙️"
+                        />
+                        <SkillCard
+                                title="Game Development"
+                                content="Prototype fun 2D loops: tight controls, simple AI, polished UI, smooth performance."
+                                icon="🎮"
+                        />
+                </div>
+        </div>
+        <div class="introduction-image">
+                <img
+                        src={introImage.src}
+                        alt="Introduction Image"
+                        width={introImage.width}
+                        height={introImage.height}
+                />
+        </div>
+</div>
+
+<style>
+        .introduction-container {
+                width: 100vw;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                gap: 32px;
+                margin-top: 32px;
+                background: var(--color-background);
+                color: var(--color-text-primary);
+                margin-block: 10px 100px;
+        }
+
+        .introduction-content {
+                width: 40%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 16px;
+        }
+
+        .introduction-main,
+        .introduction-skills {
+                width: 100%;
+        }
+
+        .introduction-main p {
+                font-size: 1.05rem;
+                line-height: 1.65;
+                color: var(--color-text-secondary);
+                text-align: justify;
+                letter-spacing: 0.2px;
+                -webkit-hyphens: auto;
+        }
+
+        .introduction-main {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+                margin-bottom: 16px;
+        }
+
+        .introduction-main h1 {
+                font-size: 3rem;
+                line-height: 1.15;
+        }
+
+        .introduction-main p:first-of-type {
+                text-indent: 0;
+        }
+
+        .introduction-main p:first-of-type::first-letter {
+                float: left;
+                font-size: 3.4rem;
+                line-height: 0.9;
+                font-weight: 600;
+                margin: 4px 10px 0 0;
+                font-family: "Playfair Display", serif;
+                color: var(--color-text-primary);
+        }
+
+        .introduction-skills {
+                display: flex;
+                flex-wrap: wrap;
+                flex-direction: row;
+                justify-content: space-between;
+                gap: 16px;
+        }
+
+        .introduction-image {
+                position: relative;
+                display: flex;
+                justify-content: center;
+                width: clamp(400px, 25%, 600px);
+                padding: 12px;
+                background: var(--color-surface);
+                border: 2px dashed var(--color-primary-20);
+                outline: 122px solid var(--color-primary-100);
+        }
+
+        .introduction-image img {
+                width: 100%;
+                height: auto;
+                display: block;
+                filter: grayscale(1) brightness(0.98) contrast(1.05);
+                animation: introImagePulse 6s ease-in-out infinite;
+                transition: all 0.3s ease-in-out;
+        }
+
+        .introduction-image img:hover {
+                scale: 1.01;
+                box-shadow:
+                        0 0 0 1px var(--color-shadow),
+                        0 8px 24px var(--color-shadow-strong);
+        }
+
+        @media (max-width: 1100px) {
+                .introduction-container {
+                        flex-direction: column;
+                        padding: 0 24px 48px;
+                }
+                .introduction-content {
+                        width: 100%;
+                }
+                .introduction-image {
+                        width: min(520px, 100%);
+                }
+        }
+</style>
