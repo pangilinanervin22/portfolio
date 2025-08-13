@@ -1,14 +1,24 @@
 ---
-const { gap = "2rem" } = Astro.props; // default gap if not passed
+const {
+        gap = "2rem",
+        patternHeight = "0.75rem",
+        dotSize = "1.2px",
+        dotColor = "var(--color-text-primary)",
+        dotOpacity = 0.2,
+} = Astro.props;
 ---
 
-<div class="dashed-lines" style={`--gap: ${gap};`}>
+<div
+        class="dashed-lines"
+        style={`--gap: ${gap}; --pattern-height: ${patternHeight}; --dot-size: ${dotSize}; --dot-color: ${dotColor}; --dot-opacity: ${dotOpacity};`}
+>
         <hr />
         <hr />
 </div>
 
 <style lang="scss">
         .dashed-lines {
+                position: relative;
                 width: 100%;
                 background: transparent;
                 display: flex;
@@ -18,10 +28,10 @@ const { gap = "2rem" } = Astro.props; // default gap if not passed
                 hr {
                         width: 100%;
                         border: none;
-                        border-top: 2px dashed var(--color-text-primary);
+                        border-top: 2px dashed var(--color-primary-80);
                         margin: 0;
                         background: transparent;
-                        opacity: 0.2;
+                        opacity: var(--dot-opacity);
                 }
         }
 </style>

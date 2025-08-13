@@ -1,0 +1,90 @@
+---
+// skill_card.astro
+interface Props {
+        title: string;
+        content: string;
+        icon?: any;
+}
+const { title, content, icon } = Astro.props;
+---
+
+<div class="skill-card">
+        <h2 class="skill-card-title">
+                {
+                        icon && (
+                                <span
+                                        class="skill-card-icon"
+                                        aria-hidden="true"
+                                >
+                                        {icon}
+                                </span>
+                        )
+                }
+                {title}
+        </h2>
+        <p class="skill-card-content">
+                {content}
+        </p>
+</div>
+
+<style scoped>
+        .skill-card {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                width: 48%;
+                gap: 0.75rem;
+                padding: 1.25rem 1.35rem 1.45rem;
+                background: var(--color-background);
+                border: 1px dashed var(--color-border);
+                transition:
+                        border-color 0.25s,
+                        transform 0.25s,
+                        box-shadow 0.25s;
+        }
+
+        @media (hover: hover) {
+                .skill-card:hover {
+                        border-color: var(--color-primary);
+                        transform: translateY(-2px);
+                        box-shadow: 0 4px 10px var(--color-shadow-soft);
+                }
+        }
+
+        .skill-card:focus-within {
+                outline: 2px solid var(--color-focus-ring);
+                outline-offset: 2px;
+        }
+
+        .skill-card-title {
+                font-size: 1.2rem;
+                line-height: 1.2;
+                font-weight: 600;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                margin: 0;
+                letter-spacing: 0.5px;
+                background: linear-gradient(
+                        90deg,
+                        var(--color-primary),
+                        var(--color-primary-40)
+                );
+                -webkit-background-clip: text;
+                color: transparent;
+                gap: 0.55rem;
+        }
+
+        .skill-card-icon {
+                font-size: 1.25em;
+                color: var(--color-icon);
+                filter: drop-shadow(0 0 2px var(--color-icon-muted));
+        }
+
+        .skill-card-content {
+                font-size: 1rem;
+                line-height: 1.5;
+                color: var(--color-text-primary);
+                margin: 0;
+        }
+</style>
