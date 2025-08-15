@@ -1,14 +1,22 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import '../../styles/CustomCursor.scss';
 
 const CustomCursor: React.FC = () => {
     const cursorRef = useRef<HTMLDivElement | null>(null);
     const dotRef = useRef<HTMLDivElement | null>(null);
+    const [enabled, setEnabled] = useState(true);
 
     const mouse = useRef({ x: 0, y: 0 });
     const cursorPos = useRef({ x: 0, y: 0 });
 
     useEffect(() => {
+        // Detect touch / coarse pointer devices and disable custom cursor
+        const isCoarse = typeof window !== 'undefined' && (window.matchMedia('(hover: none)').matches || window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window);
+        if (isCoarse) {
+            setEnabled(false);
+            return; // skip setting up listeners / animation
+        }
+
         const move = (e: MouseEvent) => {
             mouse.current.x = e.clientX;
             mouse.current.y = e.clientY;
@@ -43,6 +51,8 @@ const CustomCursor: React.FC = () => {
             document.removeEventListener("mousemove", move);
         };
     }, []);
+
+    if (!enabled) return null;
 
     return (
         <>
