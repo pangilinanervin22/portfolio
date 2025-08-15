@@ -60,6 +60,7 @@ import SkillCard from "./skill_card.astro";
                 grid-template-columns: 1fr;
                 justify-items: center;
                 width: 100%;
+                margin-top: 16px;
                 padding-inline: 16px;
                 gap: 24px;
 
@@ -93,7 +94,7 @@ import SkillCard from "./skill_card.astro";
         .introduction-title {
                 width: 100%;
                 text-align: left;
-                font-size: 2.5rem;
+                font-size: clamp(2.4rem, 4.5vw, 3.4rem);
         }
 
         .introduction-image-container {
@@ -138,6 +139,9 @@ import SkillCard from "./skill_card.astro";
                                         0 0 0 1px var(--color-shadow),
                                         0 8px 24px var(--color-shadow-strong);
                                 border: 2px dashed var(--color-primary);
+                                img {
+                                        filter: none;
+                                }
                         }
                 }
         }
