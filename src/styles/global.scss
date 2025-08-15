@@ -13,14 +13,22 @@
  	background-color: var(--color-background);
  	box-sizing: border-box;
 
-	cursor: none;
+ 	cursor: none;
  }
 
-/* Disable custom cursor and restore native pointer on touch / coarse pointer devices */
-@media (hover: none), (pointer: coarse) {
- html, body { cursor: auto; }
- .cursor, .center-dot { display: none !important; }
-}
+ @media (hover: none),
+ (pointer: coarse) {
+
+ 	html,
+ 	body {
+ 		cursor: auto;
+ 	}
+
+ 	.cursor,
+ 	.center-dot {
+ 		display: none !important;
+ 	}
+ }
 
 
 
@@ -190,7 +198,7 @@
  *::-webkit-scrollbar-thumb {
  	background-color: var(--color-thumb, rgba(120, 120, 120, 0.6));
  	border-radius: 8px;
- 	border: 2px solid transparent;
+ 	border: 2px dashed transparent;
  	/* creates spacing without showing the track */
  	background-clip: content-box;
  }
