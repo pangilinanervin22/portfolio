@@ -1,14 +1,300 @@
 ---
-const today = new Date();
+// Footer component (enhanced details) this will be static date
+const year = new Date().getFullYear();
+const buildDate = new Date().toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+});
 ---
 
-<footer>
-        &copy; {today.getFullYear()} Ervin Pangilinan. All rights reserved.
+<footer id="footer" class="footer-container" aria-labelledby="footer-heading">
+        <h2 id="footer-heading" class="visually-hidden">Site footer</h2>
+        <div class="footer-inner">
+                <div class="cluster primary">
+                        <p class="brand">
+                                &copy; {year}
+                                <span class="name">Ervin Pangilinan</span>
+                        </p>
+                        <p class="tagline">Always learning, always growing.</p>
+                </div>
+
+                <nav aria-label="Footer navigation" class="mini-nav">
+                        <h3 class="heading">Navigate</h3>
+                        <ul class="mini-list">
+                                <li>
+                                        <a href="/portfolio/#welcome">Home</a>
+                                </li>
+                                <li>
+                                        <a href="/portfolio/#introduction"
+                                                >About</a
+                                        >
+                                </li>
+                                <li>
+                                        <a href="/portfolio/#experience"
+                                                >Experience</a
+                                        >
+                                </li>
+                        </ul>
+                </nav>
+
+                <nav aria-label="Social links" class="social-nav">
+                        <h3 class="heading">Connect</h3>
+                        <ul class="social-list">
+                                <li>
+                                        <a
+                                                href="https://github.com/pangilinanervin22"
+                                                rel="me noopener noreferrer"
+                                                target="_blank">GitHub</a
+                                        >
+                                </li>
+                                <li>
+                                        <a
+                                                href="https://mail.google.com/mail/?view=cm&fs=1&to=pangilinanervin22@gmail.com&su=Hello%20From%20Your%20Portfolio&body=Hi%20there!"
+                                                target="_blank"
+                                        >
+                                                Email
+                                        </a>
+                                </li>
+                                <li>
+                                        <a
+                                                href="https://www.linkedin.com/in/ervin-pangilinan-9b9410231"
+                                                target="_blank">LinkedIn</a
+                                        >
+                                </li>
+                        </ul>
+                </nav>
+
+                <div class="meta-block">
+                        <p class="stack" aria-label="Tech stack">
+                                Stack: <span>Astro</span> · <span
+                                        >TypeScript</span
+                                > · <span>SCSS</span>
+                        </p>
+                        <p class="meta">
+                                Built with <a
+                                        href="https://astro.build"
+                                        target="_blank">Astro</a
+                                >. Updated {buildDate}.
+                        </p>
+                        <p class="meta">Still in development...</p>
+                        <p class="meta small">
+                                <button
+                                        id="backToTopBtn"
+                                        class="top-btn"
+                                        type="button">Back to top ↑</button
+                                >
+                        </p>
+                </div>
+        </div>
 </footer>
-<style>
-        footer {
-                margin-top: 100vh;
-                padding: 25px;
-                text-align: center;
+
+<script>
+        const btn = document.getElementById("backToTopBtn");
+        if (btn) {
+                btn.addEventListener("click", () => {
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                });
+        }
+</script>
+
+<style lang="scss">
+        .footer-container {
+                width: 100%;
+                margin-top: 4rem;
+                padding: 2.75rem 1.25rem 3.25rem;
+                background: var(--color-background-surface);
+                border-top: 1px solid var(--color-border);
+                font-size: 0.95rem;
+                color: var(--color-text-muted);
+        }
+
+        .footer-inner {
+                width: min(1180px, 92%);
+                margin-inline: auto;
+                display: grid;
+                gap: 2rem;
+        }
+        @media (min-width: 640px) {
+                .footer-inner {
+                        grid-template-columns: repeat(
+                                auto-fit,
+                                minmax(180px, 1fr)
+                        );
+                        align-items: start;
+                }
+        }
+        @media (min-width: 960px) {
+                .footer-inner {
+                        grid-template-columns: 1.3fr 1fr 1fr 1.4fr;
+                }
+        }
+
+        .primary {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+        }
+        .brand {
+                margin: 0;
+                font-weight: 500;
+                letter-spacing: 0.5px;
+        }
+        .brand .name {
+                color: var(--color-text-primary);
+                font-weight: 600;
+        }
+        .tagline {
+                margin: 0;
+                font-size: 0.88rem;
+                line-height: 1.4;
+                max-width: 28ch;
+                color: var(--color-text-secondary);
+        }
+
+        .heading {
+                margin: 0 0 0.65rem;
+                font-size: 0.78rem;
+                text-transform: uppercase;
+                letter-spacing: 0.12em;
+                font-weight: 600;
+                color: var(--color-text-muted);
+        }
+
+        .mini-nav,
+        .social-nav {
+                display: flex;
+                flex-direction: column;
+        }
+        .mini-list,
+        .social-list {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 0.45rem;
+        }
+        .mini-list a,
+        .social-list a {
+                position: relative;
+                text-decoration: none;
+                color: var(--color-text-secondary);
+                font-weight: 500;
+                letter-spacing: 0.03em;
+                padding: 2px 0;
+        }
+        .mini-list a::after,
+        .social-list a::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                height: 1px;
+                background: currentColor;
+                transform: scaleX(0);
+                transform-origin: left;
+                transition: transform 0.25s ease;
+                opacity: 0.5;
+        }
+        .mini-list a:hover::after,
+        .mini-list a:focus-visible::after,
+        .social-list a:hover::after,
+        .social-list a:focus-visible::after {
+                transform: scaleX(1);
+        }
+        .mini-list a:focus-visible,
+        .social-list a:focus-visible {
+                outline: 2px solid var(--color-focus-ring);
+                outline-offset: 2px;
+                border-radius: 2px;
+        }
+
+        .meta-block {
+                display: flex;
+                flex-direction: column;
+                gap: 0.4rem;
+        }
+        .stack {
+                margin: 0;
+                font-size: 0.76rem;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                font-weight: 600;
+                color: var(--color-text-muted);
+        }
+        .stack span {
+                color: var(--color-text-secondary);
+                font-weight: 500;
+        }
+        .meta {
+                margin: 0;
+                font-size: 0.8rem;
+                opacity: 0.85;
+                line-height: 1.4;
+        }
+        .meta.small {
+                opacity: 0.7;
+        }
+        .meta a {
+                color: inherit;
+                text-decoration: none;
+        }
+        .meta a:hover {
+                text-decoration: underline;
+        }
+
+        .top-btn {
+                background: none;
+                border: none;
+                padding: 0;
+                font: inherit;
+                color: var(--color-text-secondary);
+                cursor: pointer;
+                position: relative;
+        }
+        .top-btn::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: -1px;
+                height: 1px;
+                background: currentColor;
+                transform: scaleX(0);
+                transform-origin: left;
+                transition: transform 0.25s ease;
+                opacity: 0.5;
+        }
+        .top-btn:hover::after,
+        .top-btn:focus-visible::after {
+                transform: scaleX(1);
+        }
+        .top-btn:focus-visible {
+                outline: 2px solid var(--color-focus-ring);
+                outline-offset: 2px;
+                border-radius: 2px;
+        }
+
+        .visually-hidden {
+                position: absolute !important;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0 0 0 0);
+                clip-path: inset(50%);
+                border: 0;
+                white-space: nowrap;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+                .mini-list a::after,
+                .social-list a::after,
+                .top-btn::after {
+                        transition: none;
+                }
         }
 </style>

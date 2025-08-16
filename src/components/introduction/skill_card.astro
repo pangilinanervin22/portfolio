@@ -1,31 +1,20 @@
 ---
-// skill_card.astro
 interface Props {
         title: string;
         content: string;
-        icon?: any;
+        icon?: any; // this will be an imported SVG component
 }
-const { title, content, icon } = Astro.props;
+
+const { title, content, icon: Icon } = Astro.props;
 ---
 
-<div class="skill-card">
-        <h2 class="skill-card-title">
-                {
-                        icon && (
-                                <span
-                                        class="skill-card-icon"
-                                        aria-hidden="true"
-                                >
-                                        {icon}
-                                </span>
-                        )
-                }
+<article class="skill-card">
+        <h4 class="skill-card-title">
+                {Icon && <Icon class="skill-card-icon" />}
                 {title}
-        </h2>
-        <p class="skill-card-content">
-                {content}
-        </p>
-</div>
+        </h4>
+        <p class="skill-card-content">{content}</p>
+</article>
 
 <style scoped>
         .skill-card {
@@ -56,33 +45,33 @@ const { title, content, icon } = Astro.props;
         }
 
         .skill-card-title {
-                font-size: 1.1rem;
+                font-size: 1.3rem;
                 line-height: 1.2;
-                font-weight: 600;
+                font-weight: 800;
                 display: flex;
                 align-items: center;
                 justify-content: flex-start;
                 margin: 0;
                 letter-spacing: 0.5px;
-                background: linear-gradient(
+                /* background: linear-gradient(
                         90deg,
                         var(--color-primary),
                         var(--color-primary-40)
-                );
+                ); */
                 -webkit-background-clip: text;
-                color: transparent;
+                color: var(--color-text-primary);
                 gap: 0.55rem;
         }
 
         .skill-card-icon {
-                font-size: 1.25em;
-                color: var(--color-icon);
-                filter: drop-shadow(0 0 2px var(--color-icon-muted));
+                width: 1.6em;
+                height: 1.6em;
+                margin-bottom: 4px;
         }
 
         .skill-card-content {
                 font-size: 1rem;
-                line-height: 1.5;
+                line-height: 1.8;
                 color: var(--color-text-primary);
                 margin: 0;
         }
