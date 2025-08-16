@@ -1,58 +1,100 @@
 ---
 import introImage from "../../assets/sample.jpg";
 import SkillCard from "./skill_card.astro";
+
+import gameIcon from "../../assets/skill/game.svg";
+import webIcon from "../../assets/skill/web.svg";
+import mobileIcon from "../../assets/skill/mobile.svg";
+import devOpsIcon from "../../assets/skill/devops.svg";
 ---
 
-<div class="introduction-main-container">
-        <h2 class="introduction-title">ABOUT ME</h2>
+<section
+        id="introduction"
+        class="introduction-main-container"
+        aria-labelledby="about-heading"
+        itemscope
+        itemtype="https://schema.org/Person"
+>
+        <h2 id="about-heading" class="introduction-title" itemprop="name">
+                About Ervin Pangilinan – Full Stack Developer
+        </h2>
 
-        <div class="introduction-image-container">
-                <div class="introduction-image">
+        <aside class="introduction-image-container" aria-label="Portrait">
+                <figure class="introduction-image">
                         <img
                                 src={introImage.src}
-                                alt="Introduction Image"
+                                alt="Ervin Pangilinan portrait"
                                 width={introImage.width}
                                 height={introImage.height}
+                                loading="lazy"
+                                itemprop="image"
                         />
-                </div>
-        </div>
+                        <figcaption class="visually-hidden">
+                                Portrait used in the about section
+                        </figcaption>
+                </figure>
+        </aside>
 
-        <div class="introduction-content">
-                <p class="introduction-description">
+        <div class="introduction-content" itemprop="description">
+                <p class="introduction-description" itemprop="text">
                         I started coding as a hobby in 2021 and quickly fell in
-                        enjoy with building purposeful web apps. Curiosity
-                        became disciplined problem‑solving and user‑focused
-                        design. Real project work taught me the full lifecycle
+                        love with building purposeful web apps. Curiosity became
+                        disciplined problem‑solving and user‑focused design.
+                        Real project work taught me the full lifecycle:
                         requirements, features, reviews, performance. As a
                         Computer Science student I keep sharpening fundamentals
                         to ship cleaner architecture and better usability.
                 </p>
+                <p class="introduction-description keyword-blurb">
+                        My focus spans modern <strong
+                                >JavaScript/TypeScript</strong
+                        >, component‑driven <strong
+                                >front‑end architecture</strong
+                        >, accessible UI, mobile‑first responsive design, basic
+                        <strong>DevOps</strong> automation, performance tuning, and
+                        rapid prototyping for <strong>game development</strong>.
+                        I value clean abstractions, testing, incremental
+                        delivery, and thoughtful developer experience.
+                </p>
 
-                <div class="introduction-skills">
-                        <h2>What I can do?</h2>
-                        <SkillCard
-                                title="Web Applications"
-                                content="Design end‑to‑end apps: clear flows, reusable components, secure data, fast accessible pages."
-                                icon="🌐"
-                        />
-                        <SkillCard
-                                title="Mobile Applications"
-                                content="Build native-feel apps: offline data, smooth navigation, continuous reliable updates."
-                                icon="📱"
-                        />
-                        <SkillCard
-                                title="DevOps Basics"
-                                content="Automate build/test/deploy, containerize, monitor health, enable quick safe rollbacks."
-                                icon="⚙️"
-                        />
-                        <SkillCard
-                                title="Game Development"
-                                content="Prototype fun 2D loops: tight controls, simple AI, polished UI, smooth performance."
-                                icon="🎮"
-                        />
-                </div>
+                <section
+                        class="introduction-skills"
+                        aria-labelledby="skills-heading"
+                >
+                        <h3 id="skills-heading">What I can do</h3>
+                        <ul class="skills-list" role="list">
+                                <li itemprop="knowsAbout">
+                                        <SkillCard
+                                                title="Web Applications"
+                                                content="Design end‑to‑end apps: clear flows, reusable components, secure data, fast accessible pages."
+                                                icon={webIcon}
+                                        />
+                                </li>
+                                <li itemprop="knowsAbout">
+                                        <SkillCard
+                                                title="Mobile Applications"
+                                                content="Build native-feel apps: offline data, smooth navigation, continuous reliable updates."
+                                                icon={mobileIcon}
+                                        />
+                                </li>
+                                <li itemprop="knowsAbout">
+                                        <SkillCard
+                                                title="DevOps Basics"
+                                                content="Automate build/test/deploy, containerize, enable quick safe rollbacks."
+                                                icon={devOpsIcon}
+                                        />
+                                </li>
+                                <li itemprop="knowsAbout">
+                                        <SkillCard
+                                                title="Game Development"
+                                                content="Prototype fun 2D games: tight controls, simple AI, polished UI, smooth performance."
+                                                icon={gameIcon}
+                                        />
+                                </li>
+                        </ul>
+                </section>
         </div>
-</div>
+</section>
 
 <style>
         .introduction-main-container {
@@ -60,7 +102,7 @@ import SkillCard from "./skill_card.astro";
                 grid-template-columns: 1fr;
                 justify-items: center;
                 width: 100%;
-                margin-top: 16px;
+                margin-top: 20vh;
                 padding-inline: 16px;
                 gap: 24px;
 
@@ -177,6 +219,11 @@ import SkillCard from "./skill_card.astro";
                 }
         }
 
+        .keyword-blurb strong {
+                color: var(--color-text-primary);
+                font-weight: 600;
+        }
+
         .introduction-skills {
                 display: grid;
                 grid-template-columns: 1fr;
@@ -184,17 +231,42 @@ import SkillCard from "./skill_card.astro";
                 gap: 16px;
                 width: 100%;
                 margin-top: 16px;
+        }
 
-                & > :first-child {
-                        width: 100%;
-                }
+        .introduction-skills > h3 {
+                width: 100%;
+                margin: 0;
+                font-size: clamp(1.6rem, 3vw, 2.2rem);
+                line-height: 1.2;
+        }
 
-                @media (min-width: 768px) {
+        .skills-list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                display: contents; /* let grid layout be controlled by parent */
+        }
+
+        @media (min-width: 768px) {
+                .introduction-skills {
                         grid-template-columns: repeat(2, 1fr);
-                        & > :first-child {
-                                grid-column: 1 / -1;
-                        }
                 }
+
+                .introduction-skills > h3 {
+                        grid-column: 1 / -1;
+                }
+        }
+
+        .visually-hidden {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0 0 0 0);
+                white-space: nowrap;
+                border: 0;
         }
 
         * {
