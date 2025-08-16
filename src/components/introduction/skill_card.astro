@@ -8,13 +8,13 @@ interface Props {
 const { title, content, icon: Icon } = Astro.props;
 ---
 
-<article class="skill-card">
-        <h4 class="skill-card-title">
+<div class="skill-card">
+        <h2 class="skill-card-title">
                 {Icon && <Icon class="skill-card-icon" />}
                 {title}
-        </h4>
+        </h2>
         <p class="skill-card-content">{content}</p>
-</article>
+</div>
 
 <style scoped>
         .skill-card {
@@ -22,7 +22,8 @@ const { title, content, icon: Icon } = Astro.props;
                 display: flex;
                 flex-direction: column;
                 width: 100%;
-                padding: 20px 20px 22px;
+                height: 100%;
+                padding: 22px 20px;
                 background: var(--color-surface);
                 border: 2px dashed var(--color-border);
                 transition:
