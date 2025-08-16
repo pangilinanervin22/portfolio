@@ -2,56 +2,28 @@
 import Border from "./_common/Border.astro";
 ---
 
-<div class="main-container">
-        <Border />
+<section id="welcome" class="main-container" aria-labelledby="welcome-heading">
+        <Border aria-hidden="true" />
         <div class="content-container">
-                <div class="content">
-                        <h1>Ervin Pangilinan Portfolio</h1>
-                        <p>
+                <header class="content">
+                        <h1 id="welcome-heading">Ervin Pangilinan Portfolio</h1>
+                        <p class="tagline">
                                 Developer: Making tech feel simple, one
                                 complicated feature at a time.
                         </p>
-
-                        <div class="actions">
+                        <p class="actions">
                                 <a
                                         class="btn"
-                                        href="/cv.pdf"
+                                        href="Ervin_Pangilinan_CV_2025.pdf"
                                         download
-                                        aria-label="Download CV"
                                 >
                                         Download CV
                                 </a>
-                        </div>
-                </div>
+                        </p>
+                </header>
         </div>
-        <Border />
-        <!-- 
-        <div
-                id="scroll-hint"
-                class="scroll-hint"
-                role="note"
-                aria-label="This section is scrollable"
-        >
-                <span class="mouse" aria-hidden="true"
-                        ><span class="wheel"></span>
-                </span>
-                <script>
-                        const el = document.getElementById("scroll-hint");
-                        if (el) {
-                                const toggle = () => {
-                                        el.dataset.hidden =
-                                                window.scrollY > 80
-                                                        ? "true"
-                                                        : "false";
-                                };
-                                toggle();
-                                window.addEventListener("scroll", toggle, {
-                                        passive: true,
-                                });
-                        }
-                </script>
-        </div> -->
-</div>
+        <Border aria-hidden="true" />
+</section>
 
 <style lang="scss">
         .main-container {
@@ -78,7 +50,7 @@ import Border from "./_common/Border.astro";
                 text-align: center;
 
                 h1 {
-                        font-size: clamp(2.2rem, 4vw, 4rem);
+                        font-size: clamp(2.4rem, 4.5vw, 4.4rem);
                         line-height: 1.1;
                         margin-bottom: 0.75rem;
                         letter-spacing: 0.05em;
@@ -119,75 +91,6 @@ import Border from "./_common/Border.astro";
 
                 .btn:active {
                         transform: translateY(0);
-                }
-        }
-
-        .scroll-hint {
-                position: fixed;
-                bottom: 5%;
-                left: 50%;
-                transform: translateX(-50%);
-                display: inline-flex;
-                align-items: center;
-                gap: 0.6rem;
-                padding: 0.55rem 0.9rem;
-                font-size: 0.95rem;
-                font-weight: 600;
-                color: var(--color-primary);
-                backdrop-filter: saturate(140%) blur(8px);
-                pointer-events: none;
-                z-index: 10;
-                transition:
-                        opacity 200ms ease,
-                        transform 200ms ease;
-        }
-        .scroll-hint[data-hidden="true"] {
-                opacity: 0;
-                transform: translate(-50%, 8px);
-        }
-        .scroll-hint .label {
-                letter-spacing: 0.04em;
-        }
-
-        /* Mouse indicator */
-        .mouse {
-                width: 16px;
-                height: 26px;
-                border: 2px solid currentColor;
-                border-radius: 10px;
-                display: inline-flex;
-                align-items: flex-start;
-                justify-content: center;
-                padding-top: 4px;
-                opacity: 0.9;
-        }
-        .mouse .wheel {
-                width: 3px;
-                height: 6px;
-                border-radius: 2px;
-                background: currentColor;
-                opacity: 0.9;
-                animation: wheel 1.5s ease-in-out infinite;
-        }
-
-        @keyframes wheel {
-                0% {
-                        transform: translateY(0);
-                        opacity: 0.95;
-                }
-                60% {
-                        transform: translateY(8px);
-                        opacity: 0;
-                }
-                100% {
-                        transform: translateY(0);
-                        opacity: 0;
-                }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-                .mouse .wheel {
-                        animation: none;
                 }
         }
 </style>
