@@ -38,14 +38,14 @@ import devOpsIcon from "../../assets/skill/devops.svg";
         <div class="introduction-content" itemprop="description">
                 <p class="introduction-description" itemprop="text">
                         I started coding in 2021 as a hobby that quickly became
-                        a committed practice. Curiosity matured into discipline,
-                        I focus on solving real problems, minimalist accessible
-                        interfaces, and measurable performance. Projects (solo
-                        and collaborative) taught me planning, code reviews, and
-                        iterative shipping. As a Computer Science graduate, I
-                        keep strengthening fundamentals algorithms, data
-                        structures, testing—to deliver cleaner, maintainable,
-                        user‑centered code.
+                        a committed practice and curiosity matured into
+                        discipline. Focusing on solving real problems, user
+                        accessible interfaces, and measurable performance.
+                        Projects solo and collaborative taught me planning, code
+                        reviews, and iterative shipping. As a Computer Science
+                        graduate, I keep strengthening fundamentals algorithms,
+                        data structures, testing to deliver cleaner,
+                        maintainable, user‑centered code.
                 </p>
 
                 <section
@@ -71,14 +71,14 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                                 <li itemprop="knowsAbout">
                                         <SkillCard
                                                 title="DevOps Basics"
-                                                content="Automate build/test/deploy, containerize, enable quick safe rollbacks."
+                                                content="Automate deployments: CI/CD pipelines, containerization, cloud hosting, monitoring."
                                                 icon={devOpsIcon}
                                         />
                                 </li>
                                 <li itemprop="knowsAbout">
                                         <SkillCard
                                                 title="Game Development"
-                                                content="Prototype fun 2D games: tight controls, simple AI, polished UI, smooth performance."
+                                                content="Prototype fun 2D games: simple controls, basic AI, polished UI, smooth performance."
                                                 icon={gameIcon}
                                         />
                                 </li>
@@ -93,8 +93,8 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                 grid-template-columns: 1fr;
                 justify-items: center;
                 width: 100%;
-                margin-top: 20vh;
-                padding-inline: 16px;
+                margin-top: 10vh;
+                padding-inline: 42px;
                 gap: 24px;
 
                 @media (min-width: 768px) {
@@ -128,6 +128,7 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                 width: 100%;
                 text-align: left;
                 font-size: clamp(2.4rem, 4.5vw, 3.4rem);
+                margin-bottom: 32px;
         }
 
         .introduction-image-container {
@@ -135,17 +136,17 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                width: 70%;
+                width: 80%;
                 @media (min-width: 480px) {
-                        max-width: 260px;
+                        max-width: 280px;
                 }
 
                 @media (min-width: 768px) {
-                        max-width: 320px;
+                        max-width: 360px;
                 }
 
                 @media (min-width: 1024px) {
-                        max-width: 420px;
+                        max-width: 480px;
                 }
 
                 .introduction-image {
@@ -184,14 +185,13 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                 flex-direction: column;
                 align-items: flex-start;
                 justify-content: center;
-                gap: 16px;
+                gap: 32px;
         }
 
         .introduction-description {
                 font-size: 1.05rem;
-                line-height: 1.65;
+                line-height: 1.7;
                 color: var(--color-text-secondary);
-                text-align: justify;
                 letter-spacing: 0.2px;
                 -webkit-hyphens: auto;
 
@@ -219,7 +219,7 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                 display: grid;
                 grid-template-columns: 1fr;
                 justify-items: center;
-                gap: 16px;
+                gap: 32px;
                 width: 100%;
                 margin-top: 16px;
         }
