@@ -1,0 +1,37 @@
+---
+// No frontmatter needed unless you pass props
+---
+
+<html>
+        <head>
+                <style>
+                        /* Overlay container */
+                        .vintage-overlay {
+                                position: fixed;
+                                inset: 0;
+                                background: rgba(
+                                        0,
+                                        0,
+                                        0,
+                                        0.3
+                                ); /* semi-black overlay */
+                                pointer-events: none; /* lets user still click through */
+                                z-index: 9999;
+
+                                /* adds subtle noise */
+                                background-image: url("https://www.transparenttextures.com/patterns/noise.png");
+                                background-size: cover;
+                                mix-blend-mode: multiply; /* blends with page */
+                        }
+                </style>
+        </head>
+        <body>
+                <main>
+                        <h1>Hello Vintage Astro 🚀</h1>
+                        <p>This page has a black vintage overlay.</p>
+                </main>
+
+                <!-- Overlay -->
+                <div class="vintage-overlay"></div>
+        </body>
+</html>
