@@ -1,4 +1,6 @@
 ---
+import Border from "../_common/Border.astro";
+
 // Experience data (replace with CMS / API later)
 interface ExperienceItem {
         role: string;
@@ -67,7 +69,10 @@ const experiences: ExperienceItem[] = [
         class="experience-section"
         aria-labelledby="experience-title"
 >
-        <h2 id="experience-title" class="section-title">Developer Timeline</h2>
+        <Border />
+        <h2 id="experience-title" class="section-title">
+                My Developer Timeline
+        </h2>
         <div class="timeline" role="list">
                 {
                         experiences.map((item, i) => (
@@ -138,7 +143,7 @@ const experiences: ExperienceItem[] = [
                 align-items: center;
                 padding: 3rem 1rem 4rem;
                 gap: 32px;
-                margin-top: 20vh;
+                margin-top: 10vh;
         }
 
         .section-title {
@@ -147,11 +152,12 @@ const experiences: ExperienceItem[] = [
                 font-weight: 600;
                 text-align: center;
                 width: 100%;
+                margin-block: 32px;
         }
 
         .timeline {
                 --line-width: 3px;
-                width: min(1200px, 85%);
+                width: min(1200px, 80%);
                 list-style: none;
                 position: relative;
                 display: flex;
@@ -311,8 +317,8 @@ const experiences: ExperienceItem[] = [
 
         @media (max-width: 850px) {
                 .timeline::before {
-                        left: 0.5rem;
-                        width: 2px;
+                        left: 0.4rem;
+                        width: 3px;
                         transform: none;
                         background: linear-gradient(
                                 to bottom,
@@ -325,7 +331,7 @@ const experiences: ExperienceItem[] = [
                         left: 0.5rem;
                         width: 18px;
                         height: 18px;
-                        top: 1.6rem;
+                        top: 1.4rem;
                         transform: translate(-50%, 0);
                         box-shadow: 0 3px 8px -2px var(--color-shadow);
                 }
