@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import '../../styles/CustomCursor.scss';
+import '../../styles/CustomCursor.css';
 
 const CustomCursor: React.FC = () => {
     const cursorRef = useRef<HTMLDivElement | null>(null);
