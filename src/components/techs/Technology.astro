@@ -1,0 +1,180 @@
+---
+import astroIcon from "../../assets/technologies/astro.svg";
+import reactIcon from "../../assets/technologies/react.svg";
+import typescriptIcon from "../../assets/technologies/typescript.svg";
+import nodeIcon from "../../assets/technologies/node-js.svg";
+import expressIcon from "../../assets/technologies/express.svg";
+import prismaIcon from "../../assets/technologies/prisma.svg";
+import postgresIcon from "../../assets/technologies/postgresql.svg";
+import mongoIcon from "../../assets/technologies/mongodb.svg";
+import fastapiIcon from "../../assets/technologies/fastapi.svg";
+import pythonIcon from "../../assets/technologies/python.svg";
+import expoIcon from "../../assets/technologies/expo.svg";
+import dockerIcon from "../../assets/technologies/docker.svg";
+import gitTechIcon from "../../assets/technologies/git.svg";
+import jestTechIcon from "../../assets/technologies/jest.svg";
+import unityIcon from "../../assets/technologies/unity.svg";
+
+interface Skill {
+        label: string;
+        icon?: any; // imported SVG modules work as components
+}
+
+const allSkills: Skill[] = [
+        { label: "Astro", icon: astroIcon },
+        { label: "React", icon: reactIcon },
+        { label: "TypeScript", icon: typescriptIcon },
+        { label: "Node.js", icon: nodeIcon },
+        { label: "Express", icon: expressIcon },
+        { label: "Prisma", icon: prismaIcon },
+        { label: "PostgreSQL", icon: postgresIcon },
+        { label: "MongoDB", icon: mongoIcon },
+        { label: "FastAPI", icon: fastapiIcon },
+        { label: "Python", icon: pythonIcon },
+        { label: "React Native", icon: expoIcon },
+        { label: "Docker", icon: dockerIcon },
+        { label: "Git", icon: gitTechIcon },
+        { label: "Unity (C#)", icon: unityIcon },
+        { label: "Jest", icon: jestTechIcon },
+];
+---
+
+<section id="tech" class="tech-section" aria-labelledby="tech-title">
+        <h2 id="tech-title" class="tech-title">Technologies</h2>
+
+        <div class="grid" role="list">
+                <section class="group" role="listitem" aria-labelledby="g-all">
+                        <h3 id="g-all" class="group-title">Skills</h3>
+                        <ul class="badges" role="list">
+                                {
+                                        allSkills.map((s) => (
+                                                <li
+                                                        class="badge"
+                                                        itemprop="knowsAbout"
+                                                        title={s.label}
+                                                >
+                                                        {s.icon && (
+                                                                <s.icon
+                                                                        class="icon"
+                                                                        aria-hidden="true"
+                                                                />
+                                                        )}
+                                                        <span>{s.label}</span>
+                                                </li>
+                                        ))
+                                }
+                        </ul>
+                </section>
+        </div>
+</section>
+
+<style scoped>
+        .tech-section {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 2rem;
+                padding: 3rem 1.25rem 3.5rem;
+        }
+        .tech-title {
+                font-size: clamp(2.2rem, 4vw, 3rem);
+                margin: 0;
+                letter-spacing: 1px;
+                font-weight: 600;
+                text-align: center;
+        }
+
+        .grid {
+                width: min(1300px, 92%);
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+                gap: 1.5rem;
+        }
+        .group {
+                height: max-content;
+                background: var(--color-surface);
+                border: 2px dashed var(--color-border);
+                border-radius: 22px;
+                padding: 48px;
+                display: flex;
+                flex-direction: column;
+                gap: 0.8rem;
+                box-shadow:
+                        0 3px 8px -2px var(--color-shadow-soft),
+                        0 6px 18px -3px var(--color-shadow);
+                transition:
+                        border-color 0.25s,
+                        transform 0.25s,
+                        box-shadow 0.25s;
+        }
+        @media (hover: hover) {
+                .group:hover {
+                        border-color: var(--color-primary-40);
+                        transform: translateY(-3px);
+                        box-shadow:
+                                0 10px 22px -4px var(--color-shadow),
+                                0 18px 36px -6px var(--color-shadow-strong);
+                }
+        }
+        .group-title {
+                font-size: 2rem;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                font-weight: 700;
+                color: var(--color-text-primary);
+                margin-bottom: 1rem;
+        }
+        .badges {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 1rem;
+        }
+        .badge {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                padding: 16px 12px;
+                min-height: 140px;
+                text-align: center;
+                background: var(--color-surface-alt);
+                border: 1px solid var(--color-border);
+                border-radius: 16px;
+                color: var(--color-text-muted);
+                line-height: 1.2;
+                font-weight: 600;
+                letter-spacing: 0.02em;
+                text-transform: none;
+                transition:
+                        transform 0.2s ease,
+                        background 0.25s ease,
+                        border-color 0.25s ease;
+        }
+        .badge span {
+                font-size: 0.95rem;
+        }
+        @media (hover: hover) {
+                .badge:hover {
+                        transform: translateY(-2px);
+                        background: var(--color-primary-20);
+                        border-color: var(--color-primary-40);
+                        color: var(--color-text-primary);
+                }
+        }
+        .icon {
+                width: 48px;
+                height: 48px;
+                display: block;
+        }
+        @media (prefers-reduced-motion: reduce) {
+                .group,
+                .badge {
+                        transition: none;
+                }
+        }
+</style>
