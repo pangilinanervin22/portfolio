@@ -17,7 +17,8 @@ import unityIcon from "../../assets/technologies/unity.svg";
 
 interface Skill {
         label: string;
-        icon?: any; // imported SVG modules work as components
+        // In Astro, importing an SVG returns a URL (string) or ImageMetadata with .src
+        icon?: any;
 }
 
 const allSkills: Skill[] = [
@@ -54,9 +55,18 @@ const allSkills: Skill[] = [
                                                         title={s.label}
                                                 >
                                                         {s.icon && (
-                                                                <s.icon
+                                                                <img
                                                                         class="icon"
-                                                                        aria-hidden="true"
+                                                                        src={
+                                                                                (s
+                                                                                        .icon
+                                                                                        .src ??
+                                                                                        s.icon) as string
+                                                                        }
+                                                                        alt={
+                                                                                s.label
+                                                                        }
+                                                                        loading="lazy"
                                                                 />
                                                         )}
                                                         <span>{s.label}</span>
