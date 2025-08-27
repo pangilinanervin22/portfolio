@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./SwitchTheme.scss"; // make sure you have styles
+import "./SwitchTheme.css"; // make sure you have styles
 
 const SwitchTheme: React.FC = () => {
     const [theme, setTheme] = useState<string>("light");
@@ -25,8 +25,8 @@ const SwitchTheme: React.FC = () => {
         if (themeStylesheet) {
             themeStylesheet.href =
                 theme === "dark"
-                    ? "../styles/_theme_dark.scss"
-                    : "../styles/_theme.scss";
+                    ? "../styles/_theme_dark.css"
+                    : "../styles/_theme.css";
         }
     };
 

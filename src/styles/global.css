@@ -1,5 +1,5 @@
- @use './theme';
- @use './theme_dark';
+@import './_theme.css';
+@import './_theme_dark.css';
 
  html,
  body {

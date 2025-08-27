@@ -1,39 +1,39 @@
 ---
 interface Props {
-	content: string;
-	color?: string;
-	fontSize?: string;
-	marginBlock?: string;
+        content: string;
+        color?: string;
+        fontSize?: string;
+        marginBlock?: string;
 }
 
 const {
-	content,
-	color = "black",
-	fontSize = "30px",
-	marginBlock = "3px",
+        content,
+        color = "black",
+        fontSize = "30px",
+        marginBlock = "3px",
 } = Astro.props;
 ---
 
 <div>
-	<h1>{content}</h1>
-	<div></div>
+        <h1>{content}</h1>
+        <div></div>
 </div>
 
-<style lang="scss" define:vars={{ color, fontSize, marginBlock }}>
-	@import "../../styles/_mixins.scss";
+<style lang="css" define:vars={{ color, fontSize, marginBlock }}>
+        @import "../../styles/_mixins.css";
 
-	div {
-		@include flex_center(column);
-		text-align: center;
-		margin-block: var(--marginBlock);
+        div {
+                @include flex_center(column);
+                text-align: center;
+                margin-block: var(--marginBlock);
 
-		h1 {
-			font-size: var(--fontSize);
-		}
-		div {
-			height: 6px;
-			width: 100px;
-			background: var(--color);
-		}
-	}
+                h1 {
+                        font-size: var(--fontSize);
+                }
+                div {
+                        height: 6px;
+                        width: 100px;
+                        background: var(--color);
+                }
+        }
 </style>
