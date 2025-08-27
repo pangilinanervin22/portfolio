@@ -1,0 +1,328 @@
+---
+import astroIcon from "../../assets/technologies/astro.svg";
+import reactIcon from "../../assets/technologies/react.svg";
+import typescriptIcon from "../../assets/technologies/typescript.svg";
+import nodeIcon from "../../assets/technologies/node-js.svg";
+import expressIcon from "../../assets/technologies/express.svg";
+import prismaIcon from "../../assets/technologies/prisma.svg";
+import postgresIcon from "../../assets/technologies/postgresql.svg";
+import mongoIcon from "../../assets/technologies/mongodb.svg";
+import fastapiIcon from "../../assets/technologies/fastapi.svg";
+import pythonIcon from "../../assets/technologies/python.svg";
+import expoIcon from "../../assets/technologies/expo.svg";
+import dockerIcon from "../../assets/technologies/docker.svg";
+import gitTechIcon from "../../assets/technologies/git.svg";
+import jestTechIcon from "../../assets/technologies/jest.svg";
+import unityIcon from "../../assets/technologies/unity.svg";
+
+interface Skill {
+        label: string;
+        // In Astro, importing an SVG returns a URL (string) or ImageMetadata with .src
+        icon?: any;
+}
+
+const allSkills: Skill[] = [
+        { label: "Astro", icon: astroIcon },
+        { label: "React", icon: reactIcon },
+        { label: "TypeScript", icon: typescriptIcon },
+        { label: "Node.js", icon: nodeIcon },
+        { label: "Express", icon: expressIcon },
+        { label: "Prisma", icon: prismaIcon },
+        { label: "PostgreSQL", icon: postgresIcon },
+        { label: "MongoDB", icon: mongoIcon },
+        { label: "FastAPI", icon: fastapiIcon },
+        { label: "Python", icon: pythonIcon },
+        { label: "React Native", icon: expoIcon },
+        { label: "Docker", icon: dockerIcon },
+        { label: "Git", icon: gitTechIcon },
+        { label: "Unity (C#)", icon: unityIcon },
+        { label: "Jest", icon: jestTechIcon },
+];
+---
+
+<section id="tech" class="tech-section" aria-labelledby="tech-title">
+        <h2 id="tech-title" class="tech-title">My Skills</h2>
+
+        <div class="grid" role="list">
+                <section class="group" role="listitem" aria-labelledby="g-all">
+                        <ul class="badges" role="list">
+                                {
+                                        allSkills.map((s) => (
+                                                <li
+                                                        class="badge"
+                                                        itemprop="knowsAbout"
+                                                        title={s.label}
+                                                >
+                                                        {s.icon && (
+                                                                <img
+                                                                        class="icon"
+                                                                        src={
+                                                                                (s
+                                                                                        .icon
+                                                                                        .src ??
+                                                                                        s.icon) as string
+                                                                        }
+                                                                        alt={
+                                                                                s.label
+                                                                        }
+                                                                        loading="lazy"
+                                                                />
+                                                        )}
+                                                        <span>{s.label}</span>
+                                                </li>
+                                        ))
+                                }
+                        </ul>
+                </section>
+        </div>
+</section>
+
+<style scoped>
+        .tech-section {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 2rem;
+                padding: clamp(2rem, 5vw, 3rem) 1rem clamp(2.5rem, 6vw, 3.5rem);
+        }
+        .tech-title {
+                font-size: clamp(2rem, 5vw, 3rem);
+                margin: 0;
+                letter-spacing: 1px;
+                font-weight: 600;
+                text-align: center;
+        }
+
+        .grid {
+                width: min(1200px, 92%);
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 1.25rem;
+        }
+        .group {
+                height: max-content;
+                display: flex;
+                flex-direction: column;
+                gap: 0.8rem;
+        }
+        .badges {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.9rem;
+                width: 100%;
+        }
+        .badge {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                min-height: clamp(120px, 25vw, 150px);
+                width: clamp(100px, 25%, 140px);
+                text-align: center;
+                background: var(--color-surface-muted);
+                border: 12px dashed var(--color-border);
+                border-radius: 16px;
+                color: var(--color-text-muted);
+                line-height: 1.2;
+                font-weight: 600;
+                letter-spacing: 0.02em;
+                text-transform: none;
+                transition: all 0.2s ease;
+        }
+        .badge span {
+                font-size: clamp(0.85rem, 3vw, 1rem);
+        }
+        @media (hover: hover) {
+                .badge:hover {
+                        transform: translateY(-2px) rotate(33deg);
+                        background: var(--color-primary-20);
+                        border-color: var(--color-primary-40);
+                        color: var(--color-text-primary);
+                }
+        }
+        .icon {
+                width: clamp(36px, 10vw, 56px);
+                height: clamp(36px, 10vw, 56px);
+                display: block;
+        }
+        /* Performance hints for smoother animations */
+        .tech-title,
+        .badge {
+                will-change: filter, opacity, transform;
+        }
+</style>
+
+<script>
+        import { gsap } from "gsap";
+        import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+        if (typeof window !== "undefined") {
+                const prefersReduced = window.matchMedia(
+                        "(prefers-reduced-motion: reduce)"
+                ).matches;
+
+                if (!prefersReduced) {
+                        gsap.registerPlugin(ScrollTrigger);
+
+                        const init = () => {
+                                const section = document.querySelector("#tech");
+                                if (!section) return;
+
+                                // Title blur/fade in
+                                const title =
+                                        section.querySelector(".tech-title");
+                                if (title) {
+                                        gsap.fromTo(
+                                                title,
+                                                {
+                                                        filter: "blur(6px)",
+                                                        opacity: 0,
+                                                        y: 12,
+                                                },
+                                                {
+                                                        filter: "blur(0px)",
+                                                        opacity: 1,
+                                                        y: 0,
+                                                        duration: 0.9,
+                                                        ease: "power2.out",
+                                                        scrollTrigger: {
+                                                                trigger: title,
+                                                                start: "top 85%",
+                                                                end: "top 60%",
+                                                                scrub: true,
+                                                        },
+                                                }
+                                        );
+                                }
+
+                                // Badges batch entrance
+                                const badges =
+                                        section.querySelectorAll(".badge");
+                                if (badges.length) {
+                                        ScrollTrigger.batch(badges, {
+                                                start: "top 85%",
+                                                end: "top 60%",
+                                                once: true,
+                                                onEnter: (batch) => {
+                                                        gsap.fromTo(
+                                                                batch,
+                                                                {
+                                                                        filter: "blur(8px)",
+                                                                        opacity: 0,
+                                                                        y: 16,
+                                                                },
+                                                                {
+                                                                        filter: "blur(0px)",
+                                                                        opacity: 1,
+                                                                        y: 0,
+                                                                        duration: 0.85,
+                                                                        stagger: 0.08,
+                                                                        ease: "power2.out",
+                                                                }
+                                                        );
+                                                },
+                                        });
+
+                                        // Repeating random badge animation (pulse/spotlight)
+                                        let loopActive = false;
+                                        let lastIndex = -1;
+                                        const rnd = gsap.utils.random;
+                                        let startDelay = null as any;
+
+                                        const animateRandomBadge = () => {
+                                                if (
+                                                        !loopActive ||
+                                                        !badges.length
+                                                )
+                                                        return;
+                                                // pick a different index
+                                                let idx = Math.floor(
+                                                        rnd(
+                                                                0,
+                                                                badges.length -
+                                                                        0.0001
+                                                        )
+                                                );
+                                                if (
+                                                        badges.length > 1 &&
+                                                        idx === lastIndex
+                                                ) {
+                                                        idx =
+                                                                (idx + 1) %
+                                                                badges.length;
+                                                }
+                                                lastIndex = idx;
+                                                const el = badges[
+                                                        idx
+                                                ] as HTMLElement;
+
+                                                gsap.to(el, {
+                                                        scale: 1.06,
+                                                        y: -3,
+                                                        rotate: 3,
+                                                        backgroundColor:
+                                                                "var(--color-primary-20)",
+                                                        borderColor:
+                                                                "var(--color-primary-40)",
+                                                        boxShadow: "0 10px 22px -6px var(--color-shadow), 0 18px 36px -6px var(--color-shadow-strong)",
+                                                        duration: 0.85,
+                                                        yoyo: true,
+                                                        repeat: 1,
+                                                        ease: "power1.inOut",
+                                                        clearProps: "boxShadow,backgroundColor,borderColor,scale,y",
+                                                });
+
+                                                // schedule next run with slight randomness
+                                                gsap.delayedCall(
+                                                        rnd(0.2, 0.4),
+                                                        animateRandomBadge
+                                                );
+                                        };
+
+                                        const startLoop = () => {
+                                                if (loopActive || startDelay)
+                                                        return;
+                                                startDelay = gsap.delayedCall(
+                                                        1,
+                                                        () => {
+                                                                startDelay =
+                                                                        null;
+                                                                loopActive = true;
+                                                                animateRandomBadge();
+                                                        }
+                                                );
+                                        };
+                                        const stopLoop = () => {
+                                                loopActive = false;
+                                                if (startDelay) {
+                                                        startDelay.kill();
+                                                        startDelay = null;
+                                                }
+                                        };
+
+                                        // Run loop only while section is in view
+                                        ScrollTrigger.create({
+                                                trigger: section,
+                                                start: "top 90%",
+                                                end: "bottom 70%",
+                                                onEnter: startLoop,
+                                                onEnterBack: startLoop,
+                                                onLeave: stopLoop,
+                                                onLeaveBack: stopLoop,
+                                        });
+                                }
+                        };
+
+                        // Initialize after layout; refresh on full load
+                        requestAnimationFrame(() => {
+                                init();
+                                window.addEventListener("load", () =>
+                                        ScrollTrigger.refresh()
+                                );
+                        });
+                }
+        }
+</script>
