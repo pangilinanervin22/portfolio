@@ -34,3 +34,53 @@
     pointer-events: none;
     z-index: 10000;
 }
+
+.cursor-glow {
+    position: fixed;
+    width: 26vmin;
+    height: 24vmin;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9998;
+    border-radius: 50%;
+    --glow-opacity: 0.65;
+    --glow-blur: 24px;
+    background: radial-gradient(
+        35% 35% at 50% 50%,
+        rgba(0, 0, 0, 0.45),
+        rgba(0, 0, 0, 0.22) 55%,
+        transparent 100%
+    );
+    filter: blur(var(--glow-blur));
+    opacity: var(--glow-opacity);
+    mix-blend-mode: multiply;
+    animation: glowPulse 1s ease-in-out infinite;
+}
+
+:root[data-theme='dark'] .cursor-glow {
+    background: radial-gradient(
+        35% 35% at 50% 50%,
+        color-mix(in oklab, var(--color-primary) 45%, transparent),
+        color-mix(in oklab, var(--color-primary) 12%, transparent) 60%,
+        transparent 100%
+    );
+    --glow-opacity: 0.9;
+    mix-blend-mode: lighten;
+}
+
+@keyframes glowPulse {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        filter: blur(var(--glow-blur));
+        opacity: var(--glow-opacity);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.08);
+        filter: blur(calc(var(--glow-blur) + 6px));
+        opacity: calc(var(--glow-opacity) + 0.12);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cursor-glow { filter: blur(18px); opacity: 0.45; animation: none; }
+}
