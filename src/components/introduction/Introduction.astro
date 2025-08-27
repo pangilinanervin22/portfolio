@@ -125,8 +125,7 @@ import devOpsIcon from "../../assets/skill/devops.svg";
         .introduction-title {
                 width: 100%;
                 text-align: left;
-                font-size: clamp(2.4rem, 4.5vw, 3.4rem);
-                margin-bottom: 32px;
+                font-size: clamp(2.4rem, 4.4vw, 3.4rem);
         }
 
         .introduction-image-container {
@@ -134,7 +133,7 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                width: 80%;
+                width: 60%;
                 @media (min-width: 480px) {
                         max-width: 280px;
                 }
@@ -148,7 +147,7 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                 }
 
                 .introduction-image {
-                        padding: 12px;
+                        padding: 16px;
                         height: fit-content;
                         background: var(--color-surface);
                         border: 3px dashed var(--color-primary-20);
@@ -183,7 +182,7 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                 flex-direction: column;
                 align-items: flex-start;
                 justify-content: center;
-                gap: 32px;
+                gap: 16px;
         }
 
         .introduction-description {
@@ -262,3 +261,61 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                 transition: all 0.3s ease-in-out;
         }
 </style>
+
+<script>
+        const run = async () => {
+                if (
+                        window.matchMedia("(prefers-reduced-motion: reduce)")
+                                .matches
+                )
+                        return;
+
+                const [{ default: gsap }, { ScrollTrigger }] =
+                        await Promise.all([
+                                import("gsap"),
+                                import("gsap/ScrollTrigger"),
+                        ]);
+
+                gsap.registerPlugin(ScrollTrigger);
+
+                const container = document.getElementById("introduction");
+                if (!container) return;
+
+                const targets = container.querySelectorAll(
+                        ".introduction-title, .introduction-image, .introduction-description, .introduction-skills"
+                );
+
+                targets.forEach((el, i) => {
+                        gsap.set(el, {
+                                filter: "blur(16px)",
+                                opacity: 0,
+                                y: 24,
+                        });
+
+                        gsap.to(el, {
+                                filter: "blur(0px)",
+                                opacity: 1,
+                                y: 0,
+                                duration: 0.8,
+                                ease: "power2.out",
+                                delay: Math.min(i * 0.06, 0.36),
+                                scrollTrigger: {
+                                        trigger: el,
+                                        start: "top 95%",
+                                        end: "top 75%",
+                                        toggleActions: "play none none reverse",
+                                },
+                        });
+                });
+        };
+
+        if (typeof window !== "undefined") {
+                if (document.readyState === "loading") {
+                        addEventListener("DOMContentLoaded", run, {
+                                once: true,
+                        });
+                } else {
+                        run();
+                }
+        }
+</script>

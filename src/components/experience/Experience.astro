@@ -348,4 +348,153 @@ const experiences: ExperienceItem[] = [
                         transform: none;
                 }
         }
+        /* Performance hints for animated elements */
+        .section-title,
+        .timeline-item .card,
+        .tech div {
+                will-change: filter, opacity, transform;
+        }
 </style>
+
+<script>
+        import { gsap } from "gsap";
+        import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+        if (typeof window !== "undefined") {
+                const prefersReduced = window.matchMedia(
+                        "(prefers-reduced-motion: reduce)"
+                ).matches;
+
+                if (!prefersReduced) {
+                        gsap.registerPlugin(ScrollTrigger);
+
+                        const init = () => {
+                                const section =
+                                        document.querySelector("#experience");
+                                if (!section) return;
+
+                                // Title blur-in
+                                const title =
+                                        section.querySelector(".section-title");
+                                if (title) {
+                                        gsap.fromTo(
+                                                title,
+                                                {
+                                                        filter: "blur(6px)",
+                                                        opacity: 0,
+                                                        y: 16,
+                                                },
+                                                {
+                                                        filter: "blur(0px)",
+                                                        opacity: 1,
+                                                        y: 0,
+                                                        duration: 0.6,
+                                                        ease: "power2.out",
+                                                        scrollTrigger: {
+                                                                trigger: title,
+                                                                start: "top 90%",
+                                                                end: "top 60%",
+                                                                scrub: true,
+                                                        },
+                                                }
+                                        );
+                                }
+
+                                // Cards blur-in on scroll
+                                const cards = section.querySelectorAll(
+                                        ".timeline-item .card"
+                                );
+                                cards.forEach((card) => {
+                                        gsap.fromTo(
+                                                card,
+                                                {
+                                                        filter: "blur(10px)",
+                                                        opacity: 0,
+                                                        y: 24,
+                                                },
+                                                {
+                                                        filter: "blur(0px)",
+                                                        opacity: 1,
+                                                        y: 0,
+                                                        ease: "none",
+                                                        scrollTrigger: {
+                                                                trigger: card,
+                                                                start: "top 90%",
+                                                                end: "top 60%",
+                                                                scrub: true,
+                                                        },
+                                                }
+                                        );
+
+                                        // Tech badges subtle stagger-in
+                                        const badges =
+                                                card.querySelectorAll(
+                                                        ".tech div"
+                                                );
+                                        if (badges.length) {
+                                                ScrollTrigger.batch(badges, {
+                                                        start: "top 90%",
+                                                        end: "top 60%",
+                                                        once: true,
+                                                        onEnter: (batch) => {
+                                                                gsap.fromTo(
+                                                                        batch,
+                                                                        {
+                                                                                filter: "blur(6px)",
+                                                                                opacity: 0,
+                                                                                y: 8,
+                                                                        },
+                                                                        {
+                                                                                filter: "blur(0px)",
+                                                                                opacity: 1,
+                                                                                y: 0,
+                                                                                duration: 0.4,
+                                                                                stagger: 0.06,
+                                                                                ease: "power2.out",
+                                                                        }
+                                                                );
+                                                        },
+                                                });
+                                        }
+                                });
+
+                                // Markers quick pop-in for a touch of life
+                                const markers = section.querySelectorAll(
+                                        ".timeline-item .marker"
+                                );
+                                if (markers.length) {
+                                        gsap.fromTo(
+                                                markers,
+                                                {
+                                                        opacity: 0,
+                                                        scale: 0.8,
+                                                        filter: "blur(4px)",
+                                                },
+                                                {
+                                                        opacity: 1,
+                                                        scale: 1,
+                                                        filter: "blur(0px)",
+                                                        duration: 0.4,
+                                                        stagger: 0.1,
+                                                        ease: "power2.out",
+                                                        scrollTrigger: {
+                                                                trigger: section,
+                                                                start: "top 90%",
+                                                                toggleActions:
+                                                                        "play none none reverse",
+                                                        },
+                                                }
+                                        );
+                                }
+                        };
+
+                        // Initialize after layout settled and refresh on full load
+                        requestAnimationFrame(() => {
+                                init();
+                                window.addEventListener("load", () =>
+                                        ScrollTrigger.refresh()
+                                );
+                        });
+                }
+        }
+</script>

@@ -84,8 +84,8 @@ const projects: ProjectItem[] = [
         id="projects"
         class="projects-section"
         aria-labelledby="projects-title"
-        itemscope
         itemtype="https://schema.org/ItemList"
+        itemscope
 >
         <h1 id="projects-title" class="section-title" itemprop="name">
                 Projects
@@ -115,6 +115,8 @@ const projects: ProjectItem[] = [
                 font-weight: 600;
                 margin: 0;
                 text-align: center;
+                /* perf hint for animation */
+                will-change: filter, opacity, transform;
         }
         .section-intro {
                 max-width: 860px;
@@ -123,6 +125,8 @@ const projects: ProjectItem[] = [
                 text-align: center;
                 margin: 0;
                 color: var(--color-text-secondary);
+                /* perf hint for animation */
+                will-change: filter, opacity, transform;
         }
         .projects-grid {
                 --min: clamp(340px, 40vw, 560px);
@@ -138,4 +142,148 @@ const projects: ProjectItem[] = [
                 );
                 gap: var(--gap);
         }
+
+        .reveal {
+                opacity: 0;
+                transform: translateY(16px);
+                filter: blur(10px);
+                transition:
+                        opacity 400ms ease,
+                        transform 400ms ease,
+                        filter 400ms ease;
+                will-change: opacity, transform, filter;
+        }
+        .reveal.is-visible {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+        }
+        @media (prefers-reduced-motion: reduce) {
+                .reveal,
+                .reveal.is-visible {
+                        transition: none;
+                        filter: none;
+                        transform: none;
+                        opacity: 1;
+                }
+        }
 </style>
+<script>
+        import { gsap } from "gsap";
+        import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+        if (typeof window !== "undefined") {
+                const prefersReduced = window.matchMedia(
+                        "(prefers-reduced-motion: reduce)"
+                ).matches;
+
+                if (!prefersReduced) {
+                        gsap.registerPlugin(ScrollTrigger);
+
+                        const init = () => {
+                                const section =
+                                        document.querySelector("#projects");
+                                if (!section) return;
+
+                                const title =
+                                        section.querySelector(".section-title");
+                                const intro =
+                                        section.querySelector(".section-intro");
+                                const cards =
+                                        section.querySelectorAll(
+                                                ".project-card"
+                                        );
+
+                                if (title) {
+                                        gsap.fromTo(
+                                                title,
+                                                {
+                                                        filter: "blur(6px)",
+                                                        opacity: 0,
+                                                        y: 14,
+                                                },
+                                                {
+                                                        filter: "blur(0px)",
+                                                        opacity: 1,
+                                                        y: 0,
+                                                        duration: 0.6,
+                                                        ease: "power2.out",
+                                                        scrollTrigger: {
+                                                                trigger: title,
+                                                                start: "top 75%",
+                                                                end: "top 60%",
+                                                                scrub: true,
+                                                        },
+                                                }
+                                        );
+                                }
+
+                                if (intro) {
+                                        gsap.fromTo(
+                                                intro,
+                                                {
+                                                        filter: "blur(8px)",
+                                                        opacity: 0,
+                                                        y: 18,
+                                                },
+                                                {
+                                                        filter: "blur(0px)",
+                                                        opacity: 1,
+                                                        y: 0,
+                                                        duration: 0.6,
+                                                        ease: "power2.out",
+                                                        scrollTrigger: {
+                                                                trigger: intro,
+                                                                start: "top 85%",
+                                                                end: "top 60%",
+                                                                scrub: true,
+                                                        },
+                                                }
+                                        );
+                                }
+
+                                if (cards.length) {
+                                        // initial hint for smoother anims
+                                        gsap.set(cards, {
+                                                willChange: "filter, opacity, transform",
+                                        });
+
+                                        ScrollTrigger.batch(cards, {
+                                                start: "top 90%",
+                                                end: "top 60%",
+                                                once: true,
+                                                onEnter: (batch) => {
+                                                        gsap.fromTo(
+                                                                batch,
+                                                                {
+                                                                        opacity: 0,
+                                                                        y: 24,
+                                                                        filter: "blur(10px)",
+                                                                },
+                                                                {
+                                                                        opacity: 1,
+                                                                        y: 0,
+                                                                        filter: "blur(0px)",
+                                                                        duration: 0.5,
+                                                                        ease: "power2.out",
+                                                                        stagger: {
+                                                                                each: 0.12,
+                                                                                from: "start",
+                                                                        },
+                                                                }
+                                                        );
+                                                },
+                                        });
+                                }
+                        };
+
+                        // run after layout; refresh on load to ensure correct measurements
+                        requestAnimationFrame(() => {
+                                init();
+                                window.addEventListener("load", () =>
+                                        ScrollTrigger.refresh()
+                                );
+                        });
+                }
+        }
+</script>
