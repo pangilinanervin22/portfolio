@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pangilinanervin22.github.io/portfolio/sitemap-index.xml
