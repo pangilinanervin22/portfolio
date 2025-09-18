@@ -6,15 +6,38 @@ interface Props {
 }
 
 const { title, content, icon: Icon } = Astro.props;
+const id = `skill-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")}`;
 ---
 
-<div class="skill-card">
-        <h2 class="skill-card-title">
-                {Icon && <Icon class="skill-card-icon" />}
+<article
+        class="skill-card"
+        aria-labelledby={`${id}-title`}
+        itemscope
+        itemtype="https://schema.org/DefinedTerm"
+>
+        <h4 id={`${id}-title`} class="skill-card-title" itemprop="name">
+                {Icon && (
+                        <Icon
+                                class="skill-card-icon"
+                                aria-hidden="true"
+                                focusable="false"
+                        />
+                )}
                 {title}
-        </h2>
-        <p class="skill-card-content">{content}</p>
-</div>
+        </h4>
+        <p class="skill-card-content" itemprop="description">{content}</p>
+</article>
+
+<!-- Optional SEO JSON-LD for richer snippets -->
+<script type="application/ld+json">
+        {JSON.stringify({
+                '@context': 'https://schema.org',
+                '@type': 'DefinedTerm',
+                name: title,
+                description: content,
+        })}
+        
+</script>
 
 <style scoped>
         .skill-card {

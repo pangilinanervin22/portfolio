@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import introImage from "../../assets/sample.jpg";
 import SkillCard from "./skill_card.astro";
 
@@ -6,6 +7,9 @@ import gameIcon from "../../assets/skill/game.svg";
 import webIcon from "../../assets/skill/web.svg";
 import mobileIcon from "../../assets/skill/mobile.svg";
 import devOpsIcon from "../../assets/skill/devops.svg";
+
+const description =
+        "I started coding in 2021, turning a hobby into a daily practice. I build fast, accessible apps and have experience in both solo and team projects. During a backend internship, I worked on REST APIs, databases, secure logins, and automated releases. With a Computer science degree, I focus on clean, maintainable code backed by strong fundamentals and teamwork.";
 ---
 
 <section
@@ -21,35 +25,26 @@ import devOpsIcon from "../../assets/skill/devops.svg";
 
         <aside class="introduction-image-container" aria-label="Portrait">
                 <figure class="introduction-image">
-                        <img
-                                src={introImage.src}
-                                alt="Ervin Pangilinan portrait"
-                                width={introImage.width}
-                                height={introImage.height}
-                                loading="lazy"
+                        <Image
+                                src={introImage}
+                                alt="Portrait of Ervin Pangilinan"
                                 itemprop="image"
+                                loading="lazy"
+                                decoding="async"
+                                widths={[320, 480, 640, 768]}
+                                sizes="(max-width: 1024px) 60vw, 480px"
                         />
                         <figcaption class="visually-hidden">
-                                Portrait used in the about section
+                                Portrait of Ervin Pangilinan used in the About Me section
                         </figcaption>
                 </figure>
         </aside>
 
-        <div class="introduction-content" itemprop="description">
-                <p class="introduction-description" itemprop="text">
-                        I started coding in 2021, turning a hobby into a daily
-                        practice. I build fast, accessible apps and have
-                        experience in both solo and team projects. During a
-                        backend internship, I worked on REST APIs, databases,
-                        secure logins, and automated releases. With a Computer
-                        science degree, I focus on clean, maintainable code
-                        backed by strong fundamentals and teamwork.
+        <div class="introduction-content">
+                <p class="introduction-description" itemprop="description">
+                        {description}
                 </p>
-
-                <section
-                        class="introduction-skills"
-                        aria-labelledby="skills-heading"
-                >
+                <section class="introduction-skills" aria-labelledby="skills-heading">
                         <h3 id="skills-heading">What I can do</h3>
                         <ul class="skills-list" role="list">
                                 <li itemprop="knowsAbout">
@@ -84,6 +79,11 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                 </section>
         </div>
 </section>
+
+<!-- SEO: JSON-LD structured data -->
+<script type="application/ld+json" is:inline>
+        {JSON.stringify(ldJson)}
+</script>
 
 <style>
         .introduction-main-container {
@@ -157,10 +157,8 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                                 width: 100%;
                                 height: auto;
                                 border-radius: 50px 0 50px 0;
-                                filter: grayscale(1) brightness(0.98)
-                                        contrast(1.05);
-                                animation: introImagePulse 6s ease-in-out
-                                        infinite;
+                                filter: grayscale(1) brightness(0.98) contrast(1.05);
+                                animation: introImagePulse 6s ease-in-out infinite;
                                 transition: all 0.3s ease-in-out;
                         }
 
@@ -264,17 +262,12 @@ import devOpsIcon from "../../assets/skill/devops.svg";
 
 <script>
         const run = async () => {
-                if (
-                        window.matchMedia("(prefers-reduced-motion: reduce)")
-                                .matches
-                )
-                        return;
+                if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-                const [{ default: gsap }, { ScrollTrigger }] =
-                        await Promise.all([
-                                import("gsap"),
-                                import("gsap/ScrollTrigger"),
-                        ]);
+                const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([
+                        import("gsap"),
+                        import("gsap/ScrollTrigger"),
+                ]);
 
                 gsap.registerPlugin(ScrollTrigger);
 
@@ -311,9 +304,7 @@ import devOpsIcon from "../../assets/skill/devops.svg";
 
         if (typeof window !== "undefined") {
                 if (document.readyState === "loading") {
-                        addEventListener("DOMContentLoaded", run, {
-                                once: true,
-                        });
+                        addEventListener("DOMContentLoaded", run, { once: true });
                 } else {
                         run();
                 }
