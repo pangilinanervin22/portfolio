@@ -31,7 +31,7 @@ import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
                 <li><a href="/portfolio/#home">Home</a></li>
                 <li><a href="/portfolio/#introduction">About</a></li>
                 <li><a href="/portfolio/#experience">Experience</a></li>
-                <li><a href="/portfolio/projects">Projects</a></li>
+                <li><a href="/portfolio/#projects">Projects</a></li>
                 <li><a href="/portfolio/#footer">Contact</a></li>
                 <li class="theme-switch"><SwitchTheme client:load /></li>
         </ul>
@@ -118,11 +118,15 @@ import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
                 padding: 0;
                 align-items: center;
         }
-        .nav-list a {
+        .nav-list li a {
                 color: var(--color-text-primary);
                 text-decoration: none;
                 font-weight: 500;
-                transition: color 0.15s;
+                transition: all 0.25s;
+
+                &:hover {
+                        background: var(--color-icon-inverse);
+                }
         }
         .theme-switch {
                 display: flex;
@@ -146,15 +150,13 @@ import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
                         padding: 12px;
                         min-width: 180px;
                         border-radius: 8px;
-                        background: var(--color-background);
+                        background: var(--color-border);
                 }
 
-                /* When checkbox is checked -> show menu */
                 .nav-toggle:checked ~ .nav-list {
                         display: flex;
                 }
 
-                /* animate hamburger -> X */
                 .nav-toggle:checked + .menu-btn .hamburger {
                         background: transparent;
                 }
@@ -167,7 +169,6 @@ import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
                         top: 0;
                 }
 
-                /* optional: make links full width inside the menu */
                 .nav-list li {
                         width: 100%;
                 }
@@ -180,7 +181,6 @@ import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
                 }
         }
 
-        /* small focus-visible for keyboard */
         .menu-btn:focus {
                 outline: 2px solid rgba(0, 0, 0, 0.12);
                 border-radius: 6px;
