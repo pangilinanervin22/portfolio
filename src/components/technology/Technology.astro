@@ -171,40 +171,13 @@ const allSkills: Skill[] = [
                                 const section = document.querySelector("#tech");
                                 if (!section) return;
 
-                                // Title blur/fade in
-                                const title =
-                                        section.querySelector(".tech-title");
-                                if (title) {
-                                        gsap.fromTo(
-                                                title,
-                                                {
-                                                        filter: "blur(6px)",
-                                                        opacity: 0,
-                                                        y: 12,
-                                                },
-                                                {
-                                                        filter: "blur(0px)",
-                                                        opacity: 1,
-                                                        y: 0,
-                                                        duration: 0.9,
-                                                        ease: "power2.out",
-                                                        scrollTrigger: {
-                                                                trigger: title,
-                                                                start: "top 85%",
-                                                                end: "top 60%",
-                                                                scrub: true,
-                                                        },
-                                                }
-                                        );
-                                }
-
                                 // Badges batch entrance
                                 const badges =
                                         section.querySelectorAll(".badge");
                                 if (badges.length) {
                                         ScrollTrigger.batch(badges, {
                                                 start: "top 85%",
-                                                end: "top 60%",
+                                                end: "top 50%",
                                                 once: true,
                                                 onEnter: (batch) => {
                                                         gsap.fromTo(
@@ -307,7 +280,7 @@ const allSkills: Skill[] = [
                                         ScrollTrigger.create({
                                                 trigger: section,
                                                 start: "top 90%",
-                                                end: "bottom 70%",
+                                                end: "bottom 10%",
                                                 onEnter: startLoop,
                                                 onEnterBack: startLoop,
                                                 onLeave: stopLoop,
