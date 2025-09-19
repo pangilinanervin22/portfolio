@@ -8,25 +8,11 @@ import "@fontsource-variable/inter";
 
 import "../styles/global.css"; // Ensure global styles are imported
 import CustomCursor from "../components/react/CustomCursor";
-// Ensure BASE_URL always has a trailing slash when composing asset hrefs
-const baseUrl = import.meta.env.BASE_URL.endsWith("/")
-        ? import.meta.env.BASE_URL
-        : `${import.meta.env.BASE_URL}/`;
 ---
 
 <html lang="en">
         <head>
                 <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-                <link
-                        rel="icon"
-                        type="image/svg+xml"
-                        href={`${baseUrl}favicon.svg`}
-                />
-                <link
-                        rel="shortcut icon"
-                        type="image/svg+xml"
-                        href={`${baseUrl}favicon.svg`}
-                />
         </head>
         <body>
                 <CustomCursor client:load />

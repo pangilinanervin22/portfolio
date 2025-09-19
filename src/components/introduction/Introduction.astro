@@ -1,6 +1,5 @@
 ---
-import { Image } from "astro:assets";
-import introImage from "../../assets/sample.jpg";
+import introImage from "../../assets/me.jpg";
 import SkillCard from "./skill_card.astro";
 
 import gameIcon from "../../assets/skill/game.svg";
@@ -25,17 +24,19 @@ const description =
 
         <aside class="introduction-image-container" aria-label="Portrait">
                 <figure class="introduction-image">
-                        <Image
-                                src={introImage}
-                                alt="Portrait of Ervin Pangilinan"
-                                itemprop="image"
+                        <img
+                                src={introImage.src}
+                                alt="Ervin Pangilinan portrait"
+                                width={introImage.width}
+                                height={introImage.height}
                                 loading="lazy"
+                                itemprop="image"
                                 decoding="async"
-                                widths={[320, 480, 640, 768]}
                                 sizes="(max-width: 1024px) 60vw, 480px"
                         />
                         <figcaption class="visually-hidden">
-                                Portrait of Ervin Pangilinan used in the About Me section
+                                Portrait of Ervin Pangilinan used for
+                                introduction section
                         </figcaption>
                 </figure>
         </aside>
@@ -44,7 +45,10 @@ const description =
                 <p class="introduction-description" itemprop="description">
                         {description}
                 </p>
-                <section class="introduction-skills" aria-labelledby="skills-heading">
+                <section
+                        class="introduction-skills"
+                        aria-labelledby="skills-heading"
+                >
                         <h3 id="skills-heading">What I can do</h3>
                         <ul class="skills-list" role="list">
                                 <li itemprop="knowsAbout">
@@ -79,11 +83,6 @@ const description =
                 </section>
         </div>
 </section>
-
-<!-- SEO: JSON-LD structured data -->
-<script type="application/ld+json" is:inline>
-        {JSON.stringify(ldJson)}
-</script>
 
 <style>
         .introduction-main-container {
@@ -157,8 +156,10 @@ const description =
                                 width: 100%;
                                 height: auto;
                                 border-radius: 50px 0 50px 0;
-                                filter: grayscale(1) brightness(0.98) contrast(1.05);
-                                animation: introImagePulse 6s ease-in-out infinite;
+                                filter: grayscale(1) brightness(0.98)
+                                        contrast(1.05);
+                                animation: introImagePulse 6s ease-in-out
+                                        infinite;
                                 transition: all 0.3s ease-in-out;
                         }
 
@@ -262,12 +263,17 @@ const description =
 
 <script>
         const run = async () => {
-                if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+                if (
+                        window.matchMedia("(prefers-reduced-motion: reduce)")
+                                .matches
+                )
+                        return;
 
-                const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([
-                        import("gsap"),
-                        import("gsap/ScrollTrigger"),
-                ]);
+                const [{ default: gsap }, { ScrollTrigger }] =
+                        await Promise.all([
+                                import("gsap"),
+                                import("gsap/ScrollTrigger"),
+                        ]);
 
                 gsap.registerPlugin(ScrollTrigger);
 
@@ -304,7 +310,9 @@ const description =
 
         if (typeof window !== "undefined") {
                 if (document.readyState === "loading") {
-                        addEventListener("DOMContentLoaded", run, { once: true });
+                        addEventListener("DOMContentLoaded", run, {
+                                once: true,
+                        });
                 } else {
                         run();
                 }
