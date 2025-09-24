@@ -31,20 +31,17 @@ const description =
                                 height={introImage.height}
                                 loading="lazy"
                                 itemprop="image"
-                                decoding="async"
-                                sizes="(max-width: 1024px) 60vw, 480px"
                         />
                         <figcaption class="visually-hidden">
-                                Portrait of Ervin Pangilinan used for
-                                introduction section
+                                Ervin Pangilinan picture used for introduction section
                         </figcaption>
                 </figure>
         </aside>
 
         <div class="introduction-content">
-                <p class="introduction-description" itemprop="description">
+                <h3 class="introduction-description" itemprop="description">
                         {description}
-                </p>
+                </h3>
                 <section
                         class="introduction-skills"
                         aria-labelledby="skills-heading"
@@ -187,6 +184,7 @@ const description =
         .introduction-description {
                 font-size: 1.05rem;
                 line-height: 1.7;
+                font-weight: 400;
                 color: var(--color-text-secondary);
                 letter-spacing: 0.2px;
                 -webkit-hyphens: auto;
