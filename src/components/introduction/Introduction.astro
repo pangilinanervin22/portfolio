@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import introImage from "../../assets/me.jpg";
 import SkillCard from "./skill_card.astro";
 
@@ -7,8 +8,6 @@ import webIcon from "../../assets/skill/web.svg";
 import mobileIcon from "../../assets/skill/mobile.svg";
 import devOpsIcon from "../../assets/skill/devops.svg";
 
-const description =
-        "I started coding in 2021, turning a hobby into a daily practice. I build fast, accessible apps and have experience in both solo and team projects. During a backend internship, I worked on REST APIs, databases, secure logins, and automated releases. With a Computer science degree, I focus on clean, maintainable code backed by strong fundamentals and teamwork.";
 ---
 
 <section
@@ -23,24 +22,42 @@ const description =
         </h2>
 
         <aside class="introduction-image-container" aria-label="Portrait">
-                <figure class="introduction-image">
-                        <img
-                                src={introImage.src}
-                                alt="Ervin Pangilinan portrait"
-                                width={introImage.width}
-                                height={introImage.height}
-                                loading="lazy"
+                <figure class="introduction-image" itemscope itemtype="https://schema.org/ImageObject">
+                        <Image
+                                src={introImage}
+                                alt="Ervin Pangilinan - Full Stack Developer and Computer Science Graduate specializing in web applications, mobile development, and DevOps"
+                                width={480}
+                                height={480}
+                                loading="eager"
+                                decoding="async"
+                                fetchpriority="high"
+                                format="jpg"
+                                quality={90}
+                                densities={[1, 1.5, 2]}
+                                sizes="(max-width: 480px) 280px, (max-width: 768px) 360px, (max-width: 1024px) 480px, 480px"
+                                class="intro-portrait"
                                 itemprop="image"
+                                data-src={introImage.src}
+                                data-title="Ervin Pangilinan Professional Portrait"
+                                data-description="Professional headshot of Ervin Pangilinan, Full Stack Developer specializing in web development, mobile applications, and DevOps"
                         />
-                        <figcaption class="visually-hidden">
-                                Ervin Pangilinan picture used for introduction section
+                        <figcaption itemprop="caption">
+                                Ervin Pangilinan - Full Stack Developer and Computer Science graduate with expertise in web development, mobile applications, and DevOps practices
                         </figcaption>
+                        
+                        <!-- Hidden structured data for Google Images -->
+                        <meta itemprop="name" content="Ervin Pangilinan Professional Portrait" />
+                        <meta itemprop="description" content="Professional headshot of Ervin Pangilinan, Full Stack Developer and Computer Science graduate" />
+                        <meta itemprop="contentUrl" content={introImage.src} />
+                        <meta itemprop="thumbnailUrl" content={introImage.src} />
+                        <meta itemprop="author" content="Ervin Pangilinan" />
+                        <meta itemprop="copyrightHolder" content="Ervin Pangilinan" />
                 </figure>
         </aside>
 
         <div class="introduction-content">
                 <h3 class="introduction-description" itemprop="description">
-                        {description}
+                        {"I started coding in 2021, turning a hobby into a daily practice. I build fast, accessible apps and have experience in both solo and team projects. During a full-stack internship, I worked on different technologies, web architecture, databases, secure authentication, and automated releases. With a Computer science degree, I focus on clean, maintainable code backed by strong fundamentals and teamwork."}
                 </h3>
                 <section
                         class="introduction-skills"
@@ -149,7 +166,7 @@ const description =
                         border: 3px dashed var(--color-primary-20);
                         border-radius: 64px 0 64px 0;
 
-                        img {
+                        .intro-portrait {
                                 width: 100%;
                                 height: auto;
                                 border-radius: 50px 0 50px 0;
@@ -166,7 +183,7 @@ const description =
                                         0 0 0 1px var(--color-shadow),
                                         0 8px 24px var(--color-shadow-strong);
                                 border: 2px dashed var(--color-primary);
-                                img {
+                                .intro-portrait {
                                         filter: none;
                                 }
                         }
@@ -196,9 +213,9 @@ const description =
                                 float: left;
                                 font-size: 3.4rem;
                                 line-height: 0.9;
-                                font-weight: 600;
+                                font-weight: 700;
                                 margin: 4px 8px 0 0;
-                                font-family: "Playfair Display", serif;
+                                font-family: 'Inter Variable', sans-serif;
                                 color: var(--color-text-primary);
                         }
                 }
@@ -252,6 +269,31 @@ const description =
                 clip: rect(0 0 0 0);
                 white-space: nowrap;
                 border: 0;
+        }
+
+        /* Style for visible figcaption */
+        figcaption {
+                position: absolute;
+                bottom: -40px;
+                left: 0;
+                right: 0;
+                font-size: 0.85rem;
+                color: var(--color-text-secondary);
+                text-align: center;
+                padding: 8px;
+                background: var(--color-surface);
+                border-radius: 8px;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease-in-out;
+                box-shadow: 0 2px 8px var(--color-shadow);
+                border: 1px solid var(--color-primary-20);
+        }
+
+        .introduction-image:hover figcaption {
+                opacity: 1;
+                visibility: visible;
+                bottom: -35px;
         }
 
         * {

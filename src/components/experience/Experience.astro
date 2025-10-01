@@ -68,6 +68,8 @@ const experiences: ExperienceItem[] = [
         id="experience"
         class="experience-section"
         aria-labelledby="experience-title"
+        itemscope
+        itemtype="https://schema.org/Person"
 >
         <Border />
         <h2 id="experience-title" class="section-title">
@@ -84,30 +86,29 @@ const experiences: ExperienceItem[] = [
                                         <article
                                                 class="card"
                                                 aria-labelledby={`exp-${i}-role`}
+                                                itemscope
+                                                itemtype="https://schema.org/WorkExperience"
                                         >
                                                 <header class="card-head">
                                                         <h3
                                                                 id={`exp-${i}-role`}
                                                                 class="role"
+                                                                itemprop="jobTitle"
                                                         >
                                                                 {item.role}
                                                         </h3>
                                                         <p class="meta">
                                                                 <>
-                                                                        <span class="company">
-                                                                                {
-                                                                                        item.company
-                                                                                }
+                                                                        <span class="company" itemprop="worksFor" itemscope itemtype="https://schema.org/Organization">
+                                                                                <span itemprop="name">{item.company}</span>
                                                                         </span>
                                                                         <span class="period">
-                                                                                {
-                                                                                        item.period
-                                                                                }
+                                                                                <time itemprop="startDate">{item.period}</time>
                                                                         </span>
                                                                 </>
                                                         </p>
                                                 </header>
-                                                <p class="description">
+                                                <p class="description" itemprop="description">
                                                         {item.description}
                                                 </p>
                                                 {item.tech && (

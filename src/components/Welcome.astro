@@ -1,96 +1,231 @@
 ---
 import Border from "./_common/Border.astro";
+import GithubIcon from "../assets/icons/github.svg";
+import LinkedinIcon from "../assets/icons/linkedin.svg";
+import EmailIcon from "../assets/icons/email.svg";
 ---
 
-<section id="welcome" class="main-container" aria-labelledby="welcome-heading">
-        <Border aria-hidden="true" />
+<Border aria-hidden="true" />
+<section 
+        id="welcome" 
+        class="main-container" 
+        aria-labelledby="welcome-heading"
+        itemscope 
+        itemtype="https://schema.org/Person"
+>
         <div class="content-container">
                 <header class="content">
-                        <h1 id="welcome-heading">Ervin Pangilinan Portfolio</h1>
-                        <p class="tagline">
-                                Developer: Making tech feel simple, one
-                                complicated feature at a time.
+                        <h1 id="welcome-heading" itemprop="name">
+                                Ervin Pangilinan
+                        </h1>
+                        <p class="tagline" itemprop="description">
+                                Full Stack Developer
                         </p>
-                        <p class="actions">
+                        
+                        <!-- Minimalist Social Links -->
+                        <nav class="social-links" aria-label="Social media and contact links">
+                                <a
+                                        href="https://github.com/pangilinanervin22"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="social-link"
+                                        aria-label="GitHub"
+                                        itemprop="sameAs"
+                                >
+                                        <GithubIcon class="social-icon" aria-hidden="true" />
+                                </a>
+                                
+                                <a
+                                        href="https://www.linkedin.com/in/ervin-pangilinan"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="social-link"
+                                        aria-label="LinkedIn"
+                                        itemprop="sameAs"
+                                >
+                                        <LinkedinIcon class="social-icon" aria-hidden="true" />
+                                </a>
+                                
+                                <a
+                                        href="mailto:pangilinanervin22@gmail.com"
+                                        class="social-link"
+                                        aria-label="Email"
+                                        itemprop="email"
+                                >
+                                        <EmailIcon class="social-icon" aria-hidden="true" />
+                                </a>
+                        </nav>
+                        
+                        <div class="actions">
                                 <a
                                         class="btn"
-                                        href="Ervin_Pangilinan_CV_2025.pdf"
-                                        download
+                                        href="/portfolio/Ervin_Pangilinan_CV_2025.pdf"
+                                        download="Ervin_Pangilinan_CV_2025.pdf"
+                                        aria-label="Download CV"
+                                        itemprop="url"
                                 >
                                         Download CV
                                 </a>
-                        </p>
+                        </div>
                 </header>
         </div>
-        <Border aria-hidden="true" />
+        
+        <!-- Hidden structured data for better SEO -->
+        <script type="application/ld+json">
+        {
+                "@context": "https://schema.org",
+                "@type": "Person",
+                "name": "Ervin Pangilinan",
+                "jobTitle": "Full Stack Developer",
+                "description": "Full Stack Developer specializing in web applications, mobile development, and DevOps practices",
+                "url": "https://pangilinanervin22.github.io/portfolio/",
+                "email": "pangilinanervin22@gmail.com",
+                "sameAs": [
+                        "https://github.com/pangilinanervin22",
+                        "https://www.linkedin.com/in/ervin-pangilinan"
+                ],
+                "knowsAbout": ["Web Development", "Mobile Development", "DevOps", "Full Stack Development"],
+                "hasOccupation": {
+                        "@type": "Occupation",
+                        "name": "Full Stack Developer"
+                }
+        }
+        </script>
 </section>
+<Border aria-hidden="true" />
 
 <style>
         .main-container {
                 display: flex;
-                flex-direction: column;
                 align-items: center;
-                height: 92vh;
-                padding: 8px 16px 16px;
+                justify-content: center;
+                min-height: 80vh;
+                padding: 2rem;
         }
 
         .content-container {
-                height: 100%;
                 width: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background-repeat: no-repeat;
-                background-size: cover;
-                background-position: center;
-                padding: 1rem;
+                max-width: 600px;
+                margin: 0 auto;
         }
 
         .content {
                 text-align: center;
 
                 h1 {
-                        font-size: clamp(2.4rem, 4.5vw, 4.4rem);
-                        line-height: 1.1;
-                        margin-bottom: 0.75rem;
-                        letter-spacing: 0.05em;
+                        font-size: clamp(2.5rem, 5vw, 4rem);
+                        font-weight: 300;
+                        letter-spacing: -0.02em;
+                        margin: 0 0 1rem 0;
                         color: var(--color-text-primary);
-                        font-weight: 500;
-                        font-family: "Playfair Display", serif;
+                        line-height: 1.1;
                 }
 
-                p {
-                        font-size: clamp(1rem, 0.6vw + 0.9rem, 1.35rem);
-                        line-height: 1.5;
-                        margin-top: 0.5rem;
+                .tagline {
+                        font-size: clamp(1.1rem, 2vw, 1.3rem);
+                        font-weight: 400;
                         color: var(--color-text-secondary);
+                        margin: 0 0 3rem 0;
+                        line-height: 1.4;
+                }
+        }
+
+        /* Minimalist Social Links */
+        .social-links {
+                display: flex;
+                justify-content: center;
+                gap: 1.5rem;
+                margin: 0 0 3rem 0;
+        }
+
+        .social-link {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 56px;
+                height: 56px;
+                color: var(--color-text-secondary);
+                text-decoration: none;
+                transition: color 0.2s ease;
+                
+                &:hover {
+                        color: var(--color-text-primary);
+                }
+        }
+
+        .social-icon {
+                width: 32px;
+                height: 32px;
+        }
+
+        /* Clean Action Button */
+        .actions {
+                display: flex;
+                justify-content: center;
+        }
+
+        .btn {
+                display: inline-flex;
+                align-items: center;
+                padding: 0.8rem 2rem;
+                font-size: 1rem;
+                font-weight: 500;
+                color: var(--color-text-primary);
+                text-decoration: none;
+                border: 1px solid var(--color-text-primary);
+                background: transparent;
+                transition: all 0.2s ease;
+                
+                &:hover {
+                        background: var(--color-text-primary);
+                        color: var(--color-background);
+                }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+                .main-container {
+                        padding: 1.5rem;
+                        min-height: 90vh;
                 }
 
-                .actions {
-                        margin-top: 1.25rem;
+                .social-links {
+                        gap: 1.2rem;
+                        margin: 0 0 2.5rem 0;
+                }
+
+                .social-link {
+                        width: 52px;
+                        height: 52px;
+                }
+
+                .social-icon {
+                        width: 28px;
+                        height: 28px;
+                }
+        }
+
+        @media (max-width: 480px) {
+                .main-container {
+                        padding: 1rem;
+                }
+
+                .content h1 {
+                        margin-bottom: 0.8rem;
+                }
+
+                .tagline {
+                        margin-bottom: 2.5rem;
+                }
+
+                .social-links {
+                        gap: 1rem;
+                        margin-bottom: 2rem;
                 }
 
                 .btn {
-                        display: inline-block;
-                        padding: 1rem 1.75rem;
-                        font-size: clamp(0.95rem, 0.5vw + 0.85rem, 1.05rem);
-                        font-weight: 600;
-                        color: var(--color-text-inverse);
-                        background: var(--color-primary);
-                        border: none;
-                        text-decoration: none;
-                        transition:
-                                transform 0.15s ease,
-                                filter 0.15s ease;
-                }
-
-                .btn:hover {
-                        filter: brightness(1.05);
-                        transform: translateY(-1px);
-                }
-
-                .btn:active {
-                        transform: translateY(0);
+                        padding: 0.7rem 1.5rem;
+                        font-size: 0.95rem;
                 }
         }
 </style>

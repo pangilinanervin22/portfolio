@@ -40,19 +40,22 @@ const allSkills: Skill[] = [
 ];
 ---
 
-<section id="tech" class="tech-section" aria-labelledby="tech-title">
+<section id="tech" class="tech-section" aria-labelledby="tech-title" itemscope itemtype="https://schema.org/ItemList">
         <h2 id="tech-title" class="tech-title">My Skills</h2>
 
         <div class="grid" role="list">
                 <section class="group" role="listitem" aria-labelledby="g-all">
                         <ul class="badges" role="list">
                                 {
-                                        allSkills.map((s) => (
+                                        allSkills.map((s, index) => (
                                                 <li
                                                         class="badge"
-                                                        itemprop="knowsAbout"
+                                                        itemprop="itemListElement"
+                                                        itemscope
+                                                        itemtype="https://schema.org/Thing"
                                                         title={s.label}
                                                 >
+                                                        <meta itemprop="position" content={String(index + 1)} />
                                                         {s.icon && (
                                                                 <img
                                                                         class="icon"
@@ -62,13 +65,13 @@ const allSkills: Skill[] = [
                                                                                         .src ??
                                                                                         s.icon) as string
                                                                         }
-                                                                        alt={
-                                                                                s.label
-                                                                        }
+                                                                        alt={`${s.label} technology logo`}
                                                                         loading="lazy"
+                                                                        decoding="async"
+                                                                        itemprop="image"
                                                                 />
                                                         )}
-                                                        <span>{s.label}</span>
+                                                        <span itemprop="name">{s.label}</span>
                                                 </li>
                                         ))
                                 }

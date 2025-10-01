@@ -34,9 +34,13 @@ import LinkIcon from "../../assets/icons/link.svg";
                                                 height={p.image.height}
                                                 alt={
                                                         p.imageAlt ||
-                                                        `${p.title} screenshot`
+                                                        `${p.title} - Web application screenshot showcasing ${p.stack.join(', ')} technology stack`
                                                 }
                                                 loading="lazy"
+                                                decoding="async"
+                                                itemprop="image"
+                                                itemscope
+                                                itemtype="https://schema.org/ImageObject"
                                         />
                                         <figcaption class="visually-hidden">
                                                 {p.imageAlt || p.title}

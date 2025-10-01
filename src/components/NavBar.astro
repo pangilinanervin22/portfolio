@@ -3,7 +3,7 @@
 import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
 ---
 
-<nav class="navbar">
+<nav class="navbar" role="navigation" aria-label="Main navigation" itemscope itemtype="https://schema.org/SiteNavigationElement">
         <div class="navbar-title">
                 <span class="navbar-main-title">EP</span>
         </div>
@@ -27,12 +27,12 @@ import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
                 <span class="hamburger" aria-hidden="true"></span>
         </label>
 
-        <ul class="nav-list">
-                <li><a href="/portfolio/#home">Home</a></li>
-                <li><a href="/portfolio/#introduction">About</a></li>
-                <li><a href="/portfolio/#experience">Experience</a></li>
-                <li><a href="/portfolio/#projects">Projects</a></li>
-                <li><a href="/portfolio/#footer">Contact</a></li>
+        <ul class="nav-list" role="menubar">
+                <li role="none"><a href="/portfolio/#home" role="menuitem" itemprop="url">Home</a></li>
+                <li role="none"><a href="/portfolio/#introduction" role="menuitem" itemprop="url">About</a></li>
+                <li role="none"><a href="/portfolio/#experience" role="menuitem" itemprop="url">Experience</a></li>
+                <li role="none"><a href="/portfolio/#projects" role="menuitem" itemprop="url">Projects</a></li>
+                <li role="none"><a href="/portfolio/#footer" role="menuitem" itemprop="url">Contact</a></li>
                 <li class="theme-switch"><SwitchTheme client:load /></li>
         </ul>
 </nav>
@@ -55,9 +55,9 @@ import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
         .navbar-main-title {
                 color: var(--color-text-primary);
                 font-size: 1.5rem;
-                font-weight: 700;
+                font-weight: 800;
                 letter-spacing: 1px;
-                font-family: "Great Vibes", cursive;
+                font-family: 'Inter Variable', sans-serif;
         }
 
         /* hide the checkbox visually but keep it accessible */
