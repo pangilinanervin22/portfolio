@@ -31,7 +31,7 @@ const {
 <link rel="canonical" href={canonicalURL} />
 
 <!-- Image Preload for better discovery -->
-<link rel="preload" as="image" href={`${import.meta.env.BASE_URL}me.jpg`} />
+<link rel="preload" as="image" href={`/portfolio/me.jpg`} />
 
 <!-- Primary Meta Tags -->
 <title>{title}</title>
@@ -76,18 +76,18 @@ const {
                 image: {
                         "@type": "ImageObject",
                         url: new URL(
-                                `${import.meta.env.BASE_URL}me.jpg`,
+                                `/portfolio/me.jpg`,
                                 Astro.site
                         ).href,
                         caption: "Ervin Pangilinan - Full Stack Developer Professional Portrait",
                         width: 480,
                         height: 480,
                         contentUrl: new URL(
-                                `${import.meta.env.BASE_URL}me.jpg`,
+                                `/portfolio/me.jpg`,
                                 Astro.site
                         ).href,
                         thumbnailUrl: new URL(
-                                `${import.meta.env.BASE_URL}me.jpg`,
+                                `/portfolio/me.jpg`,
                                 Astro.site
                         ).href,
                 },
@@ -96,7 +96,7 @@ const {
                         "Computer Science graduate and Full Stack Developer specializing in web applications, mobile development, and DevOps practices",
                 url:
                         Astro.site?.href ||
-                        `https://pangilinanervin22.github.io${import.meta.env.BASE_URL}`,
+                        `https://pangilinanervin22.github.io/portfolio/`,
                 sameAs: [
                         "https://github.com/pangilinanervin22",
                         "https://www.linkedin.com/in/ervin-pangilinan-9b9410231",
