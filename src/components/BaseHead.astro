@@ -7,7 +7,11 @@ export interface Props {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image = "/portfolio/me.jpg" } = Astro.props;
+const {
+        title,
+        description,
+        image = `/portfolio/me.jpg`,
+} = Astro.props;
 ---
 
 <!-- Global Metadata -->
@@ -15,22 +19,29 @@ const { title, description, image = "/portfolio/me.jpg" } = Astro.props;
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="generator" content={Astro.generator} />
 
-<link rel="icon" type="image/svg+xml" href="/portfolio/favicon.svg" />
-<link rel="manifest" href="/portfolio/site.webmanifest" />
+<link
+        rel="icon"
+        type="image/svg+xml"
+        href={`/portfolio/favicon.svg`}
+        />
+<link rel="manifest" href={`/portfolio/site.webmanifest`} />
 <meta name="theme-color" content="#ffffff" />
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
 
 <!-- Image Preload for better discovery -->
-<link rel="preload" as="image" href="/portfolio/me.jpg" />
+<link rel="preload" as="image" href={`${import.meta.env.BASE_URL}me.jpg`} />
 
 <!-- Primary Meta Tags -->
 <title>{title}</title>
 <meta name="title" content={title} />
 <meta name="description" content={description} />
 <meta name="author" content="Ervin Pangilinan" />
-<meta name="keywords" content="Ervin Pangilinan, Full Stack Developer, Computer Science, Web Development, Mobile Development, DevOps, React, TypeScript, Node.js, Portfolio" />
+<meta
+        name="keywords"
+        content="Ervin Pangilinan, Full Stack Developer, Computer Science, Web Development, Mobile Development, DevOps, React, TypeScript, Node.js, Portfolio"
+/>
 <meta name="robots" content="index, follow" />
 <meta name="language" content="English" />
 <meta name="revisit-after" content="7 days" />
@@ -56,49 +67,62 @@ const { title, description, image = "/portfolio/me.jpg" } = Astro.props;
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
 
 <!-- JSON-LD Structured Data -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Ervin Pangilinan",
-  "image": {
-    "@type": "ImageObject",
-    "url": "https://pangilinanervin22.github.io/portfolio/me.jpg",
-    "caption": "Ervin Pangilinan - Full Stack Developer Professional Portrait",
-    "width": 480,
-    "height": 480,
-    "contentUrl": "https://pangilinanervin22.github.io/portfolio/me.jpg",
-    "thumbnailUrl": "https://pangilinanervin22.github.io/portfolio/me.jpg"
-  },
-  "jobTitle": "Full Stack Developer",
-  "description": "Computer Science graduate and Full Stack Developer specializing in web applications, mobile development, and DevOps practices",
-  "url": "https://pangilinanervin22.github.io/portfolio/",
-  "sameAs": [
-    "https://github.com/pangilinanervin22",
-    "https://www.linkedin.com/in/ervin-pangilinan"
-  ],
-  "knowsAbout": [
-    "Web Development",
-    "Mobile Development",
-    "DevOps",
-    "React",
-    "TypeScript",
-    "Node.js",
-    "Python",
-    "PostgreSQL",
-    "Docker"
-  ],
-  "alumniOf": {
-    "@type": "EducationalOrganization",
-    "name": "Cavite State University Bacoor"
-  },
-  "hasOccupation": {
-    "@type": "Occupation",
-    "name": "Full Stack Developer",
-    "occupationLocation": {
-      "@type": "Country",
-      "name": "Philippines"
-    }
-  }
-}
-</script>
+<script
+        type="application/ld+json"
+        set:html={JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Person",
+                name: "Ervin Pangilinan",
+                image: {
+                        "@type": "ImageObject",
+                        url: new URL(
+                                `${import.meta.env.BASE_URL}me.jpg`,
+                                Astro.site
+                        ).href,
+                        caption: "Ervin Pangilinan - Full Stack Developer Professional Portrait",
+                        width: 480,
+                        height: 480,
+                        contentUrl: new URL(
+                                `${import.meta.env.BASE_URL}me.jpg`,
+                                Astro.site
+                        ).href,
+                        thumbnailUrl: new URL(
+                                `${import.meta.env.BASE_URL}me.jpg`,
+                                Astro.site
+                        ).href,
+                },
+                jobTitle: "Full Stack Developer",
+                description:
+                        "Computer Science graduate and Full Stack Developer specializing in web applications, mobile development, and DevOps practices",
+                url:
+                        Astro.site?.href ||
+                        `https://pangilinanervin22.github.io${import.meta.env.BASE_URL}`,
+                sameAs: [
+                        "https://github.com/pangilinanervin22",
+                        "https://www.linkedin.com/in/ervin-pangilinan-9b9410231",
+                ],
+                knowsAbout: [
+                        "Web Development",
+                        "Mobile Development",
+                        "DevOps",
+                        "React",
+                        "TypeScript",
+                        "Node.js",
+                        "Python",
+                        "PostgreSQL",
+                        "Docker",
+                ],
+                alumniOf: {
+                        "@type": "EducationalOrganization",
+                        name: "Cavite State University Bacoor",
+                },
+                hasOccupation: {
+                        "@type": "Occupation",
+                        name: "Full Stack Developer",
+                        occupationLocation: {
+                                "@type": "Country",
+                                name: "Philippines",
+                        },
+                },
+        })}
+/>

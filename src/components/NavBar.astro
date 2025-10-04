@@ -28,11 +28,11 @@ import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
         </label>
 
         <ul class="nav-list" role="menubar">
-                <li role="none"><a href="/portfolio/#home" role="menuitem" itemprop="url">Home</a></li>
-                <li role="none"><a href="/portfolio/#introduction" role="menuitem" itemprop="url">About</a></li>
-                <li role="none"><a href="/portfolio/#experience" role="menuitem" itemprop="url">Experience</a></li>
-                <li role="none"><a href="/portfolio/#projects" role="menuitem" itemprop="url">Projects</a></li>
-                <li role="none"><a href="/portfolio/#footer" role="menuitem" itemprop="url">Contact</a></li>
+                <li role="none"><a href={`${import.meta.env.BASE_URL}#home`} role="menuitem" itemprop="url">Home</a></li>
+                <li role="none"><a href={`${import.meta.env.BASE_URL}#introduction`} role="menuitem" itemprop="url">About</a></li>
+                <li role="none"><a href={`${import.meta.env.BASE_URL}#experience`} role="menuitem" itemprop="url">Experience</a></li>
+                <li role="none"><a href={`${import.meta.env.BASE_URL}#projects`} role="menuitem" itemprop="url">Projects</a></li>
+                <li role="none"><a href={`${import.meta.env.BASE_URL}#footer`} role="menuitem" itemprop="url">Contact</a></li>
                 <li class="theme-switch"><SwitchTheme client:load /></li>
         </ul>
 </nav>

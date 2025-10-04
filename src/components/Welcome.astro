@@ -6,11 +6,11 @@ import EmailIcon from "../assets/icons/email.svg";
 ---
 
 <Border aria-hidden="true" />
-<section 
-        id="welcome" 
-        class="main-container" 
+<section
+        id="welcome"
+        class="main-container"
         aria-labelledby="welcome-heading"
-        itemscope 
+        itemscope
         itemtype="https://schema.org/Person"
 >
         <div class="content-container">
@@ -21,9 +21,12 @@ import EmailIcon from "../assets/icons/email.svg";
                         <p class="tagline" itemprop="description">
                                 Full Stack Developer
                         </p>
-                        
+
                         <!-- Minimalist Social Links -->
-                        <nav class="social-links" aria-label="Social media and contact links">
+                        <nav
+                                class="social-links"
+                                aria-label="Social media and contact links"
+                        >
                                 <a
                                         href="https://github.com/pangilinanervin22"
                                         target="_blank"
@@ -32,9 +35,12 @@ import EmailIcon from "../assets/icons/email.svg";
                                         aria-label="GitHub"
                                         itemprop="sameAs"
                                 >
-                                        <GithubIcon class="social-icon" aria-hidden="true" />
+                                        <GithubIcon
+                                                class="social-icon"
+                                                aria-hidden="true"
+                                        />
                                 </a>
-                                
+
                                 <a
                                         href="https://www.linkedin.com/in/ervin-pangilinan-9b9410231"
                                         target="_blank"
@@ -43,23 +49,29 @@ import EmailIcon from "../assets/icons/email.svg";
                                         aria-label="LinkedIn"
                                         itemprop="sameAs"
                                 >
-                                        <LinkedinIcon class="social-icon" aria-hidden="true" />
+                                        <LinkedinIcon
+                                                class="social-icon"
+                                                aria-hidden="true"
+                                        />
                                 </a>
-                                
+
                                 <a
                                         href="mailto:pangilinanervin22@gmail.com"
                                         class="social-link"
                                         aria-label="Email"
                                         itemprop="email"
                                 >
-                                        <EmailIcon class="social-icon" aria-hidden="true" />
+                                        <EmailIcon
+                                                class="social-icon"
+                                                aria-hidden="true"
+                                        />
                                 </a>
                         </nav>
-                        
+
                         <div class="actions">
                                 <a
                                         class="btn"
-                                        href="/portfolio/Ervin_Pangilinan_CV_2025.pdf"
+                                        href={`${import.meta.env.BASE_URL}Ervin_Pangilinan_CV_2025.pdf`}
                                         download="Ervin_Pangilinan_CV_2025.pdf"
                                         aria-label="Download CV"
                                         itemprop="url"
@@ -69,27 +81,33 @@ import EmailIcon from "../assets/icons/email.svg";
                         </div>
                 </header>
         </div>
-        
+
         <!-- Hidden structured data for better SEO -->
         <script type="application/ld+json">
-        {
-                "@context": "https://schema.org",
-                "@type": "Person",
-                "name": "Ervin Pangilinan",
-                "jobTitle": "Full Stack Developer",
-                "description": "Full Stack Developer specializing in web applications, mobile development, and DevOps practices",
-                "url": "https://pangilinanervin22.github.io/portfolio/",
-                "email": "pangilinanervin22@gmail.com",
-                "sameAs": [
-                        "https://github.com/pangilinanervin22",
-                        "https://www.linkedin.com/in/ervin-pangilinan"
-                ],
-                "knowsAbout": ["Web Development", "Mobile Development", "DevOps", "Full Stack Development"],
-                "hasOccupation": {
-                        "@type": "Occupation",
-                        "name": "Full Stack Developer"
+                {
+                        "@context": "https://schema.org",
+                        "@type": "Person",
+                        "name": "Ervin Pangilinan",
+                        "jobTitle": "Full Stack Developer",
+                        "description": "Full Stack Developer specializing in web applications, mobile development, and DevOps practices",
+                        "url": "https://pangilinanervin22.github.io/portfolio/",
+                        "email": "pangilinanervin22@gmail.com",
+                        "sameAs": [
+                                "https://github.com/pangilinanervin22",
+                                "https://www.linkedin.com/in/ervin-pangilinan-9b9410231"
+
+                        ],
+                        "knowsAbout": [
+                                "Web Development",
+                                "Mobile Development",
+                                "DevOps",
+                                "Full Stack Development"
+                        ],
+                        "hasOccupation": {
+                                "@type": "Occupation",
+                                "name": "Full Stack Developer"
+                        }
                 }
-        }
         </script>
 </section>
 <Border aria-hidden="true" />
@@ -147,7 +165,7 @@ import EmailIcon from "../assets/icons/email.svg";
                 color: var(--color-text-secondary);
                 text-decoration: none;
                 transition: color 0.2s ease;
-                
+
                 &:hover {
                         color: var(--color-text-primary);
                 }
@@ -175,7 +193,7 @@ import EmailIcon from "../assets/icons/email.svg";
                 border: 1px solid var(--color-text-primary);
                 background: transparent;
                 transition: all 0.2s ease;
-                
+
                 &:hover {
                         background: var(--color-text-primary);
                         color: var(--color-background);
