@@ -28,17 +28,6 @@ const id = `skill-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-
         <p class="skill-card-content" itemprop="description">{content}</p>
 </article>
 
-<!-- Optional SEO JSON-LD for richer snippets -->
-<script type="application/ld+json">
-        {JSON.stringify({
-                '@context': 'https://schema.org',
-                '@type': 'DefinedTerm',
-                name: title,
-                description: content,
-        })}
-        
-</script>
-
 <style scoped>
         .skill-card {
                 position: relative;
