@@ -2,7 +2,6 @@
         "name": "about-me",
         "type": "module",
         "version": "0.0.1",
-        "packageManager": "pnpm@10.24.0",
         "scripts": {
                 "dev": "astro dev --watch",
                 "build": "astro build",
