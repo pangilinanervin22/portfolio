@@ -41,7 +41,7 @@
  	outline: 0;
  	vertical-align: baseline;
  	box-sizing: border-box;
- 	font-family: 'Inter Variable', sans-serif;
+ 	font-family: 'Outfit Variable', 'Sora', system-ui, sans-serif;
  	color: var(--color-text-primary);
 
  }

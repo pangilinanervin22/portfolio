@@ -116,36 +116,38 @@ const allSkills: Skill[] = [
                 gap: 0.9rem;
                 width: 100%;
         }
-        .badge {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                gap: 0.5rem;
-                min-height: clamp(120px, 25vw, 150px);
-                width: clamp(100px, 25%, 140px);
-                text-align: center;
-                background: var(--color-surface-muted);
-                border: 12px dashed var(--color-border);
-                border-radius: 16px;
-                color: var(--color-text-muted);
-                line-height: 1.2;
-                font-weight: 600;
-                letter-spacing: 0.02em;
-                text-transform: none;
-                transition: all 0.2s ease;
-        }
+	.badge {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		min-height: clamp(120px, 25vw, 150px);
+		width: clamp(100px, 25%, 140px);
+		text-align: center;
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: 16px;
+		color: var(--color-text-muted);
+		line-height: 1.2;
+		font-weight: 600;
+		letter-spacing: 0.02em;
+		text-transform: none;
+		transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+		box-shadow: 0 1px 3px var(--color-shadow-soft);
+	}
         .badge span {
                 font-size: clamp(0.85rem, 3vw, 1rem);
         }
-        @media (hover: hover) {
-                .badge:hover {
-                        transform: translateY(-2px) rotate(33deg);
-                        background: var(--color-primary-20);
-                        border-color: var(--color-primary-40);
-                        color: var(--color-text-primary);
-                }
-        }
+	@media (hover: hover) {
+		.badge:hover {
+			transform: translateY(-4px);
+			background: var(--color-surface-alt);
+			border-color: var(--color-primary-40);
+			color: var(--color-text-primary);
+			box-shadow: 0 8px 25px -5px var(--color-shadow);
+		}
+	}
         .icon {
                 width: clamp(36px, 10vw, 56px);
                 height: clamp(36px, 10vw, 56px);

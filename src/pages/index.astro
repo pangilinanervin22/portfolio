@@ -10,32 +10,32 @@ import Projects from "../components/projects/Projects.astro";
 ---
 
 <Layout>
-        <main>
-                <img
-                        src={background.src}
-                        alt="Background Image"
-                        srcset=""
-                        class="background-image"
-                />
-                <Navbar />
-                <Welcome />
-                <Introduction />
-                <Experience />
-                <Techs />
-                <Projects />
-        </main>
+	<main>
+		<img
+			src={background.src}
+			alt="Background Image"
+			srcset=""
+			class="background-image"
+		/>
+		<Navbar />
+		<Welcome />
+		<Introduction />
+		<Experience />
+		<Techs />
+		<Projects />
+	</main>
 </Layout>
 
 <style>
-        main {
-                display: flex;
-                flex-direction: column;
-                justify-items: center;
-                align-items: center;
-                width: 100vw;
-        }
+	main {
+		display: flex;
+		flex-direction: column;
+		justify-items: center;
+		align-items: center;
+		width: 100vw;
+	}
 
-        .background-image {
+	.background-image {
                 position: fixed;
                 top: 0;
                 left: 0;
