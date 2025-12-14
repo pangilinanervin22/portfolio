@@ -12,6 +12,9 @@ export default defineConfig({
   base: "/portfolio",
   integrations: [mdx(), sitemap(), react()],
   output: "static",
+  experimental: {
+    svgo : true
+  }
 });
 
 
