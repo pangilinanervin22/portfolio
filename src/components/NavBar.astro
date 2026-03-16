@@ -28,7 +28,7 @@ import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
         </label>
 
         <ul class="nav-list" role="menubar">
-                <li role="none"><a href={`/portfolio#home`} role="menuitem" itemprop="url">Home</a></li>
+                <li role="none"><a href={`/portfolio#welcome`} role="menuitem" itemprop="url">Home</a></li>
                 <li role="none"><a href={`/portfolio#introduction`} role="menuitem" itemprop="url">About</a></li>
                 <li role="none"><a href={`/portfolio#experience`} role="menuitem" itemprop="url">Experience</a></li>
                 <li role="none"><a href={`/portfolio#projects`} role="menuitem" itemprop="url">Projects</a></li>
@@ -122,10 +122,11 @@ import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
                 color: var(--color-text-primary);
                 text-decoration: none;
                 font-weight: 500;
-                transition: all 0.25s;
+                transition: opacity 0.25s;
+                border-radius: 4px;
 
                 &:hover {
-                        background: var(--color-icon-inverse);
+                        opacity: 0.6;
                 }
         }
         .theme-switch {
@@ -181,8 +182,9 @@ import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
                 }
         }
 
-        .menu-btn:focus {
-                outline: 2px solid rgba(0, 0, 0, 0.12);
+        .menu-btn:focus-visible {
+                outline: 2px solid var(--color-focus-ring);
+                outline-offset: 2px;
                 border-radius: 6px;
         }
 </style>

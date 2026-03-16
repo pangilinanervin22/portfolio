@@ -74,6 +74,7 @@ const {
 
 <!-- JSON-LD Structured Data -->
 <script
+        is:inline
         type="application/ld+json"
         set:html={JSON.stringify({
                 "@context": "https://schema.org",
@@ -101,7 +102,6 @@ const {
                 description:
                         "Computer Science graduate and Full Stack Developer specializing in web applications, mobile development, and DevOps practices",
                 url:
-                        Astro.site?.href ||
                         Astro.site?.href || `https://pangilinanervin22.github.io/portfolio/`,
                 sameAs: [
                         "https://github.com/pangilinanervin22",

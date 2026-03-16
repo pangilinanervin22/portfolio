@@ -19,10 +19,30 @@ import CustomCursor from "../components/react/CustomCursor";
                 <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
         </head>
         <body>
-                <CustomCursor client:load />
-                <main>
+                <a href="#main-content" class="skip-link">Skip to main content</a>
+                <CustomCursor client:idle />
+                <main id="main-content">
                         <slot />
                 </main>
                 <Footer />
         </body>
 </html>
+
+<style>
+        .skip-link {
+                position: absolute;
+                top: -100%;
+                left: 1rem;
+                z-index: 10000;
+                padding: 0.5rem 1rem;
+                background: var(--color-text-primary);
+                color: var(--color-background);
+                font-weight: 600;
+                border-radius: 0 0 8px 8px;
+                text-decoration: none;
+                transition: top 0.1s;
+        }
+        .skip-link:focus-visible {
+                top: 0;
+        }
+</style>

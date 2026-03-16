@@ -23,8 +23,7 @@ const CustomCursor: React.FC = () => {
             mouse.current.y = e.clientY;
 
             if (dotRef.current) {
-                dotRef.current.style.left = `${e.clientX}px`;
-                dotRef.current.style.top = `${e.clientY}px`;
+                dotRef.current.style.transform = `translate3d(${e.clientX - 3}px, ${e.clientY - 3}px, 0)`;
             }
         };
 
@@ -39,8 +38,7 @@ const CustomCursor: React.FC = () => {
             cursorPos.current.y += dy * 0.1;
 
             if (cursorRef.current) {
-                cursorRef.current.style.left = `${cursorPos.current.x}px`;
-                cursorRef.current.style.top = `${cursorPos.current.y}px`;
+                cursorRef.current.style.transform = `translate3d(${cursorPos.current.x - 20}px, ${cursorPos.current.y - 20}px, 0)`;
             }
 
             if (glowRef.current) {
