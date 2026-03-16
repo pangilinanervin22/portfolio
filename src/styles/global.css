@@ -40,8 +40,16 @@
  	outline: 0;
  	vertical-align: baseline;
  	box-sizing: border-box;
- 	font-family: 'Outfit Variable', 'Sora', system-ui, sans-serif;
+ 	font-family: 'Sora', 'Outfit Variable', system-ui, sans-serif;
  	color: var(--color-text-primary);
+ }
+
+ h1, h2, h3 {
+ 	font-family: 'Outfit Variable', 'Sora', system-ui, sans-serif;
+ }
+
+ section[id] {
+ 	scroll-margin-top: 2rem;
  }
 
  /* Restore focus indicators for keyboard navigation */

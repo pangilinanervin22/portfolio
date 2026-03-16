@@ -42,9 +42,15 @@
     --color-text-faint: var(--gray-500);
     --color-text-inverse: var(--gray-1000);
 
+    /* Accent */
+    --color-accent: #6b8cff;
+    --color-accent-hover: #8aa4ff;
+    --color-accent-muted: #6b8cff30;
+    --color-accent-subtle: #6b8cff12;
+
     /* Links */
-    --color-link: var(--gray-0);
-    --color-link-hover: var(--gray-300);
+    --color-link: var(--color-accent);
+    --color-link-hover: var(--color-accent-hover);
     --color-link-active: var(--gray-0);
     --color-link-visited: var(--gray-200);
     --color-link-underline: var(--gray-500);
@@ -55,7 +61,7 @@
     --color-icon-inverse: var(--gray-1000);
 
     /* States */
-    --color-focus-ring: var(--gray-0);
+    --color-focus-ring: var(--color-accent);
     --color-outline: var(--gray-300);
     --color-selection-bg: var(--gray-0);
     --color-selection-text: var(--gray-1000);

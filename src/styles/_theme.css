@@ -42,9 +42,15 @@
     --color-text-faint: #808080;
     --color-text-inverse: #ffffff;
 
+    /* Accent */
+    --color-accent: #4a6cf7;
+    --color-accent-hover: #3b5de6;
+    --color-accent-muted: #4a6cf730;
+    --color-accent-subtle: #4a6cf712;
+
     /* Links */
-    --color-link: #000000;
-    --color-link-hover: #444444;
+    --color-link: var(--color-accent);
+    --color-link-hover: var(--color-accent-hover);
     --color-link-active: #000000;
     --color-link-visited: #222222;
     --color-link-underline: #808080;
@@ -55,7 +61,7 @@
     --color-icon-inverse: #ffffff;
 
     /* States */
-    --color-focus-ring: #000000;
+    --color-focus-ring: var(--color-accent);
     --color-outline: #111111;
     --color-selection-bg: #000000;
     --color-selection-text: #ffffff;
