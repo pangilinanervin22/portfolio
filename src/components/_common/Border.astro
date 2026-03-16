@@ -28,9 +28,15 @@ const {
                 hr {
                         width: 100%;
                         border: none;
-                        border-top: 2px dashed var(--color-primary-80);
+                        height: 1px;
                         margin: 0;
-                        background: transparent;
+                        background: linear-gradient(
+                                90deg,
+                                transparent 0%,
+                                var(--color-border) 20%,
+                                var(--color-border) 80%,
+                                transparent 100%
+                        );
                         opacity: var(--dot-opacity);
                 }
         }

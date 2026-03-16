@@ -37,7 +37,7 @@ const id = `skill-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-
                 height: 100%;
                 padding: 18px 20px;
                 background: var(--color-surface);
-                border: 2px dashed var(--color-border);
+                border: 1px solid var(--color-border);
                 transition:
                         border-color 0.25s,
                         transform 0.25s,
@@ -46,7 +46,7 @@ const id = `skill-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-
 
 	@media (hover: hover) {
 		.skill-card:hover {
-			border-color: var(--color-primary);
+			border-color: var(--color-accent-muted);
 			transform: translateY(-2px);
 			box-shadow: 0 4px 10px var(--color-shadow-soft);
 		}
@@ -89,8 +89,4 @@ const id = `skill-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-
                 margin: 0;
         }
 
-        /* Optimize for scroll animations */
-        .skill-card {
-                will-change: transform, opacity, filter;
-        }
 </style>
