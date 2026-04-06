@@ -1,263 +1,177 @@
 ---
-import { allSkills } from "../../data/technologies";
+import { skillGroups } from "../../data/technologies";
 ---
 
 <section id="tech" class="tech-section" aria-labelledby="tech-title" itemscope itemtype="https://schema.org/ItemList">
-        <h2 id="tech-title" class="tech-title">My Skills</h2>
+	<h2 id="tech-title" class="tech-title">My Skills</h2>
 
-        <div class="grid" role="list">
-                <section class="group" role="listitem" aria-labelledby="g-all">
-                        <ul class="badges" role="list">
-                                {
-                                        allSkills.map((s, index) => (
-                                                <li
-                                                        class="badge"
-                                                        itemprop="itemListElement"
-                                                        itemscope
-                                                        itemtype="https://schema.org/Thing"
-                                                        title={s.label}
-                                                >
-                                                        <meta itemprop="position" content={String(index + 1)} />
-                                                        {s.icon && (
-                                                                <img
-                                                                        class="icon"
-                                                                        src={
-                                                                                (s
-                                                                                        .icon
-                                                                                        .src ??
-                                                                                        s.icon) as string
-                                                                        }
-                                                                        alt={`${s.label} technology logo`}
-                                                                        loading="lazy"
-                                                                        decoding="async"
-                                                                        itemprop="image"
-                                                                />
-                                                        )}
-                                                        <span itemprop="name">{s.label}</span>
-                                                </li>
-                                        ))
-                                }
-                        </ul>
-                </section>
-        </div>
+	<div class="tech-list" role="list">
+		{
+			skillGroups.map((group, gi) => (
+				<div class="tech-group" role="listitem">
+					<span class="category-label">{group.category}</span>
+					<span class="skill-names">
+						{group.skills.map((skill, si) => (
+							<>
+								<span
+									class="skill-name"
+									itemprop="itemListElement"
+									itemscope
+									itemtype="https://schema.org/Thing"
+								>
+									<meta itemprop="position" content={String(gi * 10 + si + 1)} />
+									<span itemprop="name">{skill}</span>
+								</span>
+								{si < group.skills.length - 1 && (
+									<span class="separator" aria-hidden="true"> · </span>
+								)}
+							</>
+						))}
+					</span>
+				</div>
+			))
+		}
+	</div>
 </section>
 
-<style scoped>
-        .tech-section {
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 2rem;
-                padding: clamp(2rem, 5vw, 3rem) 1rem clamp(2.5rem, 6vw, 3.5rem);
-        }
-        .tech-title {
-                font-size: clamp(2rem, 5vw, 3rem);
-                margin: 0;
-                letter-spacing: 1px;
-                font-weight: 600;
-                text-align: center;
-        }
-
-        .grid {
-                width: min(1200px, 92%);
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-                gap: 1.25rem;
-        }
-        .group {
-                height: max-content;
-                display: flex;
-                flex-direction: column;
-                gap: 0.8rem;
-        }
-        .badges {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 0.9rem;
-                width: 100%;
-        }
-	.badge {
+<style>
+	.tech-section {
+		width: 100%;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content: center;
-		gap: 0.5rem;
-		min-height: clamp(120px, 25vw, 150px);
-		width: clamp(100px, 25%, 140px);
-		text-align: center;
-		background: var(--color-surface);
-		border: 1px solid var(--color-border);
-		border-radius: 16px;
-		color: var(--color-text-muted);
-		line-height: 1.2;
-		font-weight: 600;
-		letter-spacing: 0.02em;
-		text-transform: none;
-		transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-		box-shadow: 0 1px 3px var(--color-shadow-soft);
+		gap: 2rem;
+		padding: clamp(2rem, 5vw, 3rem) 1rem clamp(2.5rem, 6vw, 3.5rem);
 	}
-        .badge span {
-                font-size: clamp(0.85rem, 3vw, 1rem);
-        }
+
+	.tech-title {
+		font-size: clamp(2rem, 5vw, 3rem);
+		margin: 0;
+		letter-spacing: 1px;
+		font-weight: 600;
+		text-align: center;
+	}
+
+	.tech-list {
+		width: min(700px, 90%);
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+	}
+
+	.tech-group {
+		display: flex;
+		align-items: baseline;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+
+	.category-label {
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		font-weight: 500;
+		letter-spacing: 0.08em;
+		color: var(--color-text-primary);
+		min-width: 110px;
+		flex-shrink: 0;
+	}
+
+	.skill-names {
+		font-family: var(--font-mono);
+		font-size: 0.9rem;
+		font-weight: 400;
+		color: var(--color-text-muted);
+		line-height: 1.8;
+	}
+
+	.skill-name {
+		transition: color 0.2s ease;
+	}
+
 	@media (hover: hover) {
-		.badge:hover {
-			transform: translateY(-4px);
-			background: var(--color-surface-alt);
-			border-color: var(--color-primary-40);
+		.skill-name:hover {
 			color: var(--color-text-primary);
-			box-shadow: 0 8px 25px -5px var(--color-shadow);
 		}
 	}
-        .icon {
-                width: clamp(36px, 10vw, 56px);
-                height: clamp(36px, 10vw, 56px);
-                display: block;
-        }
+
+	.separator {
+		color: var(--color-text-faint);
+	}
+
+	@media (max-width: 480px) {
+		.tech-group {
+			flex-direction: column;
+			gap: 0.25rem;
+		}
+		.category-label {
+			min-width: auto;
+		}
+	}
 </style>
 
 <script>
-        import { gsap } from "gsap";
-        import { ScrollTrigger } from "gsap/ScrollTrigger";
+	import { gsap } from "gsap";
+	import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-        if (typeof window !== "undefined") {
-                const prefersReduced = window.matchMedia(
-                        "(prefers-reduced-motion: reduce)"
-                ).matches;
+	if (typeof window !== "undefined") {
+		const prefersReduced = window.matchMedia(
+			"(prefers-reduced-motion: reduce)"
+		).matches;
 
-                if (!prefersReduced) {
-                        gsap.registerPlugin(ScrollTrigger);
+		if (!prefersReduced) {
+			gsap.registerPlugin(ScrollTrigger);
 
-                        const init = () => {
-                                const section = document.querySelector("#tech");
-                                if (!section) return;
+			const init = () => {
+				const section = document.querySelector("#tech");
+				if (!section) return;
 
-                                // Badges batch entrance
-                                const badges =
-                                        section.querySelectorAll(".badge");
-                                if (badges.length) {
-                                        ScrollTrigger.batch(badges, {
-                                                start: "top 85%",
-                                                end: "top 50%",
-                                                once: true,
-                                                onEnter: (batch) => {
-                                                        gsap.fromTo(
-                                                                batch,
-                                                                {
-                                                                        filter: "blur(8px)",
-                                                                        opacity: 0,
-                                                                        y: 16,
-                                                                },
-                                                                {
-                                                                        filter: "blur(0px)",
-                                                                        opacity: 1,
-                                                                        y: 0,
-                                                                        duration: 0.85,
-                                                                        stagger: 0.08,
-                                                                        ease: "power2.out",
-                                                                }
-                                                        );
-                                                },
-                                        });
+				const title = section.querySelector(".tech-title");
+				if (title) {
+					gsap.fromTo(
+						title,
+						{ filter: "blur(6px)", opacity: 0, y: 16 },
+						{
+							filter: "blur(0px)",
+							opacity: 1,
+							y: 0,
+							duration: 0.6,
+							ease: "power2.out",
+							scrollTrigger: {
+								trigger: title,
+								start: "top 90%",
+								end: "top 60%",
+								scrub: true,
+							},
+						}
+					);
+				}
 
-                                        // Repeating random badge animation (pulse/spotlight)
-                                        let loopActive = false;
-                                        let lastIndex = -1;
-                                        const rnd = gsap.utils.random;
-                                        let startDelay = null as any;
+				const list = section.querySelector(".tech-list");
+				if (list) {
+					gsap.fromTo(
+						list,
+						{ filter: "blur(8px)", opacity: 0, y: 20 },
+						{
+							filter: "blur(0px)",
+							opacity: 1,
+							y: 0,
+							duration: 0.8,
+							ease: "power2.out",
+							scrollTrigger: {
+								trigger: list,
+								start: "top 90%",
+								end: "top 60%",
+								scrub: true,
+							},
+						}
+					);
+				}
+			};
 
-                                        const animateRandomBadge = () => {
-                                                if (
-                                                        !loopActive ||
-                                                        !badges.length
-                                                )
-                                                        return;
-                                                // pick a different index
-                                                let idx = Math.floor(
-                                                        rnd(
-                                                                0,
-                                                                badges.length -
-                                                                        0.0001
-                                                        )
-                                                );
-                                                if (
-                                                        badges.length > 1 &&
-                                                        idx === lastIndex
-                                                ) {
-                                                        idx =
-                                                                (idx + 1) %
-                                                                badges.length;
-                                                }
-                                                lastIndex = idx;
-                                                const el = badges[
-                                                        idx
-                                                ] as HTMLElement;
-
-                                                gsap.to(el, {
-                                                        scale: 1.06,
-                                                        y: -3,
-                                                        rotate: 3,
-                                                        backgroundColor:
-                                                                "var(--color-primary-20)",
-                                                        borderColor:
-                                                                "var(--color-primary-40)",
-                                                        boxShadow: "0 10px 22px -6px var(--color-shadow), 0 18px 36px -6px var(--color-shadow-strong)",
-                                                        duration: 0.85,
-                                                        yoyo: true,
-                                                        repeat: 1,
-                                                        ease: "power1.inOut",
-                                                        clearProps: "boxShadow,backgroundColor,borderColor,scale,y",
-                                                });
-
-                                                // schedule next run with slight randomness
-                                                gsap.delayedCall(
-                                                        rnd(2.0, 4.0),
-                                                        animateRandomBadge
-                                                );
-                                        };
-
-                                        const startLoop = () => {
-                                                if (loopActive || startDelay)
-                                                        return;
-                                                startDelay = gsap.delayedCall(
-                                                        1,
-                                                        () => {
-                                                                startDelay =
-                                                                        null;
-                                                                loopActive = true;
-                                                                animateRandomBadge();
-                                                        }
-                                                );
-                                        };
-                                        const stopLoop = () => {
-                                                loopActive = false;
-                                                if (startDelay) {
-                                                        startDelay.kill();
-                                                        startDelay = null;
-                                                }
-                                        };
-
-                                        // Run loop only while section is in view
-                                        ScrollTrigger.create({
-                                                trigger: section,
-                                                start: "top 90%",
-                                                end: "bottom 10%",
-                                                onEnter: startLoop,
-                                                onEnterBack: startLoop,
-                                                onLeave: stopLoop,
-                                                onLeaveBack: stopLoop,
-                                        });
-                                }
-                        };
-
-                        // Initialize after layout; refresh on full load
-                        requestAnimationFrame(() => {
-                                init();
-                                window.addEventListener("load", () =>
-                                        ScrollTrigger.refresh()
-                                );
-                        });
-                }
-        }
+			requestAnimationFrame(() => {
+				init();
+				window.addEventListener("load", () => ScrollTrigger.refresh());
+			});
+		}
+	}
 </script>
