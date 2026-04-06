@@ -1,6 +1,6 @@
 :root[data-theme='dark'] {
     /* Grayscale scale (keep same canonical values) */
-    --gray-0: #efefef;
+    --gray-0: #eeeeee;
     --gray-50: #f7f7f7;
     --gray-100: #f0f0f0;
     --gray-200: #e0e0e0;
@@ -16,13 +16,13 @@
     --gray-950: #0a0a0a;
     --gray-1000: #000000;
 
-    /* Base */
-    --color-background: var(--gray-950);
-    --color-background-alt: var(--gray-900);
-    --color-surface: var(--gray-850);
-    --color-surface-alt: var(--gray-800);
-    --color-surface-muted: var(--gray-750);
-    --color-border: var(--gray-700);
+    /* Base — warm dark tones */
+    --color-background: #111110;
+    --color-background-alt: #1a1a18;
+    --color-surface: #1c1c1a;
+    --color-surface-alt: #2a2a26;
+    --color-surface-muted: #333330;
+    --color-border: #2a2a28;
 
     /* Primary / semantic (inverted vs light theme) */
     --color-primary: var(--gray-0);
@@ -36,21 +36,21 @@
     --color-secondary-alt: var(--gray-750);
 
     /* Text */
-    --color-text-primary: var(--gray-0);
-    --color-text-secondary: var(--gray-300);
-    --color-text-muted: var(--gray-400);
-    --color-text-faint: var(--gray-500);
+    --color-text-primary: #eeeeee;
+    --color-text-secondary: #bbbbbb;
+    --color-text-muted: #777777;
+    --color-text-faint: #555555;
     --color-text-inverse: var(--gray-1000);
 
-    /* Accent */
-    --color-accent: #6b8cff;
-    --color-accent-hover: #8aa4ff;
-    --color-accent-muted: #6b8cff30;
-    --color-accent-subtle: #6b8cff12;
+    /* Accent — white is the accent in dark mode */
+    --color-accent: #ffffff;
+    --color-accent-hover: #dddddd;
+    --color-accent-muted: #ffffff30;
+    --color-accent-subtle: #ffffff12;
 
     /* Links */
-    --color-link: var(--color-accent);
-    --color-link-hover: var(--color-accent-hover);
+    --color-link: #eeeeee;
+    --color-link-hover: #dddddd;
     --color-link-active: var(--gray-0);
     --color-link-visited: var(--gray-200);
     --color-link-underline: var(--gray-500);
@@ -61,18 +61,18 @@
     --color-icon-inverse: var(--gray-1000);
 
     /* States */
-    --color-focus-ring: var(--color-accent);
+    --color-focus-ring: #ffffff;
     --color-outline: var(--gray-300);
     --color-selection-bg: var(--gray-0);
     --color-selection-text: var(--gray-1000);
 
-    /* Shadows / depth (stronger opacity for dark surfaces) */
-    --color-shadow-soft: rgba(0, 0, 0, 0.30);
-    --color-shadow: rgba(0, 0, 0, 0.45);
-    --color-shadow-strong: rgba(0, 0, 0, 0.60);
+    /* Shadows / depth */
+    --color-shadow-soft: rgba(0, 0, 0, 0.15);
+    --color-shadow: rgba(0, 0, 0, 0.25);
+    --color-shadow-strong: rgba(0, 0, 0, 0.35);
     --color-backdrop: rgba(0, 0, 0, 0.70);
 
     /* Gradients */
-    --gradient-soft: linear-gradient(180deg, var(--gray-850), var(--gray-950));
-    --gradient-inset: linear-gradient(180deg, var(--gray-800), var(--gray-900));
+    --gradient-soft: linear-gradient(180deg, #1c1c1a, #111110);
+    --gradient-inset: linear-gradient(180deg, #2a2a26, #1c1c1a);
 }
