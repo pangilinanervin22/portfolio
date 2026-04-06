@@ -26,7 +26,7 @@ Create a `.env` file at the root to override these for local development.
 
 ## Architecture
 
-This is an **Astro 5** static site (portfolio) with a React island integration for interactive components.
+This is an **Astro 6** static site (portfolio) with a React island integration for interactive components.
 
 ### Page Structure
 

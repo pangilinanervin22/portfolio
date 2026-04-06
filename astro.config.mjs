@@ -10,10 +10,7 @@ export default defineConfig({
   site: env.DEFAULT_PATH || "https://pangilinanervin22.github.io/",
   base: env.DEFAULT_BASE || "/portfolio",
   integrations: [sitemap(), react()],
-  output: "static",
-  experimental: {
-    svgo: true
-  }
+  output: "static"
 });
 
 
