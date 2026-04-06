@@ -164,27 +164,20 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                         height: fit-content;
                         background: var(--color-surface);
                         border: 1px solid var(--color-border);
-                        border-radius: 24px;
+                        border-radius: 12px;
 
                         .intro-portrait {
                                 width: 100%;
                                 height: auto;
                                 border-radius: 20px;
-                                filter: grayscale(1) brightness(0.98)
-                                        contrast(1.05);
-                                animation: introImagePulse 6s ease-in-out
-                                        infinite;
                                 transition: all 0.3s ease-in-out;
                         }
 
                         &:hover {
                                 scale: 1.01;
-                                box-shadow:
-                                        0 0 0 1px var(--color-shadow),
-                                        0 8px 24px var(--color-shadow-strong);
-                                border-color: var(--color-accent-muted);
+                                box-shadow: 0 4px 12px var(--color-shadow);
                                 .intro-portrait {
-                                        filter: none;
+                                        transform: scale(1.01);
                                 }
                         }
                 }
