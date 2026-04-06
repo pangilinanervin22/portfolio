@@ -154,11 +154,13 @@ import EmailIcon from "../assets/icons/email.svg";
 		}
 
 		.tagline {
-			font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+			font-family: var(--font-mono);
+			font-size: clamp(1rem, 2.2vw, 1.2rem);
 			font-weight: 400;
-			color: var(--color-text-secondary);
+			color: var(--color-text-muted);
 			margin: 0 0 3rem 0;
 			line-height: 1.4;
+			letter-spacing: 0.02em;
 			opacity: 0;
 			animation: fadeSlideUp 0.7s ease forwards;
 			animation-delay: 0.35s;
@@ -182,14 +184,13 @@ import EmailIcon from "../assets/icons/email.svg";
 		justify-content: center;
 		width: 44px;
 		height: 44px;
-		color: var(--color-text-secondary);
+		color: var(--color-text-muted);
 		text-decoration: none;
 		border-radius: 50%;
 		transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 
 		&:hover {
 			color: var(--color-text-primary);
-			background: var(--color-surface-alt);
 			transform: translateY(-2px);
 		}
 	}
@@ -212,17 +213,21 @@ import EmailIcon from "../assets/icons/email.svg";
 		display: inline-flex;
 		align-items: center;
 		padding: 0.8rem 2rem;
-		font-size: 1rem;
+		font-family: var(--font-mono);
+		font-size: 0.9rem;
 		font-weight: 500;
-		color: var(--color-accent);
+		color: var(--color-text-inverse);
 		text-decoration: none;
 		border: 1px solid var(--color-accent);
-		background: transparent;
-		transition: all 0.2s ease;
+		border-radius: 8px;
+		background: var(--color-accent);
+		transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 
 		&:hover {
-			background: var(--color-accent);
-			color: #ffffff;
+			background: var(--color-accent-hover);
+			border-color: var(--color-accent-hover);
+			transform: translateY(-1px);
+			box-shadow: 0 4px 12px var(--color-shadow);
 		}
 	}
 
