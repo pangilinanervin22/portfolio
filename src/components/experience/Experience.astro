@@ -99,73 +99,63 @@ import { experiences } from "../../data/experiences";
         }
 
         .timeline {
-                --line-width: 3px;
-                width: min(1200px, 80%);
+                --line-width: 1px;
+                width: min(800px, 80%);
                 list-style: none;
                 position: relative;
                 display: flex;
                 flex-direction: column;
-                gap: 32px;
+                gap: 2rem;
+                padding-left: 2rem;
         }
 
-        /* Central vertical line (desktop) */
+        /* Left vertical line */
         .timeline::before {
                 content: "";
                 position: absolute;
                 top: 0;
                 bottom: 0;
-                left: 50%;
+                left: 0.5rem;
                 width: var(--line-width);
-                transform: translateX(-50%);
-                background: linear-gradient(
-                        to bottom,
-                        var(--color-primary-20) 0%,
-                        var(--color-primary-40) 40%,
-                        var(--color-primary-20) 100%
-                );
+                background: var(--color-border);
         }
 
         .timeline-item {
                 position: relative;
         }
 
-	.timeline-item .marker {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		width: 16px;
-		height: 16px;
-		border-radius: 50%;
-		background: var(--color-accent);
-		box-shadow: 0 4px 10px -2px var(--color-shadow-strong);
-	}
+        .timeline-item .marker {
+                position: absolute;
+                top: 1.6rem;
+                left: -1.5rem;
+                transform: translateX(-50%);
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: var(--color-text-primary);
+                border: 2px solid var(--color-background);
+                box-shadow: 0 0 0 1px var(--color-border);
+        }
 
         .timeline-item .card {
                 background: var(--color-surface);
                 border: 1px solid var(--color-border);
-                border-radius: 16px;
-                padding: 2rem;
+                border-radius: 12px;
+                padding: 1.5rem;
                 display: flex;
                 flex-direction: column;
-                gap: 1.25rem;
+                gap: 1rem;
                 width: 100%;
-                box-shadow:
-                        0 2px 8px -2px var(--color-shadow-soft),
-                        0 4px 12px -3px var(--color-shadow);
+                box-shadow: 0 1px 3px var(--color-shadow-soft);
                 transition:
-                        transform 0.22s ease,
-                        box-shadow 0.22s ease,
-                        border-color 0.22s ease;
+                        transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                        box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-	.timeline-item .card:hover {
-		transform: translateY(-8px);
-		border-color: var(--color-accent-muted);
-		box-shadow:
-			0 12px 28px -4px var(--color-shadow),
-			0 20px 40px -6px var(--color-shadow-strong);
-	}
+        .timeline-item .card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px var(--color-shadow);
+        }
 
         .card-head {
                 display: flex;
@@ -189,10 +179,11 @@ import { experiences } from "../../data/experiences";
                 display: flex;
                 flex-wrap: wrap;
                 gap: 0.65rem;
-                font-size: 0.85rem;
+                font-family: var(--font-mono);
+                font-size: 0.8rem;
                 text-transform: capitalize;
-                letter-spacing: 0.05em;
-                font-weight: 500;
+                letter-spacing: 0.02em;
+                font-weight: 400;
                 color: var(--color-text-muted);
                 margin: 0;
         }
@@ -237,69 +228,36 @@ import { experiences } from "../../data/experiences";
                 list-style: none;
         }
         .tech div {
-                font-size: 0.75rem;
-                letter-spacing: 0.08em;
-                font-weight: 700;
-                padding: 0.5rem 0.85rem;
-                border-radius: 12px;
-                background: var(--badge-bg);
-                border: 1px solid var(--color-border);
+                font-family: var(--font-mono);
+                font-size: 0.72rem;
+                letter-spacing: 0.02em;
+                font-weight: 400;
+                padding: 0.35rem 0.65rem;
+                border-radius: 4px;
+                background: var(--color-surface-alt);
                 color: var(--color-text-muted);
-                transition: all 0.2s ease;
+                transition: color 0.2s ease;
         }
         .tech div:hover {
-                border-color: var(--color-primary-40);
                 color: var(--color-text-primary);
         }
 
         @media (min-width: 850px) {
                 .timeline {
-                        --center-gap: 4rem;
-                        gap: 3.5rem;
-                        padding-inline: 0.5rem;
-                }
-                .timeline-item {
-                        display: grid;
-                        grid-template-columns: 1fr var(--line-width) 1fr;
-                        align-items: center;
-                        min-height: 26px;
-                }
-                .timeline-item[data-index]:nth-of-type(odd) .card {
-                        grid-column: 1/2;
-                        justify-self: end;
-                        max-width: calc(100% - var(--center-gap));
-                        margin-right: var(--center-gap);
-                }
-                .timeline-item[data-index]:nth-of-type(even) .card {
-                        grid-column: 3/4;
-                        justify-self: start;
-                        max-width: calc(100% - var(--center-gap));
-                        margin-left: var(--center-gap);
+                        width: min(800px, 80%);
+                        gap: 2.5rem;
                 }
         }
 
         @media (max-width: 850px) {
+                .timeline {
+                        padding-left: 1.5rem;
+                }
                 .timeline::before {
-                        left: 0.4rem;
-                        width: 3px;
-                        transform: none;
-                        background: linear-gradient(
-                                to bottom,
-                                var(--color-primary-40) 0%,
-                                var(--color-primary-20) 100%
-                        );
-                        opacity: 0.4;
+                        left: 0.35rem;
                 }
                 .timeline-item .marker {
-                        left: 0.5rem;
-                        width: 18px;
-                        height: 18px;
-                        top: 1.4rem;
-                        transform: translate(-50%, 0);
-                        box-shadow: 0 3px 8px -2px var(--color-shadow);
-                }
-                .timeline-item .card {
-                        margin-left: 2.2rem;
+                        left: -1.15rem;
                 }
         }
 
@@ -382,37 +340,6 @@ import { experiences } from "../../data/experiences";
                                                         },
                                                 }
                                         );
-
-                                        // Tech badges subtle stagger-in
-                                        const badges =
-                                                card.querySelectorAll(
-                                                        ".tech div"
-                                                );
-                                        if (badges.length) {
-                                                ScrollTrigger.batch(badges, {
-                                                        start: "top 90%",
-                                                        end: "top 30%",
-                                                        once: true,
-                                                        onEnter: (batch) => {
-                                                                gsap.fromTo(
-                                                                        batch,
-                                                                        {
-                                                                                filter: "blur(6px)",
-                                                                                opacity: 0,
-                                                                                y: 8,
-                                                                        },
-                                                                        {
-                                                                                filter: "blur(0px)",
-                                                                                opacity: 1,
-                                                                                y: 0,
-                                                                                duration: 0.4,
-                                                                                stagger: 0.06,
-                                                                                ease: "power2.out",
-                                                                        }
-                                                                );
-                                                        },
-                                                });
-                                        }
                                 });
 
                                 // Markers quick pop-in for a touch of life
