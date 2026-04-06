@@ -1,11 +1,11 @@
 :root {
     /* Base */
-    --color-background: #ffffff;
-    --color-background-alt: #f5f5f5;
-    --color-surface: #fafafa;
-    --color-surface-alt: #f0f0f0;
-    --color-surface-muted: #e9e9e9;
-    --color-border: #e0e0e0;
+    --color-background: #faf8f6;
+    --color-background-alt: #f5f3f0;
+    --color-surface: #ffffff;
+    --color-surface-alt: #f5f3f0;
+    --color-surface-muted: #eeece9;
+    --color-border: #eeeeee;
 
     /* Grayscale scale (monochrome depth) */
     --gray-0: #ffffff;
@@ -37,42 +37,45 @@
 
     /* Text */
     --color-text-primary: #111111;
-    --color-text-secondary: #3d3d3d;
-    --color-text-muted: #666666;
-    --color-text-faint: #808080;
+    --color-text-secondary: #555555;
+    --color-text-muted: #999999;
+    --color-text-faint: #bbbbbb;
     --color-text-inverse: #ffffff;
 
-    /* Accent */
-    --color-accent: #4a6cf7;
-    --color-accent-hover: #3b5de6;
-    --color-accent-muted: #4a6cf730;
-    --color-accent-subtle: #4a6cf712;
+    /* Accent — black is the accent in monochrome */
+    --color-accent: #111111;
+    --color-accent-hover: #333333;
+    --color-accent-muted: #11111130;
+    --color-accent-subtle: #11111112;
 
     /* Links */
-    --color-link: var(--color-accent);
+    --color-link: var(--color-text-primary);
     --color-link-hover: var(--color-accent-hover);
     --color-link-active: #000000;
     --color-link-visited: #222222;
-    --color-link-underline: #808080;
+    --color-link-underline: #999999;
 
     /* Icons */
     --color-icon: #333333;
-    --color-icon-muted: #666666;
+    --color-icon-muted: #999999;
     --color-icon-inverse: #ffffff;
 
     /* States */
-    --color-focus-ring: var(--color-accent);
+    --color-focus-ring: #111111;
     --color-outline: #111111;
     --color-selection-bg: #000000;
     --color-selection-text: #ffffff;
 
-    /* Shadows / depth */
-    --color-shadow-soft: rgba(0, 0, 0, 0.06);
-    --color-shadow: rgba(0, 0, 0, 0.12);
-    --color-shadow-strong: rgba(0, 0, 0, 0.24);
+    /* Shadows / depth — subtler */
+    --color-shadow-soft: rgba(0, 0, 0, 0.04);
+    --color-shadow: rgba(0, 0, 0, 0.08);
+    --color-shadow-strong: rgba(0, 0, 0, 0.12);
     --color-backdrop: rgba(0, 0, 0, 0.55);
 
     /* Gradients (still monochrome) */
-    --gradient-soft: linear-gradient(180deg, #ffffff, #f0f0f0);
+    --gradient-soft: linear-gradient(180deg, #ffffff, #f5f3f0);
     --gradient-inset: linear-gradient(180deg, #2b2b2b, #111111);
+
+    /* Font families */
+    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
 }
