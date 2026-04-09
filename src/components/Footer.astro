@@ -1,4 +1,5 @@
 ---
+import Border from "./_common/Border.astro";
 // Footer component (enhanced details) this will be static date
 const year = new Date().getFullYear();
 const buildDate = new Date().toLocaleDateString("en-US", {
@@ -9,6 +10,7 @@ const buildDate = new Date().toLocaleDateString("en-US", {
 ---
 
 <footer id="footer" class="footer-container" aria-labelledby="footer-heading">
+        <Border />
         <h2 id="footer-heading" class="visually-hidden">Site footer</h2>
         <div class="footer-inner">
                 <div class="cluster primary">

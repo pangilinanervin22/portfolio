@@ -4,381 +4,444 @@ import { experiences } from "../../data/experiences";
 ---
 
 <section
-        id="experience"
-        class="experience-section"
-        aria-labelledby="experience-title"
-        itemscope
-        itemtype="https://schema.org/Person"
+	id="experience"
+	class="experience-section"
+	aria-labelledby="experience-title"
+	itemscope
+	itemtype="https://schema.org/Person"
 >
-        <Border />
-        <h2 id="experience-title" class="section-title">
-                My Developer Timeline
-        </h2>
-        <div class="timeline" role="list">
-                {
-                        experiences.map((item, i) => (
-                                <div class="timeline-item" data-index={i}>
-                                        <div
-                                                class="marker"
-                                                aria-hidden="true"
-                                        />
-                                        <article
-                                                class="card"
-                                                aria-labelledby={`exp-${i}-role`}
-                                                itemscope
-                                                itemtype="https://schema.org/WorkExperience"
-                                        >
-                                                <header class="card-head">
-                                                        <h3
-                                                                id={`exp-${i}-role`}
-                                                                class="role"
-                                                                itemprop="jobTitle"
-                                                        >
-                                                                {item.role}
-                                                        </h3>
-                                                        <p class="meta">
-                                                                <>
-                                                                        <span class="company" itemprop="worksFor" itemscope itemtype="https://schema.org/Organization">
-                                                                                <span itemprop="name">{item.company}</span>
-                                                                        </span>
-                                                                        <span class="period">
-                                                                                <time itemprop="startDate">{item.period}</time>
-                                                                        </span>
-                                                                        <span class="location">
-                                                                                {item.location}
-                                                                        </span>
-                                                                </>
-                                                        </p>
-                                                </header>
-                                                <p class="description" itemprop="description">
-                                                        {item.description}
-                                                </p>
-                                                {item.tech && (
-                                                        <div
-                                                                class="tech"
-                                                                aria-label="Technologies used"
-                                                        >
-                                                                {item.tech.map(
-                                                                        (
-                                                                                cur
-                                                                        ) => (
-                                                                                <div>
-                                                                                        {
-                                                                                                cur
-                                                                                        }
-                                                                                </div>
-                                                                        )
-                                                                )}
-                                                        </div>
-                                                )}
-                                        </article>
-                                </div>
-                        ))
-                }
-        </div>
+	<Border />
+	<h2 id="experience-title" class="section-title">
+		My Developer Timeline
+	</h2>
+	<div class="timeline" role="list">
+		{
+			experiences.map((item, i) => {
+				const isCurrent = item.period.includes("Present");
+				return (
+					<div
+						class={`timeline-item ${isCurrent ? "timeline-item--current" : ""}`}
+						data-index={i}
+					>
+						<div class="marker" aria-hidden="true" />
+						<article
+							class="card"
+							aria-labelledby={`exp-${i}-role`}
+							itemscope
+							itemtype="https://schema.org/WorkExperience"
+						>
+							<div class="card-period">
+								<time itemprop="startDate">{item.period}</time>
+								{isCurrent && (
+									<span class="current-badge">Now</span>
+								)}
+							</div>
+							<header class="card-head">
+								<h3
+									id={`exp-${i}-role`}
+									class="role"
+									itemprop="jobTitle"
+								>
+									{item.role}
+								</h3>
+								<p class="meta">
+									<span
+										class="company"
+										itemprop="worksFor"
+										itemscope
+										itemtype="https://schema.org/Organization"
+									>
+										<span itemprop="name">
+											{item.company}
+										</span>
+									</span>
+									<span class="location">
+										{item.location}
+									</span>
+								</p>
+							</header>
+							<p
+								class="description"
+								itemprop="description"
+							>
+								{item.description}
+							</p>
+							{item.tech && (
+								<div
+									class="tech"
+									aria-label="Technologies used"
+								>
+									{item.tech.map((cur) => (
+										<span>{cur}</span>
+									))}
+								</div>
+							)}
+						</article>
+					</div>
+				);
+			})
+		}
+	</div>
 </section>
 
 <style>
-        .experience-section {
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                padding: 3rem 1rem 4rem;
-                gap: 32px;
-                margin-top: 10vh;
-        }
+	.experience-section {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 3rem 1rem 4rem;
+		gap: 32px;
+		margin-top: 10vh;
+	}
 
-        .section-title {
-                font-size: clamp(2.4rem, 4.5vw, 3.4rem);
-                letter-spacing: 1px;
-                font-weight: 600;
-                text-align: center;
-                width: 100%;
-                margin-block: 32px;
-        }
+	.section-title {
+		font-size: clamp(2.4rem, 4.5vw, 3.4rem);
+		letter-spacing: 1px;
+		font-weight: 600;
+		text-align: center;
+		width: 100%;
+		margin-block: 32px;
+	}
 
-        .timeline {
-                --line-width: 2px;
-                width: min(800px, 80%);
-                list-style: none;
-                position: relative;
-                display: flex;
-                flex-direction: column;
-                gap: 2rem;
-                padding-left: 2rem;
-        }
+	.timeline {
+		--line-width: 2px;
+		width: min(800px, 80%);
+		list-style: none;
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+		padding-left: 2rem;
+	}
 
-        /* Left vertical line */
-        .timeline::before {
-                content: "";
-                position: absolute;
-                top: 0;
-                bottom: 0;
-                left: 0.5rem;
-                width: var(--line-width);
-                background: var(--color-border);
-        }
+	/* Left vertical line with gradient fade */
+	.timeline::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0.5rem;
+		width: var(--line-width);
+		background: linear-gradient(
+			to bottom,
+			transparent 0%,
+			var(--color-border) 4%,
+			var(--color-border) 96%,
+			transparent 100%
+		);
+	}
 
-        .timeline-item {
-                position: relative;
-        }
+	.timeline-item {
+		position: relative;
+	}
 
-        .timeline-item .marker {
-                position: absolute;
-                top: 1.6rem;
-                left: -1.5rem;
-                transform: translateX(-50%);
-                width: 7px;
-                height: 7px;
-                border-radius: 50%;
-                background: var(--color-text-primary);
-                border: 2px solid var(--color-background);
-                box-shadow: 0 0 0 1px var(--color-border);
-        }
+	/* Hollow ring markers for past roles */
+	.timeline-item .marker {
+		position: absolute;
+		top: 1.4rem;
+		left: -1.5rem;
+		transform: translateX(-50%);
+		width: 9px;
+		height: 9px;
+		border-radius: 50%;
+		background: var(--color-background);
+		border: 2px solid var(--color-text-muted);
+		z-index: 1;
+		transition: border-color 0.3s ease;
+	}
 
-        .timeline-item .card {
-                background: var(--color-surface);
-                border: 1px solid var(--color-border);
-                border-radius: 12px;
-                padding: 1.5rem;
-                display: flex;
-                flex-direction: column;
-                gap: 1rem;
-                width: 100%;
-                box-shadow: 0 1px 3px var(--color-shadow-soft);
-                transition:
-                        transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-                        box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+	/* Filled marker for current role */
+	.timeline-item--current .marker {
+		background: var(--color-text-primary);
+		border-color: var(--color-text-primary);
+	}
 
-        .timeline-item .card:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 4px 12px var(--color-shadow);
-        }
+	/* Pulse ring animation for current marker */
+	.timeline-item--current .marker::after {
+		content: "";
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 100%;
+		height: 100%;
+		border-radius: 50%;
+		border: 1.5px solid var(--color-text-primary);
+		transform: translate(-50%, -50%) scale(1);
+		opacity: 0;
+		animation: marker-pulse 2.5s ease-out infinite;
+	}
 
-        .card-head {
-                display: flex;
-                flex-direction: column;
-                gap: 0.5rem;
-                border-bottom: 1px solid var(--color-border);
-                padding-bottom: 1rem;
-                margin-bottom: 0.5rem;
-        }
+	@keyframes marker-pulse {
+		0% {
+			transform: translate(-50%, -50%) scale(1);
+			opacity: 0.7;
+		}
+		100% {
+			transform: translate(-50%, -50%) scale(3.5);
+			opacity: 0;
+		}
+	}
 
-        .role {
-                font-size: clamp(1.25rem, 1vw + 1.05rem, 1.55rem);
-                line-height: 1.3;
-                font-weight: 700;
-                color: var(--color-text-primary);
-                margin: 0;
-                letter-spacing: -0.3px;
-        }
+	.timeline-item .card {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: 12px;
+		padding: 1.5rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.85rem;
+		width: 100%;
+		box-shadow: 0 1px 3px var(--color-shadow-soft);
+		transition:
+			transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+			box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+	}
 
-        .meta {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 0.65rem;
-                font-family: var(--font-mono);
-                font-size: 0.8rem;
-                text-transform: capitalize;
-                letter-spacing: 0.02em;
-                font-weight: 400;
-                color: var(--color-text-muted);
-                margin: 0;
-        }
+	.timeline-item .card:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 4px 12px var(--color-shadow);
+	}
 
-        .meta .company {
-                position: relative;
-        }
-        .meta .company::after {
-                content: "•";
-                margin-left: 0.6rem;
-                opacity: 0.55;
-        }
-        .meta .company:last-child::after {
-                content: none;
-        }
-        
-        .meta .period::after {
-                content: "•";
-                margin-left: 0.6rem;
-                opacity: 0.55;
-        }
-        
-        .meta .location {
-                display: inline;
-        }
+	/* Prominent date display */
+	.card-period {
+		display: flex;
+		align-items: center;
+		gap: 0.65rem;
+	}
 
-        .description {
-                margin: 0;
-                font-size: 1rem;
-                line-height: 1.8;
-                color: var(--color-text-secondary);
-                letter-spacing: 0.2px;
-        }
+	.card-period time {
+		font-family: var(--font-mono);
+		font-size: 0.78rem;
+		font-weight: 500;
+		letter-spacing: 0.04em;
+		color: var(--color-text-primary);
+	}
 
-        .tech {
-                --badge-bg: var(--color-surface-alt);
-                display: flex;
-                flex-wrap: wrap;
-                gap: 0.6rem;
-                padding: 0.5rem 0 0;
-                margin: 0;
-                list-style: none;
-        }
-        .tech div {
-                font-family: var(--font-mono);
-                font-size: 0.72rem;
-                letter-spacing: 0.02em;
-                font-weight: 400;
-                padding: 0.35rem 0.65rem;
-                border-radius: 4px;
-                background: var(--color-surface-alt);
-                color: var(--color-text-muted);
-                transition: color 0.2s ease;
-        }
-        .tech div:hover {
-                color: var(--color-text-primary);
-        }
+	.current-badge {
+		font-family: var(--font-mono);
+		font-size: 0.6rem;
+		font-weight: 600;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		padding: 0.15rem 0.45rem;
+		background: var(--color-text-primary);
+		color: var(--color-text-inverse);
+		border-radius: 3px;
+		line-height: 1.4;
+	}
 
-        @media (min-width: 850px) {
-                .timeline {
-                        width: min(800px, 80%);
-                        gap: 2.5rem;
-                }
-        }
+	.card-head {
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+		border-bottom: 1px solid var(--color-border);
+		padding-bottom: 0.85rem;
+	}
 
-        @media (max-width: 850px) {
-                .timeline {
-                        padding-left: 1.5rem;
-                }
-                .timeline::before {
-                        left: 0.35rem;
-                }
-                .timeline-item .marker {
-                        left: -1.15rem;
-                }
-        }
+	.role {
+		font-size: clamp(1.25rem, 1vw + 1.05rem, 1.55rem);
+		line-height: 1.3;
+		font-weight: 700;
+		color: var(--color-text-primary);
+		margin: 0;
+		letter-spacing: -0.3px;
+	}
 
-        @media (prefers-reduced-motion: reduce) {
-                .timeline-item .card {
-                        transition: none;
-                }
-                .timeline-item .card:hover {
-                        transform: none;
-                }
-        }
+	.meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.65rem;
+		font-family: var(--font-mono);
+		font-size: 0.8rem;
+		text-transform: capitalize;
+		letter-spacing: 0.02em;
+		font-weight: 400;
+		color: var(--color-text-muted);
+		margin: 0;
+	}
+
+	.meta .company::after {
+		content: "·";
+		margin-left: 0.6rem;
+		opacity: 0.55;
+	}
+
+	.description {
+		margin: 0;
+		font-size: 1rem;
+		line-height: 1.8;
+		color: var(--color-text-secondary);
+		letter-spacing: 0.2px;
+	}
+
+	.tech {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		padding: 0.35rem 0 0;
+		margin: 0;
+		list-style: none;
+	}
+	.tech span {
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		letter-spacing: 0.02em;
+		font-weight: 400;
+		padding: 0.3rem 0.6rem;
+		border-radius: 4px;
+		background: var(--color-surface-alt);
+		color: var(--color-text-muted);
+		transition: color 0.2s ease;
+	}
+
+	@media (hover: hover) {
+		.tech span:hover {
+			color: var(--color-text-primary);
+		}
+	}
+
+	@media (min-width: 850px) {
+		.timeline {
+			width: min(800px, 80%);
+			gap: 2.5rem;
+		}
+	}
+
+	@media (max-width: 850px) {
+		.timeline {
+			padding-left: 1.5rem;
+		}
+		.timeline::before {
+			left: 0.35rem;
+		}
+		.timeline-item .marker {
+			left: -1.15rem;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.timeline-item .card {
+			transition: none;
+		}
+		.timeline-item .card:hover {
+			transform: none;
+		}
+		.timeline-item--current .marker::after {
+			animation: none;
+			display: none;
+		}
+	}
 </style>
 
 <script>
-        import { gsap } from "gsap";
-        import { ScrollTrigger } from "gsap/ScrollTrigger";
+	import { gsap } from "gsap";
+	import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-        if (typeof window !== "undefined") {
-                const prefersReduced = window.matchMedia(
-                        "(prefers-reduced-motion: reduce)"
-                ).matches;
+	if (typeof window !== "undefined") {
+		const prefersReduced = window.matchMedia(
+			"(prefers-reduced-motion: reduce)"
+		).matches;
 
-                if (!prefersReduced) {
-                        gsap.registerPlugin(ScrollTrigger);
+		if (!prefersReduced) {
+			gsap.registerPlugin(ScrollTrigger);
 
-                        const init = () => {
-                                const section =
-                                        document.querySelector("#experience");
-                                if (!section) return;
+			const init = () => {
+				const section =
+					document.querySelector("#experience");
+				if (!section) return;
 
-                                // Title blur-in
-                                const title =
-                                        section.querySelector(".section-title");
-                                if (title) {
-                                        gsap.fromTo(
-                                                title,
-                                                {
-                                                        filter: "blur(6px)",
-                                                        opacity: 0,
-                                                        y: 16,
-                                                },
-                                                {
-                                                        filter: "blur(0px)",
-                                                        opacity: 1,
-                                                        y: 0,
-                                                        duration: 0.6,
-                                                        ease: "power2.out",
-                                                        scrollTrigger: {
-                                                                trigger: title,
-                                                                start: "top 90%",
-                                                                end: "top 60%",
-                                                                scrub: true,
-                                                        },
-                                                }
-                                        );
-                                }
+				// Title blur-in
+				const title =
+					section.querySelector(".section-title");
+				if (title) {
+					gsap.fromTo(
+						title,
+						{
+							filter: "blur(6px)",
+							opacity: 0,
+							y: 16,
+						},
+						{
+							filter: "blur(0px)",
+							opacity: 1,
+							y: 0,
+							duration: 0.6,
+							ease: "power2.out",
+							scrollTrigger: {
+								trigger: title,
+								start: "top 90%",
+								end: "top 60%",
+								scrub: true,
+							},
+						}
+					);
+				}
 
-                                // Cards blur-in on scroll
-                                const cards = section.querySelectorAll(
-                                        ".timeline-item .card"
-                                );
-                                cards.forEach((card) => {
-                                        gsap.fromTo(
-                                                card,
-                                                {
-                                                        filter: "blur(10px)",
-                                                        opacity: 0,
-                                                        y: 24,
-                                                },
-                                                {
-                                                        filter: "blur(0px)",
-                                                        opacity: 1,
-                                                        y: 0,
-                                                        ease: "none",
-                                                        scrollTrigger: {
-                                                                trigger: card,
-                                                                start: "top 90%",
-                                                                end: "top 40%",
-                                                                scrub: true,
-                                                        },
-                                                }
-                                        );
-                                });
+				// Cards blur-in on scroll
+				const cards = section.querySelectorAll(
+					".timeline-item .card"
+				);
+				cards.forEach((card) => {
+					gsap.fromTo(
+						card,
+						{
+							filter: "blur(10px)",
+							opacity: 0,
+							y: 24,
+						},
+						{
+							filter: "blur(0px)",
+							opacity: 1,
+							y: 0,
+							ease: "none",
+							scrollTrigger: {
+								trigger: card,
+								start: "top 90%",
+								end: "top 40%",
+								scrub: true,
+							},
+						}
+					);
+				});
 
-                                // Markers quick pop-in for a touch of life
-                                const markers = section.querySelectorAll(
-                                        ".timeline-item .marker"
-                                );
-                                if (markers.length) {
-                                        gsap.fromTo(
-                                                markers,
-                                                {
-                                                        opacity: 0,
-                                                        scale: 0.8,
-                                                        filter: "blur(4px)",
-                                                },
-                                                {
-                                                        opacity: 1,
-                                                        scale: 1,
-                                                        filter: "blur(0px)",
-                                                        duration: 0.4,
-                                                        stagger: 0.1,
-                                                        ease: "power2.out",
-                                                        scrollTrigger: {
-                                                                trigger: section,
-                                                                start: "top 90%",
-                                                                toggleActions:
-                                                                        "play none none reverse",
-                                                        },
-                                                }
-                                        );
-                                }
-                        };
+				// Markers stagger pop-in
+				const markers = section.querySelectorAll(
+					".timeline-item .marker"
+				);
+				if (markers.length) {
+					gsap.fromTo(
+						markers,
+						{
+							opacity: 0,
+							scale: 0.6,
+							filter: "blur(4px)",
+						},
+						{
+							opacity: 1,
+							scale: 1,
+							filter: "blur(0px)",
+							duration: 0.4,
+							stagger: 0.1,
+							ease: "power2.out",
+							scrollTrigger: {
+								trigger: section,
+								start: "top 90%",
+								toggleActions:
+									"play none none reverse",
+							},
+						}
+					);
+				}
+			};
 
-                        // Initialize after layout settled and refresh on full load
-                        requestAnimationFrame(() => {
-                                init();
-                                window.addEventListener("load", () =>
-                                        ScrollTrigger.refresh()
-                                );
-                        });
-                }
-        }
+			// Initialize after layout settled and refresh on full load
+			requestAnimationFrame(() => {
+				init();
+				window.addEventListener("load", () =>
+					ScrollTrigger.refresh()
+				);
+			});
+		}
+	}
 </script>

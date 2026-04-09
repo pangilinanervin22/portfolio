@@ -6,6 +6,7 @@
     --color-surface-alt: #f5f3f0;
     --color-surface-muted: #eeece9;
     --color-border: #eeeeee;
+    --color-background-blur: rgba(250, 248, 246, 0.8);
 
     /* Grayscale scale (monochrome depth) */
     --gray-0: #ffffff;

@@ -23,6 +23,7 @@
     --color-surface-alt: #2a2a26;
     --color-surface-muted: #333330;
     --color-border: #2a2a28;
+    --color-background-blur: rgba(17, 17, 16, 0.8);
 
     /* Primary / semantic (inverted vs light theme) */
     --color-primary: var(--gray-0);

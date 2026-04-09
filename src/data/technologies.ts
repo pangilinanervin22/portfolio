@@ -10,20 +10,38 @@ export interface SkillGroup {
 
 export const skillGroups: SkillGroup[] = [
 	{
-		category: "FRONTEND",
-		skills: ["Astro", "React", "React Native", "TypeScript"],
+		category: "LANGUAGES",
+		skills: ["JavaScript (ES6+)", "TypeScript", "Python", "HTML5", "CSS3", "SQL"],
 	},
 	{
-		category: "BACKEND",
-		skills: ["Node.js", "Express", "NestJs", "FastAPI", "Python", "Prisma"],
+		category: "FRAMEWORKS",
+		skills: [
+			"Next.js",
+			"React.js",
+			"NestJS",
+			"Node.js",
+			"Express.js",
+			"Laravel",
+			"FastApi",
+			"React Native",
+			"TailwindCSS",
+		],
 	},
 	{
-		category: "DATABASE",
-		skills: ["PostgreSQL", "MongoDB"],
+		category: "CLOUD & DEVOPS",
+		skills: ["Azure", "Vercel", "Heroku", "Docker", "DigitalOcean", "GitHub Actions"],
 	},
 	{
-		category: "TOOLS & INFRA",
-		skills: ["Docker", "Git", "Azure", "Jest", "Unity (C#)"],
+		category: "DATABASES",
+		skills: ["PostgreSQL", "Supabase", "MySQL", "MongoDB", "Firebase"],
+	},
+	{
+		category: "TOOLS & DESIGN",
+		skills: ["Git", "Figma", "Postman", "Expo", "Draw.io"],
+	},
+	{
+		category: "AI & AUTOMATION",
+		skills: ["N8n Workflow Automation", "Ollama (Local LLMs)", "OpenAI API"],
 	},
 ];
 

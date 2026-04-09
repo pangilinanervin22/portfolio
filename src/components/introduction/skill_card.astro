@@ -38,17 +38,20 @@ const id = `skill-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-
 		padding: 18px 20px;
 		background: var(--color-surface);
 		border: 1px solid var(--color-border);
+		border-left: 2px solid transparent;
 		border-radius: 12px;
 		box-shadow: 0 1px 3px var(--color-shadow-soft);
 		transition:
 			transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-			box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+			box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+			border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
 	@media (hover: hover) {
 		.skill-card:hover {
 			transform: translateY(-2px);
 			box-shadow: 0 4px 12px var(--color-shadow);
+			border-left-color: var(--color-text-primary);
 		}
 	}
 

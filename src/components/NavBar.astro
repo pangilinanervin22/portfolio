@@ -38,14 +38,25 @@ import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
 </nav>
 
 <style>
-        /* Basic navbar layout */
+        /* Sticky navbar with backdrop blur */
         .navbar {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
                 padding: clamp(12px, 2vh, 24px) clamp(16px, 4vw, 48px);
                 width: 100%;
-                position: relative;
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                background: var(--color-background-blur);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                border-bottom: 1px solid var(--color-border);
+                transition: box-shadow 0.3s ease;
+        }
+
+        .navbar.scrolled {
+                box-shadow: 0 2px 8px var(--color-shadow);
         }
 
         .navbar-title {
@@ -154,7 +165,10 @@ import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
                         padding: 12px;
                         min-width: 180px;
                         border-radius: 8px;
-                        background: var(--color-border);
+                        background: var(--color-surface);
+                        border: 1px solid var(--color-border);
+                        box-shadow: 0 4px 16px var(--color-shadow);
+                        z-index: 10;
                 }
 
                 .nav-toggle:checked ~ .nav-list {
@@ -190,4 +204,28 @@ import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
                 outline-offset: 2px;
                 border-radius: 6px;
         }
+
+        @media (prefers-reduced-motion: reduce) {
+                .navbar {
+                        transition: none;
+                }
+        }
 </style>
+
+<script>
+	if (typeof window !== "undefined") {
+		const navbar = document.querySelector('.navbar');
+		if (navbar) {
+			let ticking = false;
+			window.addEventListener('scroll', () => {
+				if (!ticking) {
+					requestAnimationFrame(() => {
+						navbar.classList.toggle('scrolled', window.scrollY > 50);
+						ticking = false;
+					});
+					ticking = true;
+				}
+			}, { passive: true });
+		}
+	}
+</script>

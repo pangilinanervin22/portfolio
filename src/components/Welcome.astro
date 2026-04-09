@@ -19,6 +19,7 @@ import EmailIcon from "../assets/icons/email.svg";
 			<h1 id="welcome-heading" itemprop="name">
 				Ervin Pangilinan
 			</h1>
+			<div class="accent-line" aria-hidden="true"></div>
 			<p class="tagline" itemprop="description">
 				Full Stack Developer
 			</p>
@@ -83,6 +84,13 @@ import EmailIcon from "../assets/icons/email.svg";
                 </header>
         </div>
 
+        <!-- Scroll indicator -->
+        <div class="scroll-hint" aria-hidden="true">
+                <svg width="16" height="10" viewBox="0 0 16 10" fill="none">
+                        <path d="M1 1L8 8L15 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+        </div>
+
         <!-- Hidden structured data for better SEO -->
         <script type="application/ld+json">
                 {
@@ -119,6 +127,7 @@ import EmailIcon from "../assets/icons/email.svg";
 		justify-content: center;
 		min-height: 80vh;
 		padding: 2rem;
+		position: relative;
 	}
 
 	.content-container {
@@ -145,7 +154,7 @@ import EmailIcon from "../assets/icons/email.svg";
 			font-size: clamp(2.8rem, 6vw, 4.5rem);
 			font-weight: 700;
 			letter-spacing: -0.03em;
-			margin: 0 0 1rem 0;
+			margin: 0 0 0.75rem 0;
 			color: var(--color-text-primary);
 			line-height: 1.05;
 			opacity: 0;
@@ -158,12 +167,34 @@ import EmailIcon from "../assets/icons/email.svg";
 			font-size: clamp(1rem, 2.2vw, 1.2rem);
 			font-weight: 400;
 			color: var(--color-text-muted);
-			margin: 0 0 3rem 0;
+			margin: 0 0 2.5rem 0;
 			line-height: 1.4;
 			letter-spacing: 0.02em;
 			opacity: 0;
 			animation: fadeSlideUp 0.7s ease forwards;
 			animation-delay: 0.35s;
+		}
+	}
+
+	/* Accent line between name and tagline */
+	.accent-line {
+		width: 40px;
+		height: 1.5px;
+		background: var(--color-text-primary);
+		margin: 0 auto 0.75rem;
+		opacity: 0;
+		animation: lineReveal 0.6s ease forwards;
+		animation-delay: 0.28s;
+	}
+
+	@keyframes lineReveal {
+		from {
+			width: 0;
+			opacity: 0;
+		}
+		to {
+			width: 40px;
+			opacity: 0.5;
 		}
 	}
 
@@ -187,10 +218,12 @@ import EmailIcon from "../assets/icons/email.svg";
 		color: var(--color-text-muted);
 		text-decoration: none;
 		border-radius: 50%;
+		background: transparent;
 		transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 
 		&:hover {
 			color: var(--color-text-primary);
+			background: var(--color-surface-alt);
 			transform: translateY(-2px);
 		}
 	}
@@ -229,6 +262,29 @@ import EmailIcon from "../assets/icons/email.svg";
 			transform: translateY(-1px);
 			box-shadow: 0 4px 12px var(--color-shadow);
 		}
+	}
+
+	/* Scroll indicator */
+	.scroll-hint {
+		position: absolute;
+		bottom: 2rem;
+		left: 0;
+		right: 0;
+		display: flex;
+		justify-content: center;
+		color: var(--color-text-faint);
+		opacity: 0;
+		animation: fadeSlideUp 0.7s ease 0.9s forwards;
+	}
+
+	.scroll-hint svg {
+		display: block;
+		animation: gentle-bounce 2s ease-in-out 1.6s infinite;
+	}
+
+	@keyframes gentle-bounce {
+		0%, 100% { transform: translateY(0); }
+		50% { transform: translateY(5px); }
 	}
 
 	/* Page load animations */
@@ -272,7 +328,7 @@ import EmailIcon from "../assets/icons/email.svg";
 		}
 
 		.content h1 {
-			margin-bottom: 0.8rem;
+			margin-bottom: 0.6rem;
 		}
 
 		.tagline {
@@ -298,6 +354,17 @@ import EmailIcon from "../assets/icons/email.svg";
 		.actions {
 			animation: none;
 			opacity: 1;
+		}
+		.accent-line {
+			animation: none;
+			opacity: 0.5;
+		}
+		.scroll-hint {
+			animation: none;
+			opacity: 1;
+		}
+		.scroll-hint svg {
+			animation: none;
 		}
 	}
 </style>
