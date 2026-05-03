@@ -14,6 +14,7 @@ import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
                 class="nav-toggle"
                 type="checkbox"
                 aria-hidden="true"
+                tabindex="-1"
         />
 
         <!-- Label acts as the hamburger button -->
@@ -28,13 +29,13 @@ import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
         </label>
 
         <ul class="nav-list" role="menubar">
-                <li role="none"><a href={`${import.meta.env.BASE_URL}#welcome`} role="menuitem" itemprop="url">Home</a></li>
-                <li role="none"><a href={`${import.meta.env.BASE_URL}#introduction`} role="menuitem" itemprop="url">About</a></li>
-                <li role="none"><a href={`${import.meta.env.BASE_URL}#experience`} role="menuitem" itemprop="url">Experience</a></li>
-                <li role="none"><a href={`${import.meta.env.BASE_URL}#projects`} role="menuitem" itemprop="url">Projects</a></li>
-                <li role="none"><a href={`${import.meta.env.BASE_URL}#footer`} role="menuitem" itemprop="url">Contact</a></li>
-                <li class="theme-switch"><SwitchTheme client:load /></li>
-        </ul>
+        <li role="none"><a href={`${import.meta.env.BASE_URL}#welcome`} role="menuitem" itemprop="url" data-section="welcome">Home</a></li>
+        <li role="none"><a href={`${import.meta.env.BASE_URL}#introduction`} role="menuitem" itemprop="url" data-section="introduction">About</a></li>
+        <li role="none"><a href={`${import.meta.env.BASE_URL}#experience`} role="menuitem" itemprop="url" data-section="experience">Experience</a></li>
+        <li role="none"><a href={`${import.meta.env.BASE_URL}#projects`} role="menuitem" itemprop="url" data-section="projects">Work</a></li>
+        <li role="none"><a href={`${import.meta.env.BASE_URL}#footer`} role="menuitem" itemprop="url" data-section="footer">Contact</a></li>
+        <li class="theme-switch"><SwitchTheme client:load /></li>
+</ul>
 </nav>
 
 <style>
@@ -210,22 +211,92 @@ import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
                         transition: none;
                 }
         }
+
+        /* Active section underline */
+        .nav-list li a[data-section] {
+                position: relative;
+                padding-bottom: 4px;
+        }
+
+        .nav-list li a[data-section]::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                height: 1px;
+                background: var(--color-text-primary);
+                transform: scaleX(0);
+                transform-origin: center;
+                transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+                opacity: 0;
+        }
+
+        .nav-list li a[data-section].is-active::after {
+                transform: scaleX(1);
+                opacity: 1;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+                .nav-list li a[data-section]::after {
+                        transition: none;
+                }
+        }
 </style>
 
 <script>
-	if (typeof window !== "undefined") {
-		const navbar = document.querySelector('.navbar');
-		if (navbar) {
-			let ticking = false;
-			window.addEventListener('scroll', () => {
-				if (!ticking) {
-					requestAnimationFrame(() => {
-						navbar.classList.toggle('scrolled', window.scrollY > 50);
-						ticking = false;
-					});
-					ticking = true;
-				}
-			}, { passive: true });
-		}
-	}
+if (typeof window !== "undefined") {
+        const navbar = document.querySelector('.navbar');
+        if (navbar) {
+                let ticking = false;
+                window.addEventListener('scroll', () => {
+                        if (!ticking) {
+                                requestAnimationFrame(() => {
+                                        navbar.classList.toggle('scrolled', window.scrollY > 50);
+                                        ticking = false;
+                                });
+                                ticking = true;
+                        }
+                }, { passive: true });
+        }
+
+        // Active-section indicator
+        const navLinks = document.querySelectorAll('.nav-list a[data-section]');
+        const sectionMap = new Map();
+        navLinks.forEach((a) => {
+                if (!(a instanceof HTMLAnchorElement)) return;
+                const id = a.dataset.section;
+                if (id) sectionMap.set(id, a);
+        });
+
+        const sections = Array.from(sectionMap.keys())
+                .map((id) => document.getElementById(id))
+                .filter((el) => el !== null);
+
+        if (sections.length) {
+                const visible = new Map();
+                const observer = new IntersectionObserver(
+                        (entries) => {
+                                entries.forEach((entry) => {
+                                        visible.set(entry.target.id, entry.intersectionRatio);
+                                });
+                                let bestId = null;
+                                let bestRatio = 0;
+                                visible.forEach((ratio, id) => {
+                                        if (ratio > bestRatio) {
+                                                bestRatio = ratio;
+                                                bestId = id;
+                                        }
+                                });
+                                navLinks.forEach((a) => a.classList.remove('is-active'));
+                                if (bestId) {
+                                        const link = sectionMap.get(bestId);
+                                        if (link) link.classList.add('is-active');
+                                }
+                        },
+                        { threshold: [0.15, 0.4, 0.7] }
+                );
+                sections.forEach((s) => observer.observe(s));
+        }
+}
 </script>

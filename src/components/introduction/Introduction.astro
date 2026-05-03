@@ -2,12 +2,12 @@
 import { Image } from 'astro:assets';
 import introImage from "../../assets/me.jpg";
 import SkillCard from "./skill_card.astro";
+import SectionLabel from "../_common/SectionLabel.astro";
 
 import gameIcon from "../../assets/skill/game.svg";
 import webIcon from "../../assets/skill/web.svg";
 import mobileIcon from "../../assets/skill/mobile.svg";
 import devOpsIcon from "../../assets/skill/devops.svg";
-
 ---
 
 <section
@@ -17,35 +17,33 @@ import devOpsIcon from "../../assets/skill/devops.svg";
         itemscope
         itemtype="https://schema.org/Person"
 >
-        <h2 id="about-heading" class="introduction-title" itemprop="name">
-                About Me
-        </h2>
+        <div class="section-head">
+                <SectionLabel number="01" label="About" />
+                <h2 id="about-heading" class="introduction-title" itemprop="name">
+                        About
+                </h2>
+        </div>
 
-        <aside class="introduction-image-container" aria-label="Portrait">
+        <div class="introduction-image-container" aria-label="Portrait">
                 <figure class="introduction-image" itemscope itemtype="https://schema.org/ImageObject">
                         <Image
                                 src={introImage}
                                 alt="Ervin Pangilinan - Full Stack Developer and Computer Science Graduate specializing in web applications, mobile development, and DevOps"
                                 width={480}
-                                height={480}
+                                height={720}
                                 loading="eager"
                                 decoding="async"
                                 fetchpriority="high"
                                 format="webp"
                                 quality={85}
                                 densities={[1, 1.5, 2]}
-                                sizes="(max-width: 480px) 280px, (max-width: 768px) 360px, (max-width: 1024px) 480px, 480px"
+                                sizes="(max-width: 480px) 280px, (max-width: 768px) 360px, (max-width: 1024px) 380px, 380px"
                                 class="intro-portrait"
                                 itemprop="image"
-                                data-src={introImage.src}
-                                data-title="Ervin Pangilinan Professional Portrait"
-                                data-description="Professional headshot of Ervin Pangilinan, Full Stack Developer specializing in web development, mobile applications, and DevOps"
                         />
-                        <figcaption itemprop="caption">
-                                Ervin Pangilinan - Full Stack Developer and Computer Science graduate with expertise in web development, mobile applications, and DevOps practices
+                        <figcaption class="portrait-caption">
+                                <span aria-hidden="true">//</span> Manila, PH · 2026
                         </figcaption>
-                        
-                        <!-- Hidden structured data for Google Images -->
                         <meta itemprop="name" content="Ervin Pangilinan Professional Portrait" />
                         <meta itemprop="description" content="Professional headshot of Ervin Pangilinan, Full Stack Developer and Computer Science graduate" />
                         <meta itemprop="contentUrl" content={introImage.src} />
@@ -53,48 +51,51 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                         <meta itemprop="author" content="Ervin Pangilinan" />
                         <meta itemprop="copyrightHolder" content="Ervin Pangilinan" />
                 </figure>
-        </aside>
+        </div>
 
         <div class="introduction-content">
-                <h3 class="introduction-description" itemprop="description">
-                        {"I started coding in 2021, turning a hobby into a daily practice. I build reliable, accessible apps and have experience in both solo and team projects. During a full-stack developer job, I worked on different technologies, web architecture, databases, secure authentication, and automated releases. With a Computer science degree, I focus on clean, maintainable code backed by strong fundamentals and teamwork."}
-                </h3>
-                <section
-                        class="introduction-skills"
-                        aria-labelledby="skills-heading"
-                >
-                        <h3 id="skills-heading">What I can do</h3>
+                <p class="introduction-description" itemprop="description">
+                        I write software, mostly for the web. Started in 2021 as a hobby and haven't stopped. Today I'm at Cosmic Society building an event platform that supports ~30,000 peak users at large-scale events before that I have experience of working in multiple companies which include international team, HEQS Group and FiveTwenty IT Services. Computer Science grad from Cavite State University.
+                </p>
+                <p class="introduction-description-secondary">
+                        I work across the stack but lean toward backend depth REST APIs, role-based access, audit logging, query optimization, CI/CD. I care about clean architecture, accessibility, and code the next person can read. The rest of my time goes to whatever I'm currently learning.
+                </p>
+
+                <section class="introduction-skills" aria-labelledby="skills-heading">
+                        <h3 id="skills-heading">What I build</h3>
                         <ul class="skills-list" role="list">
                                 <li itemprop="knowsAbout">
                                         <SkillCard
-                                                title="Web Applications"
-                                                content="Web apps in different architectures: static, single‑page, server‑rendered, multi‑page, or hybrid built for speed, accessibility, and SEO."
+                                                title="Web platforms"
+                                                content="Production apps in TypeScript, Next.js, NestJS. Server-rendered, SPA, or hybrid."
                                                 icon={webIcon}
                                         />
                                 </li>
                                 <li itemprop="knowsAbout">
                                         <SkillCard
-                                                title="Mobile Applications"
-                                                content="Smooth mobile apps with offline storage, native UI, and safe updates using React Native/Expo."
+                                                title="Mobile apps"
+                                                content="Cross-platform with React Native + Expo. Offline-first, secure releases."
                                                 icon={mobileIcon}
                                         />
                                 </li>
                                 <li itemprop="knowsAbout">
                                         <SkillCard
-                                                title="DevOps Basics"
-                                                content="Automated builds and releases (CI/CD), Docker containers, and cloud hosting with basic monitoring."
+                                                title="DevOps & deploys"
+                                                content="CI/CD pipelines, Docker containers, cloud hosting on Vercel, AWS, Azure, DigitalOcean, Heroku."
                                                 icon={devOpsIcon}
                                         />
                                 </li>
                                 <li itemprop="knowsAbout">
                                         <SkillCard
-                                                title="Game Development"
-                                                content="Small 2D games in Unity with simple controls, basic AI, and optimized UI/performance."
+                                                title="Game dev"
+                                                content="Small 2D Unity prototypes when I want to think about something different."
                                                 icon={gameIcon}
                                         />
                                 </li>
                         </ul>
                 </section>
+
+
         </div>
 </section>
 
@@ -102,96 +103,96 @@ import devOpsIcon from "../../assets/skill/devops.svg";
         .introduction-main-container {
                 display: grid;
                 grid-template-columns: 1fr;
-                justify-items: center;
+                grid-template-areas:
+                        "head"
+                        "image"
+                        "content";
+                justify-items: start;
                 width: 100%;
-                margin-top: 10vh;
-                padding-inline: 42px;
+                max-width: 1248px;
+                margin-top: 8vh;
+                padding-inline: 1.5rem;
                 gap: 24px;
 
-                @media (min-width: 768px) {
-                        width: 768px;
-                        padding-inline: 32px;
-                }
-
                 @media (min-width: 1024px) {
-                        width: 80vw;
-                        grid-template-columns: repeat(2, 1fr);
-                        grid-auto-rows: auto;
-                        gap: 16px;
-
-                        .introduction-title {
-                                grid-column: 1 / -1;
-                        }
-
-                        .introduction-image-container {
-                                align-self: start;
-                                order: 2;
-                                max-width: 380px;
-                        }
-
-                        .introduction-content {
-                                align-self: start;
-                                order: 1;
-                        }
+                        grid-template-columns: minmax(280px, 380px) 1fr;
+                        grid-template-areas:
+                                "head head"
+                                "image content";
+                        column-gap: 3rem;
+                        row-gap: 1.5rem;
+                        align-items: start;
                 }
+        }
+
+        .section-head {
+                grid-area: head;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
         }
 
         .introduction-title {
                 width: 100%;
                 text-align: left;
                 font-size: clamp(2.4rem, 4.4vw, 3.4rem);
+                margin: 0;
+                letter-spacing: -0.02em;
         }
 
         .introduction-image-container {
+                grid-area: image;
                 position: relative;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 60%;
-                @media (min-width: 480px) {
-                        max-width: 280px;
-                }
+                width: 100%;
+                max-width: 380px;
+                margin: 0;
+        }
 
-                @media (min-width: 768px) {
-                        max-width: 360px;
-                }
+        .introduction-image {
+                position: relative;
+                padding: 14px 14px 8px;
+                background: var(--color-surface);
+                border: 1px solid var(--color-border);
+                border-radius: 12px;
+                margin: 0;
+        }
 
-                @media (min-width: 1024px) {
-                        width: 100%;
-                        max-width: 100%;
-                }
+        .intro-portrait {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 4 / 5;
+                object-fit: cover;
+                object-position: center top;
+                border-radius: 8px;
+                display: block;
+                transition: transform 0.3s ease-in-out;
+        }
 
-                .introduction-image {
-                        padding: 16px;
-                        height: fit-content;
-                        width: 100%;
-                        background: var(--color-surface);
-                        border: 1px solid var(--color-border);
-                        border-radius: 12px;
+        .introduction-image:hover {
+                box-shadow: 0 4px 12px var(--color-shadow);
+        }
 
-                        .intro-portrait {
-                                width: 100%;
-                                height: auto;
-                                border-radius: 20px;
-                                transition: all 0.3s ease-in-out;
-                        }
+        .introduction-image:hover .intro-portrait {
+                transform: scale(1.01);
+        }
 
-                        &:hover {
-                                scale: 1.01;
-                                box-shadow: 0 4px 12px var(--color-shadow);
-                                .intro-portrait {
-                                        transform: scale(1.01);
-                                }
-                        }
-                }
+        .portrait-caption {
+                margin: 10px 4px 0;
+                font-family: var(--font-mono);
+                font-size: 0.72rem;
+                letter-spacing: 0.04em;
+                color: var(--color-text-muted);
+                line-height: 1;
         }
 
         .introduction-content {
+                grid-area: content;
                 display: flex;
                 flex-direction: column;
                 align-items: flex-start;
-                justify-content: center;
-                gap: 16px;
+                gap: 1.25rem;
+                width: 100%;
         }
 
         .introduction-description {
@@ -200,96 +201,58 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                 font-weight: 400;
                 color: var(--color-text-secondary);
                 letter-spacing: 0.2px;
-                -webkit-hyphens: auto;
+                margin: 0;
 
-			&:first-of-type {
-				text-indent: 0;
-
-			&::first-letter {
-				float: left;
-				font-size: 3.4rem;
-				line-height: 0.9;
-				font-weight: 700;
-				margin: 4px 8px 0 0;
-				font-family: 'Outfit Variable', sans-serif;
-				color: var(--color-text-primary);
-			}
-			}
+                &::first-letter {
+                        float: left;
+                        font-size: 3.2rem;
+                        line-height: 0.9;
+                        font-weight: 700;
+                        margin: 4px 8px 0 0;
+                        font-family: 'Outfit Variable', sans-serif;
+                        color: var(--color-text-primary);
+                }
         }
 
-        .keyword-blurb strong {
-                color: var(--color-text-primary);
-                font-weight: 600;
+        .introduction-description-secondary {
+                font-size: 1rem;
+                line-height: 1.7;
+                font-weight: 400;
+                color: var(--color-text-secondary);
+                letter-spacing: 0.2px;
+                margin: 0;
         }
 
         .introduction-skills {
                 display: grid;
                 grid-template-columns: 1fr;
-                justify-items: center;
-                gap: 24px;
+                gap: 1rem;
                 width: 100%;
-                margin-top: 16px;
+                margin-top: 1rem;
         }
 
         .introduction-skills > h3 {
                 width: 100%;
-                margin: 0;
-                font-size: clamp(1.6rem, 3vw, 2.2rem);
+                margin: 0 0 0.25rem;
+                font-size: clamp(1.4rem, 2.4vw, 1.8rem);
                 line-height: 1.2;
+                letter-spacing: -0.01em;
         }
 
         .skills-list {
                 list-style: none;
                 padding: 0;
                 margin: 0;
-                display: contents; /* let grid layout be controlled by parent */
+                display: contents;
         }
 
-        @media (min-width: 768px) {
+        @media (min-width: 640px) {
                 .introduction-skills {
                         grid-template-columns: repeat(2, 1fr);
                 }
-
                 .introduction-skills > h3 {
                         grid-column: 1 / -1;
                 }
-        }
-
-        .visually-hidden {
-                position: absolute;
-                width: 1px;
-                height: 1px;
-                padding: 0;
-                margin: -1px;
-                overflow: hidden;
-                clip: rect(0 0 0 0);
-                white-space: nowrap;
-                border: 0;
-        }
-
-        /* Style for visible figcaption */
-        figcaption {
-                position: absolute;
-                bottom: -40px;
-                left: 0;
-                right: 0;
-                font-size: 0.85rem;
-                color: var(--color-text-secondary);
-                text-align: center;
-                padding: 8px;
-                background: var(--color-surface);
-                border-radius: 8px;
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.3s ease-in-out;
-                box-shadow: 0 2px 8px var(--color-shadow);
-                border: 1px solid var(--color-primary-20);
-        }
-
-        .introduction-image:hover figcaption {
-                opacity: 1;
-                visibility: visible;
-                bottom: -35px;
         }
 
 </style>
@@ -314,7 +277,7 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                 if (!container) return;
 
                 const targets = container.querySelectorAll(
-                        ".introduction-title, .introduction-image, .introduction-description, .introduction-skills"
+                        ".section-head, .introduction-image, .introduction-description, .introduction-description-secondary, .introduction-skills"
                 );
 
                 targets.forEach((el, i) => {

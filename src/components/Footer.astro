@@ -12,79 +12,86 @@ const buildDate = new Date().toLocaleDateString("en-US", {
 <footer id="footer" class="footer-container" aria-labelledby="footer-heading">
         <Border />
         <h2 id="footer-heading" class="visually-hidden">Site footer</h2>
+
+        <section class="cta-block" aria-labelledby="cta-heading">
+                <p class="cta-label">
+                        <span aria-hidden="true">//</span> Say hi
+                </p>
+                <h3 id="cta-heading" class="cta-headline">
+                        Want to talk about code, projects, or anything in between?
+                </h3>
+                <div class="cta-actions">
+                        <a
+                                class="cta-btn cta-btn--primary"
+                                href="mailto:pangilinanervin22@gmail.com"
+                        >
+                                pangilinanervin22@gmail.com
+                                <span aria-hidden="true">→</span>
+                        </a>
+                        <a
+                                class="cta-btn"
+                                href="https://www.linkedin.com/in/ervin-pangilinan-9b9410231"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                        >
+                                LinkedIn <span aria-hidden="true">→</span>
+                        </a>
+                </div>
+        </section>
+
         <div class="footer-inner">
                 <div class="cluster primary">
                         <p class="brand">
                                 &copy; {year}
                                 <span class="name">Ervin Pangilinan</span>
                         </p>
-                        <p class="tagline">Always learning, always growing.</p>
+                        <p class="tagline">Manila, Philippines · Building for the world.</p>
                 </div>
 
                 <nav aria-label="Footer navigation" class="mini-nav">
-                        <h3 class="heading">Navigate</h3>
+                        <h3 class="heading">
+                                <span aria-hidden="true">//</span> NAVIGATE
+                        </h3>
                         <ul class="mini-list">
-                                <li>
-                                        <a href={`${import.meta.env.BASE_URL}#welcome`}>Home</a>
-                                </li>
-                                <li>
-                                        <a href={`${import.meta.env.BASE_URL}#introduction`}
-                                                >About</a
-                                        >
-                                </li>
-                                <li>
-                                        <a href={`${import.meta.env.BASE_URL}#experience`}
-                                                >Experience</a
-                                        >
-                                </li>
+                                <li><a href={`${import.meta.env.BASE_URL}#welcome`}>Home</a></li>
+                                <li><a href={`${import.meta.env.BASE_URL}#introduction`}>About</a></li>
+                                <li><a href={`${import.meta.env.BASE_URL}#experience`}>Experience</a></li>
+                                <li><a href={`${import.meta.env.BASE_URL}#projects`}>Work</a></li>
                         </ul>
                 </nav>
 
                 <nav aria-label="Social links" class="social-nav">
-                        <h3 class="heading">Connect</h3>
+                        <h3 class="heading">
+                                <span aria-hidden="true">//</span> CONNECT
+                        </h3>
                         <ul class="social-list">
                                 <li>
                                         <a
                                                 href="https://github.com/pangilinanervin22"
                                                 rel="me noopener noreferrer"
-                                                target="_blank">GitHub</a
-                                        >
+                                                target="_blank">GitHub</a>
                                 </li>
                                 <li>
                                         <a
-                                                href="https://mail.google.com/mail/?view=cm&fs=1&to=pangilinanervin22@gmail.com&su=Hello%20From%20Your%20Portfolio&body=Hi%20there!"
-                                                target="_blank"
-                                        >
-                                                Email
-                                        </a>
+                                                href="mailto:pangilinanervin22@gmail.com">Email</a>
                                 </li>
                                 <li>
                                         <a
                                                 href="https://www.linkedin.com/in/ervin-pangilinan-9b9410231"
-                                                target="_blank">LinkedIn</a
-                                        >
+                                                target="_blank">LinkedIn</a>
                                 </li>
                         </ul>
                 </nav>
 
                 <div class="meta-block">
                         <p class="stack" aria-label="Tech stack">
-                                Stack: <span>Astro</span> · <span
-                                        >TypeScript</span
-                                > · <span>css</span>
+                                Stack: <span>Astro</span> · <span>TypeScript</span> · <span>CSS</span>
                         </p>
                         <p class="meta">
-                                Built with <a
-                                        href="https://astro.build"
-                                        target="_blank">Astro</a
-                                >. Updated {buildDate}.
+                                Built with <a href="https://astro.build" target="_blank">Astro</a>. Updated {buildDate}.
                         </p>
                         <p class="meta small">
-                                <button
-                                        id="backToTopBtn"
-                                        class="top-btn"
-                                        type="button">Back to top ↑</button
-                                >
+                                <button id="backToTopBtn" class="top-btn" type="button">Back to top ↑</button>
                         </p>
                 </div>
         </div>
@@ -298,6 +305,104 @@ const buildDate = new Date().toLocaleDateString("en-US", {
                 .mini-list a::after,
                 .social-list a::after,
                 .top-btn::after {
+                        transition: none;
+                }
+        }
+
+        /* Top CTA block */
+        .cta-block {
+                width: min(720px, 92%);
+                margin: 0 auto 2.5rem;
+                padding: 2.75rem 1rem 2.5rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+                text-align: center;
+                border-bottom: 1px solid var(--color-border);
+        }
+
+        .cta-label {
+                font-family: var(--font-mono);
+                font-size: 0.78rem;
+                font-weight: 500;
+                letter-spacing: 0.06em;
+                color: var(--color-text-muted);
+                margin: 0;
+                line-height: 1;
+        }
+
+        .cta-headline {
+                font-family: 'Outfit Variable', sans-serif;
+                font-size: clamp(1.4rem, 3vw, 2.1rem);
+                font-weight: 600;
+                line-height: 1.25;
+                letter-spacing: -0.02em;
+                color: var(--color-text-primary);
+                margin: 0;
+                max-width: 30ch;
+        }
+
+        .cta-actions {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+                gap: 0.85rem;
+                margin-top: 0.5rem;
+        }
+
+        .cta-btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.45rem;
+                padding: 0.7rem 1.1rem;
+                font-family: var(--font-mono);
+                font-size: 0.82rem;
+                font-weight: 500;
+                color: var(--color-text-primary);
+                text-decoration: none;
+                background: transparent;
+                border: 1px solid var(--color-border);
+                border-radius: 6px;
+                transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .cta-btn:hover {
+                border-color: var(--color-text-primary);
+                transform: translateY(-1px);
+        }
+
+        .cta-btn:focus-visible {
+                outline: 2px solid var(--color-focus-ring);
+                outline-offset: 2px;
+        }
+
+        .cta-btn--primary {
+                background: var(--color-accent);
+                color: var(--color-text-inverse);
+                border-color: var(--color-accent);
+        }
+
+        .cta-btn--primary:hover {
+                background: var(--color-accent-hover);
+                border-color: var(--color-accent-hover);
+                color: var(--color-text-inverse);
+        }
+
+        @media (max-width: 520px) {
+                .cta-actions {
+                        flex-direction: column;
+                        width: 100%;
+                }
+                .cta-btn {
+                        width: 100%;
+                        justify-content: center;
+                }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+                .cta-btn {
                         transition: none;
                 }
         }

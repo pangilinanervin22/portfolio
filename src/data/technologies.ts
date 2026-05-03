@@ -1,51 +1,78 @@
-export interface Skill {
-	label: string;
-	icon?: any;
-}
-
-export interface SkillGroup {
-	category: string;
+export interface SkillTier {
+	label: string;       // CORE, OFTEN, SOMETIMES, TOOLS
+	context: string;     // "daily", "regular reach", "shipped at least once", "daily workflow"
 	skills: string[];
 }
 
-export const skillGroups: SkillGroup[] = [
+export const skillTiers: SkillTier[] = [
 	{
-		category: "LANGUAGES",
-		skills: ["JavaScript (ES6+)", "TypeScript", "Python", "HTML5", "CSS3", "SQL"],
-	},
-	{
-		category: "FRAMEWORKS",
+		label: "CORE",
+		context: "daily",
 		skills: [
+			"TypeScript",
 			"Next.js",
-			"React.js",
-			"NestJS",
+			"React",
 			"Node.js",
-			"Express.js",
-			"Laravel",
-			"FastApi",
-			"React Native",
-			"TailwindCSS",
+			"Express",
+			"PostgreSQL",
+			"Prisma",
+			"Docker",
 		],
 	},
 	{
-		category: "CLOUD & DEVOPS",
-		skills: ["Azure", "Vercel", "Heroku", "Docker", "DigitalOcean", "GitHub Actions"],
+		label: "OFTEN",
+		context: "regular reach",
+		skills: [
+			"NestJS",
+			"Laravel",
+			"React Native",
+			"Expo",
+			"Tailwind",
+			"GitHub Actions",
+			"Vercel",
+			"AWS",
+			"Azure",
+			"Heroku",
+			"DigitalOcean",
+			"Supabase",
+			"Jest",
+			"Playwright",
+		],
 	},
 	{
-		category: "DATABASES",
-		skills: ["PostgreSQL", "Supabase", "MySQL", "MongoDB", "Firebase"],
+		label: "SOMETIMES",
+		context: "shipped at least once",
+		skills: [
+			"FastAPI",
+			"Python",
+			"MongoDB",
+			"MySQL",
+			"Firebase",
+			"C#",
+			"Unity",
+		],
 	},
 	{
-		category: "TOOLS & DESIGN",
-		skills: ["Git", "Figma", "Postman", "Expo", "Draw.io"],
-	},
-	{
-		category: "AI & AUTOMATION",
-		skills: ["N8n Workflow Automation", "Ollama (Local LLMs)", "OpenAI API"],
+		label: "TOOLS",
+		context: "daily workflow",
+		skills: [
+			"Git",
+			"Figma",
+			"Postman",
+			"Draw.io",
+			"n8n",
+			"Ollama",
+			"OpenAI API",
+			"Claude",
+		],
 	},
 ];
 
-// Flat list for backward compatibility (SEO structured data, etc.)
-export const allSkills: Skill[] = skillGroups.flatMap((g) =>
-	g.skills.map((label) => ({ label }))
+// Flat list retained for SEO structured data and any other consumers.
+export interface Skill {
+	label: string;
+}
+
+export const allSkills: Skill[] = skillTiers.flatMap((t) =>
+	t.skills.map((label) => ({ label }))
 );

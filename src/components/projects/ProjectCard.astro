@@ -6,68 +6,70 @@ import LinkIcon from "../../assets/icons/link.svg";
 interface Props {
         project: ProjectItem;
         index: number;
+        featured?: boolean;
 }
-const { project: p, index: i } = Astro.props as Props;
+const { project: p, index: i, featured = false } = Astro.props as Props;
 ---
 
 <li
-        class="project-card"
+        class={`project-card${featured ? " project-card--featured" : ""}`}
         itemprop="itemListElement"
         itemscope
         itemtype="https://schema.org/CreativeWork"
 >
         <article class="card" aria-labelledby={`proj-${i}-title`}>
-                {
-                        p.image && (
-                                <figure class="media" itemprop="image">
-                                        <img
-                                                src={p.image.src}
-                                                width={p.image.width}
-                                                height={p.image.height}
-                                                alt={
-                                                        p.imageAlt ||
-                                                        `${p.title} - Web application screenshot showcasing ${p.stack.join(', ')} technology stack`
-                                                }
-                                                loading="lazy"
-                                                decoding="async"
-                                                itemprop="image"
-                                                itemscope
-                                                itemtype="https://schema.org/ImageObject"
-                                        />
-                                        <figcaption class="visually-hidden">
-                                                {p.imageAlt || p.title}
-                                        </figcaption>
-                                </figure>
-                        )
-                }
-                <header class="card-head">
-                        <h2
-                                id={`proj-${i}-title`}
-                                class="card-title"
-                                itemprop="headline"
-                        >
-                                {p.title}
-                        </h2>
-                        {
-                                p.year && (
-                                        <span class="year" aria-label="Year">
-                                                {p.year}
-                                        </span>
-                                )
-                        }
-                </header>
-                <p class="card-desc" itemprop="description">{p.description}</p>
-                <ul class="stack" role="list" aria-label="Tech stack">
-                        {
-                                p.stack.map((t) => (
+                {p.image && (
+                        <figure class="media" itemprop="image">
+                                <img
+                                        src={p.image.src}
+                                        width={p.image.width}
+                                        height={p.image.height}
+                                        alt={p.imageAlt || `${p.title} - screenshot showcasing the ${p.stack.join(', ')} stack`}
+                                        loading="lazy"
+                                        decoding="async"
+                                        itemprop="image"
+                                        itemscope
+                                        itemtype="https://schema.org/ImageObject"
+                                />
+                                <figcaption class="visually-hidden">
+                                        {p.imageAlt || p.title}
+                                </figcaption>
+                        </figure>
+                )}
+                <div class="body">
+                        <header class="card-head">
+                                {featured && (
+                                        <p class="featured-label" aria-label="Featured project">
+                                                <span aria-hidden="true">//</span> FEATURED
+                                        </p>
+                                )}
+                                <div class="title-row">
+                                        <h3
+                                                id={`proj-${i}-title`}
+                                                class="card-title"
+                                                itemprop="headline"
+                                        >
+                                                {p.title}
+                                        </h3>
+                                        {p.year && (
+                                                <span class="year" aria-label="Year">
+                                                        {p.year}
+                                                </span>
+                                        )}
+                                </div>
+                        </header>
+
+                        <p class="card-desc" itemprop="description">{p.description}</p>
+
+                        <ul class="stack" role="list" aria-label="Tech stack">
+                                {p.stack.map((t) => (
                                         <li class="badge" itemprop="keywords">
                                                 {t}
                                         </li>
-                                ))
-                        }
-                </ul>
-                {
-                        (p.demo || p.repo) && (
+                                ))}
+                        </ul>
+
+                        {(p.demo || p.repo) && (
                                 <nav class="links" aria-label="Project links">
                                         {p.demo && (
                                                 <a
@@ -78,11 +80,9 @@ const { project: p, index: i } = Astro.props as Props;
                                                         itemprop="url"
                                                         aria-label={`Open live site for ${p.title}`}
                                                 >
-                                                        <LinkIcon
-                                                                class="icon"
-                                                                aria-hidden="true"
-                                                        />
+                                                        <LinkIcon class="icon" aria-hidden="true" />
                                                         <span>Live</span>
+                                                        <span class="link-arrow" aria-hidden="true">→</span>
                                                 </a>
                                         )}
                                         {p.repo && (
@@ -94,22 +94,21 @@ const { project: p, index: i } = Astro.props as Props;
                                                         itemprop="codeRepository"
                                                         aria-label={`Open GitHub repo for ${p.title}`}
                                                 >
-                                                        <GithubIcon
-                                                                class="icon"
-                                                                aria-hidden="true"
-                                                        />
+                                                        <GithubIcon class="icon" aria-hidden="true" />
                                                         <span>GitHub</span>
+                                                        <span class="link-arrow" aria-hidden="true">→</span>
                                                 </a>
                                         )}
                                 </nav>
-                        )
-                }
+                        )}
+                </div>
         </article>
 </li>
 
 <style scoped lang="css">
         .project-card {
                 position: relative;
+                min-width: 0;
         }
 
         .card {
@@ -117,26 +116,38 @@ const { project: p, index: i } = Astro.props as Props;
                 background: var(--color-surface);
                 border: 1px solid var(--color-border);
                 border-radius: 12px;
-                padding: 1.45rem 1.5rem 2rem;
+                padding: 1.45rem 1.5rem 1.75rem;
                 display: flex;
                 flex-direction: column;
                 gap: 1.05rem;
-                height: 96%;
+                height: 100%;
                 box-shadow: 0 1px 3px var(--color-shadow-soft);
                 transition:
                         transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-                        box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+                        box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                        border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-	@media (hover: hover) {
-		.card:hover {
-			transform: translateY(-2px);
-			box-shadow: 0 4px 12px var(--color-shadow);
-		}
-		.card:hover .media img {
-			transform: scale(1.02);
-		}
-	}
+        @media (hover: hover) {
+                .card:hover {
+                        transform: translateY(-2px);
+                        box-shadow: 0 4px 12px var(--color-shadow);
+                        border-color: var(--color-text-muted);
+                }
+                .card:hover .media img {
+                        transform: scale(1.02);
+                }
+                .card:hover .link-arrow {
+                        transform: translateX(2px);
+                }
+        }
+
+        .body {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                flex-grow: 1;
+        }
 
         .media {
                 position: relative;
@@ -155,7 +166,7 @@ const { project: p, index: i } = Astro.props as Props;
                 inset: 0;
                 background: linear-gradient(
                         to top,
-                        rgba(0, 0, 0, 0.2) 0%,
+                        rgba(0, 0, 0, 0.18) 0%,
                         transparent 50%
                 );
                 border-radius: 8px;
@@ -175,9 +186,7 @@ const { project: p, index: i } = Astro.props as Props;
                 height: 100%;
                 object-fit: cover;
                 display: block;
-                transition:
-                        transform 0.5s ease,
-                        filter 0.5s ease;
+                transition: transform 0.5s ease;
         }
 
         .visually-hidden {
@@ -194,6 +203,23 @@ const { project: p, index: i } = Astro.props as Props;
 
         .card-head {
                 display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+        }
+
+        .featured-label {
+                font-family: var(--font-mono);
+                font-size: 0.7rem;
+                font-weight: 600;
+                letter-spacing: 0.1em;
+                color: var(--color-text-muted);
+                margin: 0;
+                line-height: 1;
+                text-transform: uppercase;
+        }
+
+        .title-row {
+                display: flex;
                 align-items: center;
                 justify-content: space-between;
                 gap: 0.75rem;
@@ -202,27 +228,27 @@ const { project: p, index: i } = Astro.props as Props;
 
         .card-title {
                 margin: 0;
-                font-size: 1.39rem;
+                font-size: 1.4rem;
                 line-height: 1.25;
                 font-weight: 700;
-                letter-spacing: 0.5px;
-                width: 100%;
+                letter-spacing: -0.01em;
         }
 
         .year {
                 font-family: var(--font-mono);
                 font-size: 0.72rem;
                 letter-spacing: 0.02em;
-                padding: 0.35rem 0.6rem;
+                padding: 0.3rem 0.55rem;
                 border-radius: 4px;
                 color: var(--color-text-muted);
                 background: var(--color-surface-alt);
+                white-space: nowrap;
         }
 
         .card-desc {
                 margin: 0;
-                font-size: 1.05rem;
-                line-height: 1.68;
+                font-size: 1rem;
+                line-height: 1.65;
                 color: var(--color-text-secondary);
                 flex-grow: 1;
         }
@@ -272,24 +298,30 @@ const { project: p, index: i } = Astro.props as Props;
                 gap: 0.45rem;
         }
 
-        .icon {
+        :global(.icon) {
                 width: 1rem;
                 height: 1rem;
                 display: block;
         }
 
-	@media (hover: hover) {
-		.link:hover {
-			background: var(--color-accent);
-			border-color: var(--color-accent);
-			color: var(--color-text-inverse);
-		}
-	}
+        .link-arrow {
+                display: inline-block;
+                transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @media (hover: hover) {
+                .link:hover {
+                        background: var(--color-accent);
+                        border-color: var(--color-accent);
+                        color: var(--color-text-inverse);
+                }
+        }
 
         @media (prefers-reduced-motion: reduce) {
                 .card,
                 .link,
-                .media img {
+                .media img,
+                .link-arrow {
                         transition: none;
                 }
         }

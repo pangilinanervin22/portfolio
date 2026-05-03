@@ -36,9 +36,6 @@ const {
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
 
-<!-- Image Preload for better discovery -->
-<link rel="preload" as="image" href={`${base}/me.jpg`} />
-
 <!-- Primary Meta Tags -->
 <title>{title}</title>
 <meta name="title" content={title} />
@@ -98,9 +95,8 @@ const {
                                 Astro.site
                         ).href,
                 },
-                jobTitle: "Full Stack Developer",
-                description:
-                        "Computer Science graduate and Full Stack Developer specializing in web applications, mobile development, and DevOps practices",
+                jobTitle: "Full-stack Developer",
+                description: description,
                 url:
                         Astro.site?.href || `https://pangilinanervin22.github.io/portfolio/`,
                 sameAs: [

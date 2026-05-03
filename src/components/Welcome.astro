@@ -7,364 +7,363 @@ import EmailIcon from "../assets/icons/email.svg";
 
 <Border aria-hidden="true" />
 <section
-	id="welcome"
-	class="main-container"
-	aria-labelledby="welcome-heading"
-	itemscope
-	itemtype="https://schema.org/Person"
+        id="welcome"
+        class="hero"
+        aria-labelledby="welcome-heading"
+        itemscope
+        itemtype="https://schema.org/Person"
 >
-	<div class="content-container">
-		<header class="content">
-			<p class="greeting">Hello, I'm</p>
-			<h1 id="welcome-heading" itemprop="name">
-				Ervin Pangilinan
-			</h1>
-			<div class="accent-line" aria-hidden="true"></div>
-			<p class="tagline" itemprop="description">
-				Full Stack Developer
-			</p>
+        <div class="hero-inner">
+                <header class="content">
+                        <p class="status" aria-label="Current state">
+                                <span class="status-mark" aria-hidden="true">//</span>
+                                <span class="status-text">CURRENTLY</span>
+                                <span class="status-sep" aria-hidden="true">·</span>
+                                <span class="status-loc">Cosmic Society</span>
+                                <span class="status-sep" aria-hidden="true">·</span>
+                                <span class="status-loc">Manila</span>
+                        </p>
 
-                        <!-- Minimalist Social Links -->
-                        <nav
-                                class="social-links"
-                                aria-label="Social media and contact links"
-                        >
-                                <a
-                                        href="https://github.com/pangilinanervin22"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        class="social-link"
-                                        aria-label="GitHub"
-                                        itemprop="sameAs"
-                                >
-                                        <GithubIcon
-                                                class="social-icon"
-                                                aria-hidden="true"
-                                        />
-                                </a>
+                        <h1 id="welcome-heading" itemprop="name" class="name">
+                                Ervin Pangilinan
+                        </h1>
 
-                                <a
-                                        href="https://www.linkedin.com/in/ervin-pangilinan-9b9410231"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        class="social-link"
-                                        aria-label="LinkedIn"
-                                        itemprop="sameAs"
-                                >
-                                        <LinkedinIcon
-                                                class="social-icon"
-                                                aria-hidden="true"
-                                        />
-                                </a>
+                        <p class="tagline" itemprop="description">
+                                I've been writing software since 2021. Today I build software that helps people connect and engage at
+                                <span class="tagline-mark">Cosmic Society</span>
+                                and chase whatever rabbit hole catches, my weapon currently
+                                <span class="tagline-mark">TypeScript</span>,
+                                <span class="tagline-mark">Next.js</span>,
+                                <span class="tagline-mark">Supabase</span>,
+                                <span class="tagline-mark">NestJS</span>,
+                                and digging into <span class="tagline-mark">AI automation</span> and <span class="tagline-mark"> depth system design</span>.
+                        </p>
 
-                                <a
-                                        href="mailto:pangilinanervin22@gmail.com"
-                                        class="social-link"
-                                        aria-label="Email"
-                                        itemprop="email"
-                                >
-                                        <EmailIcon
-                                                class="social-icon"
-                                                aria-hidden="true"
-                                        />
-                                </a>
-                        </nav>
+                        <div class="accent-line" aria-hidden="true"></div>
 
                         <div class="actions">
-                                <a
-                                        class="btn"
-                                        href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/Ervin_Pangilinan_Resume.pdf`}
-                                        download="Ervin_Pangilinan_Resume.pdf"
-                                        aria-label="Download CV"
-                                        itemprop="url"
-                                >
-                                        Download CV
-                                </a>
+                                <nav class="text-links" aria-label="Contact links">
+                                        <a
+                                                href="mailto:pangilinanervin22@gmail.com"
+                                                class="text-link"
+                                                aria-label="Email"
+                                                itemprop="email"
+                                        >
+                                                <EmailIcon class="text-link-icon" aria-hidden="true" />
+                                                <span>Email</span>
+                                        </a>
+                                        <a
+                                                href="https://github.com/pangilinanervin22"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                class="text-link"
+                                                aria-label="GitHub"
+                                                itemprop="sameAs"
+                                        >
+                                                <GithubIcon class="text-link-icon" aria-hidden="true" />
+                                                <span>GitHub</span>
+                                        </a>
+                                        <a
+                                                href="https://www.linkedin.com/in/ervin-pangilinan-9b9410231"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                class="text-link"
+                                                aria-label="LinkedIn"
+                                                itemprop="sameAs"
+                                        >
+                                                <LinkedinIcon class="text-link-icon" aria-hidden="true" />
+                                                <span>LinkedIn</span>
+                                        </a>
+                                </nav>
+                        </div>
+
+                        <div class="exploring" aria-label="Currently exploring">
+                                <p class="exploring-label">
+                                        <span aria-hidden="true">//</span> Currently exploring
+                                </p>
+                                <ul class="exploring-list">
+                                        <li>AI automation pipelines</li>
+                                        <li><span aria-hidden="true">·</span> Distributed system design</li>
+                                        <li><span aria-hidden="true">·</span> Event-driven architecture</li>
+                                </ul>
                         </div>
                 </header>
         </div>
 
-        <!-- Scroll indicator -->
-        <div class="scroll-hint" aria-hidden="true">
-                <svg width="16" height="10" viewBox="0 0 16 10" fill="none">
+        <a class="scroll-hint" href="#introduction" aria-label="Scroll to About section">
+                <svg width="14" height="9" viewBox="0 0 16 10" fill="none" aria-hidden="true">
                         <path d="M1 1L8 8L15 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-        </div>
-
-        <!-- Hidden structured data for better SEO -->
-        <script type="application/ld+json">
-                {
-                        "@context": "https://schema.org",
-                        "@type": "Person",
-                        "name": "Ervin Pangilinan",
-                        "jobTitle": "Full Stack Developer",
-                        "description": "Full Stack Developer specializing in web applications, mobile development, and DevOps practices",
-                        "url": Astro.site?.href || "https://pangilinanervin22.github.io/portfolio/",
-                        "email": "pangilinanervin22@gmail.com",
-                        "sameAs": [
-                                "https://github.com/pangilinanervin22",
-                                "https://www.linkedin.com/in/ervin-pangilinan-9b9410231"
-                        ],
-                        "knowsAbout": [
-                                "Web Development",
-                                "Mobile Development",
-                                "DevOps",
-                                "Full Stack Development"
-                        ],
-                        "hasOccupation": {
-                                "@type": "Occupation",
-                                "name": "Full Stack Developer"
-                        }
-                }
-        </script>
+                <span class="scroll-hint-label">01 / About</span>
+        </a>
 </section>
 <Border aria-hidden="true" />
 
 <style>
-	.main-container {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		min-height: 80vh;
-		padding: 2rem;
-		position: relative;
-	}
+        .hero {
+                position: relative;
+                display: flex;
+                align-items: center;
+                width: 100%;
+                min-height: 90vh;
+                padding: 4rem 1.5rem 5rem;
+        }
 
-	.content-container {
-		width: 100%;
-		max-width: 650px;
-		margin: 0 auto;
-	}
+        .hero-inner {
+                max-width: 1200px;
+                width: 100%;
+                margin-inline: auto;
+                display: grid;
+                grid-template-columns: minmax(0, 1fr);
+        }
 
-	.content {
-		text-align: center;
+        .content {
+                max-width: 760px;
+                width: 100%;
+        }
 
-		.greeting {
-			font-size: clamp(1rem, 2vw, 1.2rem);
-			font-weight: 500;
-			color: var(--color-text-secondary);
-			margin: 0 0 0.5rem 0;
-			letter-spacing: 0.05em;
-			opacity: 0;
-			animation: fadeSlideUp 0.6s ease forwards;
-			animation-delay: 0.1s;
-		}
+        /* Status line */
+        .status {
+                font-family: var(--font-mono);
+                font-size: 0.78rem;
+                font-weight: 500;
+                letter-spacing: 0.06em;
+                color: var(--color-text-muted);
+                margin: 0 0 2rem;
+                line-height: 1;
+                display: inline-flex;
+                align-items: baseline;
+                gap: 0.45rem;
+                opacity: 0;
+                animation: fadeSlideUp 0.6s ease 0.1s forwards;
+        }
 
-		h1 {
-			font-size: clamp(2.8rem, 6vw, 4.5rem);
-			font-weight: 700;
-			letter-spacing: -0.03em;
-			margin: 0 0 0.75rem 0;
-			color: var(--color-text-primary);
-			line-height: 1.05;
-			opacity: 0;
-			animation: fadeSlideUp 0.7s ease forwards;
-			animation-delay: 0.2s;
-		}
+        .status-mark {
+                color: var(--color-text-secondary);
+                opacity: 0.7;
+        }
 
-		.tagline {
-			font-family: var(--font-mono);
-			font-size: clamp(1rem, 2.2vw, 1.2rem);
-			font-weight: 400;
-			color: var(--color-text-muted);
-			margin: 0 0 2.5rem 0;
-			line-height: 1.4;
-			letter-spacing: 0.02em;
-			opacity: 0;
-			animation: fadeSlideUp 0.7s ease forwards;
-			animation-delay: 0.35s;
-		}
-	}
+        .status-text {
+                color: var(--color-text-primary);
+                font-weight: 600;
+        }
 
-	/* Accent line between name and tagline */
-	.accent-line {
-		width: 40px;
-		height: 1.5px;
-		background: var(--color-text-primary);
-		margin: 0 auto 0.75rem;
-		opacity: 0;
-		animation: lineReveal 0.6s ease forwards;
-		animation-delay: 0.28s;
-	}
+        .status-sep {
+                opacity: 0.4;
+        }
 
-	@keyframes lineReveal {
-		from {
-			width: 0;
-			opacity: 0;
-		}
-		to {
-			width: 40px;
-			opacity: 0.5;
-		}
-	}
+        .status-loc {
+                color: var(--color-text-secondary);
+        }
 
-	/* Minimalist Social Links */
-	.social-links {
-		display: flex;
-		justify-content: center;
-		gap: 1.5rem;
-		margin: 0 0 3rem 0;
-		opacity: 0;
-		animation: fadeSlideUp 0.7s ease forwards;
-		animation-delay: 0.5s;
-	}
+        /* Name */
+        .name {
+                font-family: 'Outfit Variable', sans-serif;
+                font-size: clamp(3rem, 8vw, 6rem);
+                font-weight: 700;
+                letter-spacing: -0.04em;
+                line-height: 1;
+                color: var(--color-text-primary);
+                margin: 0 0 1.5rem;
+                opacity: 0;
+                animation: fadeSlideUp 0.7s ease 0.2s forwards;
+        }
 
-	.social-link {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 44px;
-		height: 44px;
-		color: var(--color-text-muted);
-		text-decoration: none;
-		border-radius: 50%;
-		background: transparent;
-		transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        /* Tagline */
+        .tagline {
+                font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+                font-weight: 400;
+                line-height: 1.5;
+                color: var(--color-text-secondary);
+                max-width: 60ch;
+                margin: 0 0 1.5rem;
+                opacity: 0;
+                animation: fadeSlideUp 0.7s ease 0.32s forwards;
+        }
 
-		&:hover {
-			color: var(--color-text-primary);
-			background: var(--color-surface-alt);
-			transform: translateY(-2px);
-		}
-	}
+        .tagline-mark {
+                color: var(--color-text-primary);
+                font-weight: 500;
+        }
 
-	.social-icon {
-		width: 22px;
-		height: 22px;
-	}
+        /* Accent line */
+        .accent-line {
+                width: 0;
+                height: 1.5px;
+                background: var(--color-text-primary);
+                margin: 0 0 2rem 0;
+                opacity: 0;
+                animation: lineReveal 0.7s ease 0.45s forwards;
+        }
 
-	/* Clean Action Button */
-	.actions {
-		display: flex;
-		justify-content: center;
-		opacity: 0;
-		animation: fadeSlideUp 0.7s ease forwards;
-		animation-delay: 0.65s;
-	}
+        @keyframes lineReveal {
+                from { width: 0; opacity: 0; }
+                to { width: 80px; opacity: 0.5; }
+        }
 
-	.btn {
-		display: inline-flex;
-		align-items: center;
-		padding: 0.8rem 2rem;
-		font-family: var(--font-mono);
-		font-size: 0.9rem;
-		font-weight: 500;
-		color: var(--color-text-inverse);
-		text-decoration: none;
-		border: 1px solid var(--color-accent);
-		border-radius: 8px;
-		background: var(--color-accent);
-		transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        /* Actions row */
+        .actions {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 1.5rem 2rem;
+                margin: 0 0 3rem;
+                opacity: 0;
+                animation: fadeSlideUp 0.7s ease 0.55s forwards;
+        }
 
-		&:hover {
-			background: var(--color-accent-hover);
-			border-color: var(--color-accent-hover);
-			transform: translateY(-1px);
-			box-shadow: 0 4px 12px var(--color-shadow);
-		}
-	}
+        .text-links {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1.4rem;
+                align-items: center;
+        }
 
-	/* Scroll indicator */
-	.scroll-hint {
-		position: absolute;
-		bottom: 2rem;
-		left: 0;
-		right: 0;
-		display: flex;
-		justify-content: center;
-		color: var(--color-text-faint);
-		opacity: 0;
-		animation: fadeSlideUp 0.7s ease 0.9s forwards;
-	}
+        .text-link {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.4rem;
+                font-family: var(--font-mono);
+                font-size: 0.82rem;
+                color: var(--color-text-secondary);
+                text-decoration: none;
+                transition: color 0.2s ease;
+        }
 
-	.scroll-hint svg {
-		display: block;
-		animation: gentle-bounce 2s ease-in-out 1.6s infinite;
-	}
+        .text-link:hover {
+                color: var(--color-text-primary);
+        }
 
-	@keyframes gentle-bounce {
-		0%, 100% { transform: translateY(0); }
-		50% { transform: translateY(5px); }
-	}
+        :global(.text-link-icon) {
+                width: 14px;
+                height: 14px;
+        }
 
-	/* Page load animations */
-	@keyframes fadeSlideUp {
-		from {
-			opacity: 0;
-			transform: translateY(20px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
+        /* Currently exploring */
+        .exploring {
+                opacity: 0;
+                animation: fadeSlideUp 0.7s ease 0.7s forwards;
+        }
 
-	/* Mobile Responsive */
-	@media (max-width: 768px) {
-		.main-container {
-			padding: 1.5rem;
-			min-height: 90vh;
-		}
+        .exploring-label {
+                font-family: var(--font-mono);
+                font-size: 0.72rem;
+                font-weight: 500;
+                letter-spacing: 0.06em;
+                color: var(--color-text-muted);
+                margin: 0 0 0.4rem;
+                line-height: 1;
+        }
 
-		.social-links {
-			gap: 1.2rem;
-			margin: 0 0 2.5rem 0;
-		}
+        .exploring-list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.55rem 0.85rem;
+                font-family: var(--font-mono);
+                font-size: 0.78rem;
+                color: var(--color-text-secondary);
+        }
 
-		.social-link {
-			width: 52px;
-			height: 52px;
-		}
+        .exploring-list li {
+                display: inline-flex;
+                align-items: baseline;
+                gap: 0.55rem;
+        }
 
-		.social-icon {
-			width: 26px;
-			height: 26px;
-		}
-	}
+        /* Scroll hint */
+        .scroll-hint {
+                position: absolute;
+                bottom: 1.75rem;
+                left: 50%;
+                transform: translateX(-50%);
+                display: inline-flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0.45rem;
+                color: var(--color-text-muted);
+                text-decoration: none;
+                opacity: 0;
+                animation: fadeSlideUp 0.7s ease 0.95s forwards;
+        }
 
-	@media (max-width: 480px) {
-		.main-container {
-			padding: 1rem;
-		}
+        .scroll-hint svg {
+                animation: gentle-bounce 2.4s ease-in-out 1.6s infinite;
+        }
 
-		.content h1 {
-			margin-bottom: 0.6rem;
-		}
+        .scroll-hint-label {
+                font-family: var(--font-mono);
+                font-size: 0.7rem;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: var(--color-text-muted);
+        }
 
-		.tagline {
-			margin-bottom: 2.5rem;
-		}
+        .scroll-hint:hover {
+                color: var(--color-text-primary);
+        }
 
-		.social-links {
-			gap: 1rem;
-			margin-bottom: 2rem;
-		}
+        @keyframes gentle-bounce {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(4px); }
+        }
 
-		.btn {
-			padding: 0.9rem 1.8rem;
-			font-size: 0.95rem;
-		}
-	}
+        @keyframes fadeSlideUp {
+                from { opacity: 0; transform: translateY(16px); }
+                to { opacity: 1; transform: translateY(0); }
+        }
 
-	@media (prefers-reduced-motion: reduce) {
-		.content .greeting,
-		.content h1,
-		.content .tagline,
-		.social-links,
-		.actions {
-			animation: none;
-			opacity: 1;
-		}
-		.accent-line {
-			animation: none;
-			opacity: 0.5;
-		}
-		.scroll-hint {
-			animation: none;
-			opacity: 1;
-		}
-		.scroll-hint svg {
-			animation: none;
-		}
-	}
+        /* Mobile */
+        @media (max-width: 768px) {
+                .hero {
+                        padding: 2.5rem 1.5rem 4rem;
+                        min-height: 92vh;
+                }
+                .actions {
+                        flex-direction: column;
+                        align-items: flex-start;
+                        gap: 1.25rem;
+                        margin-bottom: 2.5rem;
+                }
+                .text-links {
+                        gap: 1rem;
+                }
+        }
+
+        @media (max-width: 480px) {
+                .name {
+                        font-size: clamp(2.6rem, 13vw, 4rem);
+                }
+                .tagline {
+                        font-size: 1rem;
+                }
+                .exploring-list {
+                        font-size: 0.72rem;
+                }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+                .status,
+                .name,
+                .tagline,
+                .actions,
+                .exploring,
+                .scroll-hint {
+                        animation: none;
+                        opacity: 1;
+                }
+                .accent-line {
+                        animation: none;
+                        opacity: 0.5;
+                        width: 80px;
+                }
+                .scroll-hint svg {
+                        animation: none;
+                }
+                .text-link {
+                        transition: none;
+                }
+        }
 </style>
