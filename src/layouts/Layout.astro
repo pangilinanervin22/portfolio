@@ -12,6 +12,7 @@ import "@fontsource/jetbrains-mono/500.css";
 
 import "../styles/global.css"; // Ensure global styles are imported
 import CustomCursor from "../components/react/CustomCursor";
+import SpeedInsights from "@vercel/speed-insights/astro";
 ---
 
 <html lang="en">
@@ -25,6 +26,7 @@ import CustomCursor from "../components/react/CustomCursor";
                         <slot />
                 </main>
                 <Footer />
+                <SpeedInsights />
         </body>
 </html>
 
