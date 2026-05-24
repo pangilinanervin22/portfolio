@@ -2,6 +2,7 @@ import DemoImageInventory from "../assets/projects/inventory.png";
 import timekeeping from "../assets/projects/timekeeping.png";
 import greenCycle from "../assets/projects/greenCycle.png";
 import fairWrite from "../assets/projects/fairwrite.png";
+import priceworth from "../assets/projects/priceworth.jpg";
 
 export interface ProjectItem {
         title: string;
@@ -16,9 +17,30 @@ export interface ProjectItem {
 
 export const projects: ProjectItem[] = [
         {
+                title: "Priceworth Furniture",
+                description:
+                        "E-commerce platform for an Australian-made furniture retailer. I build and maintain the production stack across Next.js, NestJS, and Laravel: migrated the legacy Pages Router to App Router for 30%+ faster page loads and better Core Web Vitals, shipped technical SEO and dynamic sitemaps that lifted organic visits by ~2,000+, and cut cloud costs ~45% with CDN-based asset caching and SSR strategies. CI/CD on GitHub Actions across Vercel, Heroku, AWS, and Azure.",
+                stack: [
+                        "Next.js",
+                        "NestJS",
+                        "Laravel",
+                        "TypeScript",
+                        "PostgreSQL",
+                        "GitHub Actions",
+                        "Vercel",
+                        "Azure",
+                        "AWS",
+                        "Heroku",
+                ],
+                year: "2025",
+                demo: "https://www.priceworth.com.au/",
+                image: priceworth,
+                imageAlt: "image of priceworth australian furniture e-commerce website",
+        },
+        {
                 title: "Paysera Timekeeping System",
                 description:
-                        "Internship at FiveTwenty: a small team built a timekeeping platform. I owned the backend — role-based access, audit logging, API design, performance tuning, automated tests. It's in daily production use by FiveTwenty's enterprise clients.",
+                        "Internship at FiveTwenty: led the backend of an enterprise timekeeping platform (role-based access, audit logging, API design) and contributed to frontend and DevOps, including Playwright + Jest E2E coverage and Docker on DigitalOcean. Now in daily production use by FiveTwenty's enterprise clients.",
                 stack: [
                         "React",
                         "ShadCN",
@@ -28,7 +50,7 @@ export const projects: ProjectItem[] = [
                         "TypeScript",
                         "Docker",
                         "Jest",
-                        "Supertest",
+                        "Playwright",
                         "DigitalOcean",
                 ],
                 year: "2024 – 2025",
@@ -38,7 +60,7 @@ export const projects: ProjectItem[] = [
         {
                 title: "Fair Write (Gender Fair Revision)",
                 description:
-                        "Group thesis project — a writing tool that flags biased terms and suggests inclusive alternatives in real time. I worked on the backend and NLP side: REST APIs, the bias-detection pipeline, and the LanguageTool + spaCy integration. Live demo's still online.",
+                        "Group thesis project, a writing tool that flags biased terms and suggests inclusive alternatives in real time. I worked on the backend and NLP side: REST APIs, the bias-detection pipeline, and the LanguageTool + spaCy integration. Live demo's still online.",
                 stack: [
                         "Svelte",
                         "Tailwind",
@@ -56,7 +78,7 @@ export const projects: ProjectItem[] = [
         {
                 title: "Ajapco Sales & Inventory System",
                 description:
-                        "Freelance project — a sales and inventory system for a Japanese sweets shop. Built solo, full stack.",
+                        "Freelance project, a sales and inventory system for a Japanese sweets shop. Built solo, full stack.",
                 stack: ["React", "Node.js", "Express", "MySQL"],
                 year: "2023",
                 repo: "https://github.com/pangilinanervin22/inventory_react",
@@ -67,7 +89,7 @@ export const projects: ProjectItem[] = [
         {
                 title: "GreenCycle Mobile App",
                 description:
-                        "Freelance project — a recycling app I built solo. Online-first backend with offline support and tested cloud↔local sync across Android and iOS.",
+                        "Freelance project, a recycling app I built solo. Online-first backend with offline support and tested cloud↔local sync across Android and iOS.",
                 stack: ["React Native", "Expo", "Supabase", "TypeScript"],
                 year: "2025",
                 repo: "https://github.com/pangilinanervin22/GreenCycle",

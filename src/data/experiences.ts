@@ -82,7 +82,7 @@ export const experiences: ExperienceItem[] = [
 		company: "Self-Employed",
 		period: "2023 – 2025",
 		location: "Remote",
-		summary: "Custom web and mobile apps for students and small businesses — academic workflows and automated business processes.",
+		summary: "Custom web and mobile apps for students and small businesses, academic workflows and automated business processes.",
 		highlights: [
 			"Built and deployed solutions with React, Express, React Native, and Supabase, with scalability and efficiency in mind",
 			"Translated client requirements into shipped implementations with full project-delivery satisfaction",
@@ -98,7 +98,7 @@ export const experiences: ExperienceItem[] = [
 		summary: "Thesis and team projects with full-stack architecture, state management, and automated tests.",
 		highlights: [
 			"Co-built a gender-fair NLP revision tool with FastAPI + spaCy (group thesis)",
-			"Chrome Tone — 2-player brain-teaser puzzle game (C# + Unity) where black/white characters cross color-matched platforms toward a portal; won 'Best Intro in Game Development Project 2024'",
+			"Chrome Tone, 2-player brain-teaser puzzle game (C# + Unity) where black/white characters cross color-matched platforms toward a portal; won 'Best Intro in Game Development Project 2024'",
 			"Online thrift store on the MERN stack (MongoDB, Express, React, Node) for the Software Engineering course",
 		],
 		tech: [
@@ -120,7 +120,7 @@ export const experiences: ExperienceItem[] = [
 		location: "Online",
 		summary: "HTML, CSS, JS, Java, Git. Where it began.",
 		highlights: [
-			"Mini-games in vanilla JS and Java/Android — snake, guessing games, brain teasers",
+			"Mini-games in vanilla JS and Java/Android, snake, guessing games, brain teasers",
 			"Landing pages with web + mobile responsiveness and theming, designed in Figma",
 		],
 		tech: ["HTML", "CSS", "JavaScript", "Java", "Android", "Figma", "Git"],
