@@ -4,11 +4,11 @@ import '../../styles/CustomCursor.css';
 const CustomCursor: React.FC = () => {
     const cursorRef = useRef<HTMLDivElement | null>(null);
     const dotRef = useRef<HTMLDivElement | null>(null);
-    const glowRef = useRef<HTMLDivElement | null>(null);
     const [enabled, setEnabled] = useState(true);
 
     const mouse = useRef({ x: 0, y: 0 });
     const cursorPos = useRef({ x: 0, y: 0 });
+    const raf = useRef<number>(0);
 
     useEffect(() => {
         // Detect touch / coarse pointer devices and disable custom cursor
@@ -23,36 +23,51 @@ const CustomCursor: React.FC = () => {
             mouse.current.y = e.clientY;
 
             if (dotRef.current) {
-                dotRef.current.style.transform = `translate3d(${e.clientX - 3}px, ${e.clientY - 3}px, 0)`;
+                dotRef.current.style.transform = `translate3d(${e.clientX - 2.5}px, ${e.clientY - 2.5}px, 0)`;
             }
+
+            // Grow the ring over interactive targets
+            const interactive =
+                e.target instanceof Element &&
+                e.target.closest('a, button, [role="button"], label, input, summary');
+            cursorRef.current?.classList.toggle('cursor--link', Boolean(interactive));
         };
 
-        document.addEventListener("mousemove", move);
+        const hide = () => {
+            cursorRef.current?.classList.add('cursor--hidden');
+            dotRef.current?.classList.add('cursor--hidden');
+        };
+        const show = () => {
+            cursorRef.current?.classList.remove('cursor--hidden');
+            dotRef.current?.classList.remove('cursor--hidden');
+        };
+
+        document.addEventListener('mousemove', move);
+        document.documentElement.addEventListener('mouseleave', hide);
+        document.documentElement.addEventListener('mouseenter', show);
 
         const animate = () => {
             const { x, y } = cursorPos.current;
             const dx = mouse.current.x - x;
             const dy = mouse.current.y - y;
 
-            cursorPos.current.x += dx * 0.1;
-            cursorPos.current.y += dy * 0.1;
+            cursorPos.current.x += dx * 0.16;
+            cursorPos.current.y += dy * 0.16;
 
             if (cursorRef.current) {
-                cursorRef.current.style.transform = `translate3d(${cursorPos.current.x - 20}px, ${cursorPos.current.y - 20}px, 0)`;
+                cursorRef.current.style.transform = `translate3d(${cursorPos.current.x - 16}px, ${cursorPos.current.y - 16}px, 0)`;
             }
 
-            if (glowRef.current) {
-                glowRef.current.style.left = `${cursorPos.current.x}px`;
-                glowRef.current.style.top = `${cursorPos.current.y}px`;
-            }
-
-            requestAnimationFrame(animate);
+            raf.current = requestAnimationFrame(animate);
         };
 
         animate();
 
         return () => {
-            document.removeEventListener("mousemove", move);
+            document.removeEventListener('mousemove', move);
+            document.documentElement.removeEventListener('mouseleave', hide);
+            document.documentElement.removeEventListener('mouseenter', show);
+            cancelAnimationFrame(raf.current);
         };
     }, []);
 
@@ -60,11 +75,8 @@ const CustomCursor: React.FC = () => {
 
     return (
         <>
-            <div ref={glowRef} className="cursor-glow" aria-hidden="true" />
-            <div ref={cursorRef} className="cursor">
-                <div className="lens" />
-            </div>
-            <div ref={dotRef} className="center-dot" />
+            <div ref={cursorRef} className="cursor" aria-hidden="true" />
+            <div ref={dotRef} className="center-dot" aria-hidden="true" />
         </>
     );
 };

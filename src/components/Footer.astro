@@ -1,5 +1,4 @@
 ---
-import Border from "./_common/Border.astro";
 // Footer component (enhanced details) this will be static date
 const year = new Date().getFullYear();
 const buildDate = new Date().toLocaleDateString("en-US", {
@@ -10,31 +9,36 @@ const buildDate = new Date().toLocaleDateString("en-US", {
 ---
 
 <footer id="footer" class="footer-container" aria-labelledby="footer-heading">
-        <Border />
         <h2 id="footer-heading" class="visually-hidden">Site footer</h2>
 
         <section class="cta-block" aria-labelledby="cta-heading">
                 <p class="cta-label">
-                        <span aria-hidden="true">//</span> Say hi
+                        <span aria-hidden="true">//</span> 05 — Say hi
                 </p>
                 <h3 id="cta-heading" class="cta-headline">
                         Want to talk about code, projects, or anything in between?
                 </h3>
-                <div class="cta-actions">
+                <a class="cta-mail" href="mailto:pangilinanervin22@gmail.com">
+                        <span class="cta-mail-text">pangilinanervin22@gmail.com</span>
+                        <span class="cta-mail-arrow" aria-hidden="true">↗</span>
+                </a>
+                <div class="cta-secondary">
                         <a
-                                class="cta-btn cta-btn--primary"
-                                href="mailto:pangilinanervin22@gmail.com"
-                        >
-                                pangilinanervin22@gmail.com
-                                <span aria-hidden="true">→</span>
-                        </a>
-                        <a
-                                class="cta-btn"
+                                class="cta-link"
                                 href="https://www.linkedin.com/in/ervin-pangilinan-9b9410231"
                                 target="_blank"
                                 rel="noopener noreferrer"
                         >
-                                LinkedIn <span aria-hidden="true">→</span>
+                                LinkedIn <span aria-hidden="true">↗</span>
+                        </a>
+                        <span class="cta-sep" aria-hidden="true">·</span>
+                        <a
+                                class="cta-link"
+                                href="https://github.com/pangilinanervin22"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                        >
+                                GitHub <span aria-hidden="true">↗</span>
                         </a>
                 </div>
         </section>
@@ -95,6 +99,12 @@ const buildDate = new Date().toLocaleDateString("en-US", {
                         </p>
                 </div>
         </div>
+
+        <div class="eof-row" aria-hidden="true">
+                <span class="eof-line"></span>
+                <span class="eof-text">// EOF</span>
+                <span class="eof-line"></span>
+        </div>
 </footer>
 
 <script>
@@ -109,19 +119,21 @@ const buildDate = new Date().toLocaleDateString("en-US", {
 <style>
         .footer-container {
                 width: 100%;
-                margin-top: 4rem;
-                padding: 2.75rem 1.25rem 3.25rem;
-                background: var(--color-background-surface);
-                border-top: 1px solid var(--color-border);
+                margin-top: 2rem;
+                padding: 0 var(--gutter) 2rem;
                 font-size: 0.95rem;
                 color: var(--color-text-muted);
+                border-top: 1px solid var(--color-border);
         }
 
         .footer-inner {
-                width: min(1180px, 92%);
+                max-width: var(--container);
+                width: 100%;
                 margin-inline: auto;
                 display: grid;
                 gap: 2rem;
+                padding-top: 2.5rem;
+                border-top: 1px solid var(--color-border);
         }
         @media (min-width: 640px) {
                 .footer-inner {
@@ -217,7 +229,7 @@ const buildDate = new Date().toLocaleDateString("en-US", {
         .social-list a:focus-visible {
                 outline: 2px solid var(--color-focus-ring);
                 outline-offset: 2px;
-                border-radius: 2px;
+                border-radius: var(--radius-sm);
         }
 
         .meta-block {
@@ -285,7 +297,7 @@ const buildDate = new Date().toLocaleDateString("en-US", {
         .top-btn:focus-visible {
                 outline: 2px solid var(--color-focus-ring);
                 outline-offset: 2px;
-                border-radius: 2px;
+                border-radius: var(--radius-sm);
         }
 
         .visually-hidden {
@@ -309,17 +321,16 @@ const buildDate = new Date().toLocaleDateString("en-US", {
                 }
         }
 
-        /* Top CTA block */
+        /* Top CTA block — the email IS the design */
         .cta-block {
-                width: min(720px, 92%);
-                margin: 0 auto 2.5rem;
-                padding: 2.75rem 1rem 2.5rem;
+                max-width: var(--container);
+                width: 100%;
+                margin: 0 auto 2.75rem;
+                padding: clamp(3.5rem, 8vh, 5.5rem) 0 0;
                 display: flex;
                 flex-direction: column;
-                align-items: center;
-                gap: 1rem;
-                text-align: center;
-                border-bottom: 1px solid var(--color-border);
+                align-items: flex-start;
+                gap: 1.25rem;
         }
 
         .cta-label {
@@ -327,82 +338,118 @@ const buildDate = new Date().toLocaleDateString("en-US", {
                 font-size: 0.78rem;
                 font-weight: 500;
                 letter-spacing: 0.06em;
+                text-transform: uppercase;
                 color: var(--color-text-muted);
                 margin: 0;
                 line-height: 1;
         }
 
         .cta-headline {
-                font-family: 'Outfit Variable', sans-serif;
-                font-size: clamp(1.4rem, 3vw, 2.1rem);
-                font-weight: 600;
-                line-height: 1.25;
-                letter-spacing: -0.02em;
+                font-family: var(--font-display);
+                font-size: clamp(1.6rem, 3.4vw, 2.6rem);
+                font-weight: 700;
+                line-height: 1.15;
+                letter-spacing: -0.025em;
                 color: var(--color-text-primary);
                 margin: 0;
-                max-width: 30ch;
+                max-width: 26ch;
         }
 
-        .cta-actions {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                align-items: center;
-                gap: 0.85rem;
-                margin-top: 0.5rem;
-        }
-
-        .cta-btn {
+        .cta-mail {
                 display: inline-flex;
-                align-items: center;
-                gap: 0.45rem;
-                padding: 0.7rem 1.1rem;
+                align-items: baseline;
+                gap: 0.5rem;
+                margin-top: 0.5rem;
                 font-family: var(--font-mono);
-                font-size: 0.82rem;
+                font-size: clamp(1.05rem, 2.8vw, 1.9rem);
                 font-weight: 500;
+                letter-spacing: -0.01em;
                 color: var(--color-text-primary);
                 text-decoration: none;
-                background: transparent;
-                border: 1px solid var(--color-border);
-                border-radius: 6px;
-                transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+                border-bottom: 2px solid var(--color-text-primary);
+                padding-bottom: 0.3rem;
+                max-width: 100%;
+                overflow-wrap: anywhere;
+                transition: opacity 0.2s ease;
         }
 
-        .cta-btn:hover {
-                border-color: var(--color-text-primary);
-                transform: translateY(-1px);
+        .cta-mail-arrow {
+                font-family: var(--font-display);
+                transition: transform 0.25s cubic-bezier(0.22, 0.61, 0.36, 1);
         }
 
-        .cta-btn:focus-visible {
+        @media (hover: hover) {
+                .cta-mail:hover {
+                        opacity: 0.65;
+                }
+                .cta-mail:hover .cta-mail-arrow {
+                        transform: translate(3px, -3px);
+                }
+        }
+
+        .cta-mail:focus-visible {
+                outline: 2px solid var(--color-focus-ring);
+                outline-offset: 4px;
+        }
+
+        .cta-secondary {
+                display: flex;
+                align-items: baseline;
+                gap: 0.85rem;
+                font-family: var(--font-mono);
+                font-size: 0.82rem;
+        }
+
+        .cta-sep {
+                color: var(--color-text-faint);
+        }
+
+        .cta-link {
+                color: var(--color-text-secondary);
+                text-decoration: none;
+                font-weight: 500;
+                letter-spacing: 0.02em;
+                transition: color 0.2s ease;
+        }
+
+        .cta-link:hover {
+                color: var(--color-text-primary);
+        }
+
+        .cta-link:focus-visible {
                 outline: 2px solid var(--color-focus-ring);
                 outline-offset: 2px;
+                border-radius: var(--radius-sm);
         }
 
-        .cta-btn--primary {
-                background: var(--color-accent);
-                color: var(--color-text-inverse);
-                border-color: var(--color-accent);
+        /* EOF mark */
+        .eof-row {
+                max-width: var(--container);
+                width: 100%;
+                margin: 3rem auto 0;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
         }
 
-        .cta-btn--primary:hover {
-                background: var(--color-accent-hover);
-                border-color: var(--color-accent-hover);
-                color: var(--color-text-inverse);
+        .eof-line {
+                flex: 1;
+                height: 1px;
+                background: var(--color-border);
         }
 
-        @media (max-width: 520px) {
-                .cta-actions {
-                        flex-direction: column;
-                        width: 100%;
-                }
-                .cta-btn {
-                        width: 100%;
-                        justify-content: center;
-                }
+        .eof-text {
+                font-family: var(--font-mono);
+                font-size: 0.68rem;
+                font-weight: 500;
+                letter-spacing: 0.12em;
+                color: var(--color-text-faint);
         }
 
         @media (prefers-reduced-motion: reduce) {
-                .cta-btn {
+                .cta-mail,
+                .cta-mail-arrow,
+                .cta-link {
                         transition: none;
                 }
         }

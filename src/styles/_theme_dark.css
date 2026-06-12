@@ -76,4 +76,11 @@
     /* Gradients */
     --gradient-soft: linear-gradient(180deg, #1c1c1a, #111110);
     --gradient-inset: linear-gradient(180deg, #2a2a26, #1c1c1a);
+
+    /* Drafting-sheet structure */
+    --color-rail-line: rgba(238, 238, 238, 0.10);
+    --color-rail-tick: rgba(238, 238, 238, 0.18);
+    --color-dot-grid: rgba(238, 238, 238, 0.05);
+    --color-ghost-stroke: rgba(238, 238, 238, 0.17);
+    --grain-opacity: 0.15;
 }

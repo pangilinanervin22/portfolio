@@ -53,7 +53,11 @@ The single-page layout (`src/pages/index.astro`) composes sections in order:
 
 ### Animations
 
-GSAP + ScrollTrigger is used for scroll-driven blur/fade-in animations throughout section components. All animations are wrapped in `prefers-reduced-motion` checks and only run client-side.
+Scroll reveals use a single IntersectionObserver in `src/layouts/Layout.astro`: elements opt in with a `data-reveal` attribute (optionally staggered via an inline `--reveal-delay` custom property) and get `.is-revealed` added exactly once; the transition itself lives in `src/styles/global.css`. Hero load animations are pure CSS keyframes. All motion is wrapped in `prefers-reduced-motion` checks, with a `<noscript>` fallback that force-reveals everything.
+
+### Design system
+
+Monochrome "drafting sheet" aesthetic: a faint dot grid on `body::before`, an animated film grain on `body::after` (inline SVG noise data URI, ~9fps drift ≥768px, static under `prefers-reduced-motion`; intensity via `--grain-opacity` per theme), ruler-tick margin rails (`.sheet-rails` in Layout, ≥1360px), square corners (`--radius-sm`), hairline rules instead of boxed cards, and black↔white inversion as the only hover "color". The grain SVG filter must keep `color-interpolation-filters='sRGB'` or it renders several times weaker. `body` keeps `isolation: isolate` so the z:-1 dot-grid layer paints above the page background. Section headers are composed by `src/components/_common/SectionHead.astro` (rule + index + ghost numeral + title). Layout tokens (`--container`, `--gutter`, rail/ghost/grain colors) live in `src/styles/_theme.css` and `_theme_dark.css`.
 
 ### SEO / Meta
 

@@ -17,10 +17,33 @@ import SpeedInsights from "@vercel/speed-insights/astro";
 
 <html lang="en">
         <head>
+                <script is:inline>
+                        // Apply saved/system theme before first paint to avoid a light-mode flash
+                        (function () {
+                                try {
+                                        var t =
+                                                localStorage.getItem("theme") ||
+                                                (window.matchMedia("(prefers-color-scheme: dark)").matches
+                                                        ? "dark"
+                                                        : "light");
+                                        document.documentElement.setAttribute("data-theme", t);
+                                } catch (e) {}
+                        })();
+                </script>
                 <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+                <noscript>
+                        <style>
+                                [data-reveal] {
+                                        opacity: 1 !important;
+                                        transform: none !important;
+                                        filter: none !important;
+                                }
+                        </style>
+                </noscript>
         </head>
         <body>
                 <a href="#main-content" class="skip-link">Skip to main content</a>
+                <div class="sheet-rails" aria-hidden="true"></div>
                 <CustomCursor client:idle />
                 <main id="main-content">
                         <slot />
@@ -40,11 +63,90 @@ import SpeedInsights from "@vercel/speed-insights/astro";
                 background: var(--color-text-primary);
                 color: var(--color-background);
                 font-weight: 600;
-                border-radius: 0 0 8px 8px;
+                border-radius: 0 0 var(--radius-md) var(--radius-md);
                 text-decoration: none;
                 transition: top 0.1s;
         }
         .skip-link:focus-visible {
                 top: 0;
         }
+
+        /* Drafting-sheet margin rails with ruler ticks, framing the content column */
+        .sheet-rails {
+                display: none;
+        }
+
+        @media (min-width: 1360px) {
+                .sheet-rails {
+                        display: block;
+                        position: absolute;
+                        inset: 0;
+                        pointer-events: none;
+                        z-index: 3;
+                }
+
+                .sheet-rails::before,
+                .sheet-rails::after {
+                        content: "";
+                        position: absolute;
+                        top: 0;
+                        bottom: 0;
+                        width: 8px;
+                        background-image: repeating-linear-gradient(
+                                to bottom,
+                                var(--color-rail-tick) 0 1px,
+                                transparent 1px 96px
+                        );
+                }
+
+                .sheet-rails::before {
+                        left: calc(50% - (var(--container) / 2) - 3.5rem);
+                        border-left: 1px solid var(--color-rail-line);
+                }
+
+                .sheet-rails::after {
+                        right: calc(50% - (var(--container) / 2) - 3.5rem);
+                        border-right: 1px solid var(--color-rail-line);
+                        background-position: right top;
+                }
+        }
 </style>
+
+<script>
+        // Single scroll-reveal observer for all [data-reveal] elements
+        if (typeof window !== "undefined") {
+                const reveal = () => {
+                        const targets = document.querySelectorAll("[data-reveal]");
+                        if (!targets.length) return;
+
+                        const reduced = window.matchMedia(
+                                "(prefers-reduced-motion: reduce)"
+                        ).matches;
+
+                        if (reduced || !("IntersectionObserver" in window)) {
+                                targets.forEach((el) => el.classList.add("is-revealed"));
+                                return;
+                        }
+
+                        const io = new IntersectionObserver(
+                                (entries) => {
+                                        entries.forEach((entry) => {
+                                                if (entry.isIntersecting) {
+                                                        entry.target.classList.add("is-revealed");
+                                                        io.unobserve(entry.target);
+                                                }
+                                        });
+                                },
+                                { threshold: 0.1, rootMargin: "0px 0px -6% 0px" }
+                        );
+
+                        targets.forEach((el) => io.observe(el));
+                };
+
+                if (document.readyState === "loading") {
+                        addEventListener("DOMContentLoaded", reveal, { once: true });
+                } else {
+                        reveal();
+                }
+        }
+</script>

@@ -1,12 +1,11 @@
 ---
-// Put correct import path for your component
 import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
 ---
 
-<nav class="navbar" role="navigation" aria-label="Main navigation" itemscope itemtype="https://schema.org/SiteNavigationElement">
-        <div class="navbar-title">
-                <span class="navbar-main-title">EP</span>
-        </div>
+<nav class="navbar" aria-label="Main navigation" itemscope itemtype="https://schema.org/SiteNavigationElement">
+        <a class="navbar-brand" href={`${import.meta.env.BASE_URL}#welcome`} aria-label="Back to top">
+                <span class="navbar-stamp">EP</span>
+        </a>
 
         <!-- Hidden checkbox toggles the menu (CSS-only) -->
         <input
@@ -28,14 +27,17 @@ import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
                 <span class="hamburger" aria-hidden="true"></span>
         </label>
 
-        <ul class="nav-list" role="menubar">
-        <li role="none"><a href={`${import.meta.env.BASE_URL}#welcome`} role="menuitem" itemprop="url" data-section="welcome">Home</a></li>
-        <li role="none"><a href={`${import.meta.env.BASE_URL}#introduction`} role="menuitem" itemprop="url" data-section="introduction">About</a></li>
-        <li role="none"><a href={`${import.meta.env.BASE_URL}#experience`} role="menuitem" itemprop="url" data-section="experience">Experience</a></li>
-        <li role="none"><a href={`${import.meta.env.BASE_URL}#projects`} role="menuitem" itemprop="url" data-section="projects">Work</a></li>
-        <li role="none"><a href={`${import.meta.env.BASE_URL}#footer`} role="menuitem" itemprop="url" data-section="footer">Contact</a></li>
-        <li class="theme-switch"><SwitchTheme client:load /></li>
-</ul>
+        <ul class="nav-list">
+                <li><a href={`${import.meta.env.BASE_URL}#welcome`} itemprop="url" data-section="welcome">Home</a></li>
+                <li><a href={`${import.meta.env.BASE_URL}#introduction`} itemprop="url" data-section="introduction"><span class="nav-idx" aria-hidden="true">01</span>About</a></li>
+                <li><a href={`${import.meta.env.BASE_URL}#experience`} itemprop="url" data-section="experience"><span class="nav-idx" aria-hidden="true">02</span>Experience</a></li>
+                <li><a href={`${import.meta.env.BASE_URL}#tech`} itemprop="url" data-section="tech"><span class="nav-idx" aria-hidden="true">03</span>Stack</a></li>
+                <li><a href={`${import.meta.env.BASE_URL}#projects`} itemprop="url" data-section="projects"><span class="nav-idx" aria-hidden="true">04</span>Work</a></li>
+                <li><a href={`${import.meta.env.BASE_URL}#footer`} itemprop="url" data-section="footer">Contact</a></li>
+                <li class="theme-switch"><SwitchTheme client:load /></li>
+        </ul>
+
+        <span class="nav-progress" aria-hidden="true"></span>
 </nav>
 
 <style>
@@ -44,7 +46,7 @@ import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                padding: clamp(12px, 2vh, 24px) clamp(16px, 4vw, 48px);
+                padding: clamp(10px, 1.8vh, 18px) clamp(16px, 4vw, 48px);
                 width: 100%;
                 position: sticky;
                 top: 0;
@@ -53,24 +55,38 @@ import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
                 backdrop-filter: blur(12px);
                 -webkit-backdrop-filter: blur(12px);
                 border-bottom: 1px solid var(--color-border);
-                transition: box-shadow 0.3s ease;
         }
 
-        .navbar.scrolled {
-                box-shadow: 0 2px 8px var(--color-shadow);
+        /* Brand stamp */
+        .navbar-brand {
+                display: inline-flex;
+                text-decoration: none;
         }
 
-        .navbar-title {
-                display: flex;
+        .navbar-stamp {
+                display: inline-flex;
                 align-items: center;
+                justify-content: center;
+                width: 34px;
+                height: 34px;
+                font-family: var(--font-display);
+                font-size: 0.95rem;
+                font-weight: 800;
+                letter-spacing: 0.02em;
+                color: var(--color-text-primary);
+                border: 1px solid var(--color-text-primary);
+                border-radius: var(--radius-sm);
+                transition:
+                        background-color 0.2s ease,
+                        color 0.2s ease;
         }
-	.navbar-main-title {
-		color: var(--color-text-primary);
-		font-size: 1.5rem;
-		font-weight: 800;
-		letter-spacing: 1px;
-		font-family: 'Outfit Variable', sans-serif;
-	}
+
+        @media (hover: hover) {
+                .navbar-brand:hover .navbar-stamp {
+                        background: var(--color-text-primary);
+                        color: var(--color-background);
+                }
+        }
 
         /* hide the checkbox visually but keep it accessible */
         .nav-toggle {
@@ -124,7 +140,7 @@ import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
         /* Desktop nav (flex row) */
         .nav-list {
                 display: flex;
-                gap: 2rem;
+                gap: 1.9rem;
                 list-style: none;
                 margin: 0;
                 padding: 0;
@@ -132,21 +148,43 @@ import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
         }
         .nav-list li a {
                 font-family: var(--font-mono);
-                font-size: 0.85rem;
+                font-size: 0.74rem;
                 color: var(--color-text-primary);
                 text-decoration: none;
                 font-weight: 500;
-                letter-spacing: 0.02em;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
                 transition: opacity 0.25s;
-                border-radius: 4px;
+                border-radius: var(--radius-sm);
 
                 &:hover {
-                        opacity: 0.6;
+                        opacity: 0.55;
                 }
         }
+
+        .nav-idx {
+                font-size: 0.6rem;
+                color: var(--color-text-muted);
+                margin-right: 0.35rem;
+                font-weight: 400;
+        }
+
         .theme-switch {
                 display: flex;
                 align-items: center;
+        }
+
+        /* Scroll progress hairline */
+        .nav-progress {
+                position: absolute;
+                left: 0;
+                bottom: -1px;
+                width: 100%;
+                height: 2px;
+                background: var(--color-text-primary);
+                transform: scaleX(0);
+                transform-origin: left;
+                pointer-events: none;
         }
 
         /* Mobile behavior */
@@ -155,20 +193,20 @@ import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
                         display: flex;
                 }
 
-                /* start hidden and absolute so it floats beneath the navbar */
+                /* Full-width sheet under the bar */
                 .nav-list {
                         display: none;
                         position: absolute;
-                        top: calc(100% + 8px);
-                        right: 12px;
+                        top: 100%;
+                        left: 0;
+                        right: 0;
                         flex-direction: column;
-                        gap: 12px;
-                        padding: 12px;
-                        min-width: 180px;
-                        border-radius: 8px;
-                        background: var(--color-surface);
-                        border: 1px solid var(--color-border);
-                        box-shadow: 0 4px 16px var(--color-shadow);
+                        align-items: stretch;
+                        gap: 0;
+                        padding: 0.5rem 0 1rem;
+                        background: var(--color-background);
+                        border-bottom: 1px solid var(--color-border);
+                        box-shadow: 0 12px 24px var(--color-shadow);
                         z-index: 10;
                 }
 
@@ -193,21 +231,26 @@ import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
                 }
                 .nav-list a {
                         display: block;
-                        padding: 8px 4px;
+                        padding: 0.85rem clamp(16px, 4vw, 48px);
+                        border-bottom: 1px solid var(--color-border);
+                }
+                .nav-list li:last-child a {
+                        border-bottom: 0;
                 }
                 .theme-switch {
-                        padding-left: 4px;
+                        padding: 0.85rem clamp(16px, 4vw, 48px) 0;
                 }
         }
 
         .menu-btn:focus-visible {
                 outline: 2px solid var(--color-focus-ring);
                 outline-offset: 2px;
-                border-radius: 6px;
+                border-radius: var(--radius-sm);
         }
 
         @media (prefers-reduced-motion: reduce) {
-                .navbar {
+                .navbar,
+                .navbar-stamp {
                         transition: none;
                 }
         }
@@ -237,6 +280,12 @@ import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
                 opacity: 1;
         }
 
+        @media (max-width: 768px) {
+                .nav-list li a[data-section]::after {
+                        display: none;
+                }
+        }
+
         @media (prefers-reduced-motion: reduce) {
                 .nav-list li a[data-section]::after {
                         transition: none;
@@ -246,18 +295,28 @@ import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
 
 <script>
 if (typeof window !== "undefined") {
-        const navbar = document.querySelector('.navbar');
-        if (navbar) {
+        // Scroll progress hairline
+        const progress = document.querySelector(".nav-progress");
+        if (progress instanceof HTMLElement) {
                 let ticking = false;
-                window.addEventListener('scroll', () => {
-                        if (!ticking) {
-                                requestAnimationFrame(() => {
-                                        navbar.classList.toggle('scrolled', window.scrollY > 50);
-                                        ticking = false;
-                                });
-                                ticking = true;
-                        }
-                }, { passive: true });
+                const update = () => {
+                        const max =
+                                document.documentElement.scrollHeight - window.innerHeight;
+                        const ratio = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
+                        progress.style.transform = `scaleX(${ratio})`;
+                        ticking = false;
+                };
+                window.addEventListener(
+                        "scroll",
+                        () => {
+                                if (!ticking) {
+                                        requestAnimationFrame(update);
+                                        ticking = true;
+                                }
+                        },
+                        { passive: true }
+                );
+                update();
         }
 
         // Active-section indicator

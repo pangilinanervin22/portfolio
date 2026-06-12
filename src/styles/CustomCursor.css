@@ -1,92 +1,47 @@
-/* Outer circle */
+/* Difference-blend cursor: white ring + dot invert against whatever
+   they pass over, in both themes. */
 .cursor {
     position: fixed;
     top: 0;
     left: 0;
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
-    border: 2px solid var(--color-primary);
+    border: 1.5px solid #fff;
+    mix-blend-mode: difference;
     pointer-events: none;
     z-index: 9999;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     will-change: transform;
+    transition:
+        scale 0.25s cubic-bezier(0.22, 0.61, 0.36, 1),
+        opacity 0.2s ease;
 }
 
-.lens {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    pointer-events: none;
-    backdrop-filter: blur(1px);
-    background: rgba(255, 255, 255, 0.1);
+.cursor--link {
+    scale: 1.55;
 }
 
 .center-dot {
     position: fixed;
     top: 0;
     left: 0;
-    width: 6px;
-    height: 6px;
-    background-color: var(--color-primary);
+    width: 5px;
+    height: 5px;
+    background-color: #fff;
+    mix-blend-mode: difference;
     border-radius: 50%;
     pointer-events: none;
     z-index: 10000;
     will-change: transform;
+    transition: opacity 0.2s ease;
 }
 
-.cursor-glow {
-    position: fixed;
-    width: 26vmin;
-    height: 24vmin;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    z-index: 9998;
-    will-change: transform;
-    border-radius: 50%;
-    --glow-opacity: 0.35;
-    --glow-blur: 28px;
-    background: radial-gradient(
-        35% 35% at 50% 50%,
-        rgba(0, 0, 0, 0.2),
-        rgba(0, 0, 0, 0.08) 55%,
-        transparent 100%
-    );
-    filter: blur(var(--glow-blur));
-    opacity: var(--glow-opacity);
-    mix-blend-mode: soft-light;
-    animation: glowPulse 2s ease-in-out infinite;
-}
-
-:root[data-theme='dark'] .cursor-glow {
-    background: radial-gradient(
-        35% 35% at 50% 50%,
-        color-mix(in oklab, var(--color-primary) 30%, transparent),
-        color-mix(in oklab, var(--color-primary) 8%, transparent) 60%,
-        transparent 100%
-    );
-    --glow-opacity: 0.6;
-    mix-blend-mode: lighten;
-}
-
-@keyframes glowPulse {
-    0%, 100% {
-        scale: 1;
-        filter: blur(var(--glow-blur));
-        opacity: var(--glow-opacity);
-    }
-    50% {
-        scale: 1.04;
-        filter: blur(calc(var(--glow-blur) + 4px));
-        opacity: calc(var(--glow-opacity) + 0.05);
-    }
+.cursor--hidden {
+    opacity: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .cursor-glow { animation: none; filter: blur(18px); opacity: 0.45; }
-    .cursor, .center-dot { transition: none; }
+    .cursor {
+        transition: none;
+    }
 }

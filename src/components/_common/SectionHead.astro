@@ -1,0 +1,117 @@
+---
+interface Props {
+	number: string; // "01"
+	title: string; // "About"
+	headingId: string; // id used by the parent section's aria-labelledby
+	meta?: string; // right-end annotation, e.g. "5 builds"
+	intro?: string; // optional one-line intro under the title
+}
+
+const { number, title, headingId, meta, intro } = Astro.props as Props;
+---
+
+<header class="s-head" data-reveal>
+	<p class="s-rule" aria-hidden="true">
+		<span class="s-num">{number}</span>
+		<span class="s-line"></span>
+		{meta && <span class="s-meta">{meta}</span>}
+	</p>
+	<div class="s-title-row">
+		<h2 id={headingId} class="s-title">{title}</h2>
+		<span class="s-ghost" aria-hidden="true">{number}</span>
+	</div>
+	{intro && <p class="s-intro">{intro}</p>}
+</header>
+
+<style>
+	.s-head {
+		position: relative;
+		/* own stacking context so the negative z-index ghost numeral
+		   stays above the page background instead of vanishing under it */
+		z-index: 0;
+		width: 100%;
+		margin: 0 0 clamp(2rem, 4vw, 3rem);
+	}
+
+	.s-rule {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin: 0 0 1.4rem;
+		line-height: 1;
+	}
+
+	.s-num {
+		font-family: var(--font-mono);
+		font-size: 0.78rem;
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		color: var(--color-text-primary);
+		padding: 0.3rem 0.45rem;
+		border: 1px solid var(--color-text-primary);
+		border-radius: var(--radius-sm);
+	}
+
+	.s-line {
+		flex: 1;
+		height: 1px;
+		background: var(--color-border);
+	}
+
+	.s-meta {
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		font-weight: 500;
+		letter-spacing: 0.06em;
+		color: var(--color-text-muted);
+		text-transform: lowercase;
+	}
+
+	.s-title-row {
+		position: relative;
+	}
+
+	.s-title {
+		font-family: var(--font-display);
+		font-size: clamp(2.75rem, 6vw, 4.25rem);
+		font-weight: 700;
+		letter-spacing: -0.035em;
+		line-height: 0.95;
+		margin: 0;
+		color: var(--color-text-primary);
+	}
+
+	/* Oversized outlined index, watermarked at the right edge */
+	.s-ghost {
+		position: absolute;
+		right: 0;
+		top: 50%;
+		transform: translateY(-54%);
+		font-family: var(--font-display);
+		font-size: clamp(5rem, 11vw, 8.5rem);
+		font-weight: 700;
+		line-height: 1;
+		letter-spacing: -0.02em;
+		color: transparent;
+		-webkit-text-stroke: 1.5px var(--color-ghost-stroke);
+		user-select: none;
+		pointer-events: none;
+		z-index: -1;
+	}
+
+	@media (max-width: 767px) {
+		.s-ghost {
+			display: none;
+		}
+	}
+
+	.s-intro {
+		max-width: 58ch;
+		margin: 1rem 0 0;
+		font-family: var(--font-mono);
+		font-size: 0.85rem;
+		line-height: 1.6;
+		letter-spacing: 0.02em;
+		color: var(--color-text-muted);
+	}
+</style>

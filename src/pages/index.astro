@@ -5,44 +5,25 @@ import Navbar from "../components/NavBar.astro";
 import Introduction from "../components/introduction/Introduction.astro";
 import Experience from "../components/experience/Experience.astro";
 import Techs from "../components/technology/Technology.astro";
-import background from "../assets/background.png";
 import Projects from "../components/projects/Projects.astro";
 ---
 
 <Layout>
-	<main>
-		<img
-			src={background.src}
-			alt=""
-			aria-hidden="true"
-			class="background-image"
-		/>
+	<div class="page">
 		<Navbar />
 		<Welcome />
 		<Introduction />
 		<Experience />
 		<Techs />
 		<Projects />
-	</main>
+	</div>
 </Layout>
 
 <style>
-	main {
+	.page {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		width: 100%;
 	}
-
-	.background-image {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                z-index: 10;
-                opacity: 0.25;
-                pointer-events: none; /* Allows clicks to pass through */
-        }
 </style>

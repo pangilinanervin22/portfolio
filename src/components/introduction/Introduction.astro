@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import introImage from "../../assets/me.jpg";
 import SkillCard from "./skill_card.astro";
-import SectionLabel from "../_common/SectionLabel.astro";
+import SectionHead from "../_common/SectionHead.astro";
 
 import gameIcon from "../../assets/skill/game.svg";
 import webIcon from "../../assets/skill/web.svg";
@@ -18,13 +18,15 @@ import devOpsIcon from "../../assets/skill/devops.svg";
         itemtype="https://schema.org/Person"
 >
         <div class="section-head">
-                <SectionLabel number="01" label="About" />
-                <h2 id="about-heading" class="introduction-title" itemprop="name">
-                        About
-                </h2>
+                <SectionHead
+                        number="01"
+                        title="About"
+                        headingId="about-heading"
+                        meta="writing software since 2021"
+                />
         </div>
 
-        <div class="introduction-image-container" aria-label="Portrait">
+        <div class="introduction-image-container" aria-label="Portrait" data-reveal>
                 <figure class="introduction-image" itemscope itemtype="https://schema.org/ImageObject">
                         <Image
                                 src={introImage}
@@ -42,7 +44,8 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                                 itemprop="image"
                         />
                         <figcaption class="portrait-caption">
-                                <span aria-hidden="true">//</span> Manila, PH · 2026
+                                <span class="caption-left"><span aria-hidden="true">//</span> Manila, PH · 2026</span>
+                                <span class="caption-right" aria-hidden="true">fig. 01</span>
                         </figcaption>
                         <meta itemprop="name" content="Ervin Pangilinan Professional Portrait" />
                         <meta itemprop="description" content="Professional headshot of Ervin Pangilinan, Full Stack Developer and Computer Science graduate" />
@@ -54,21 +57,24 @@ import devOpsIcon from "../../assets/skill/devops.svg";
         </div>
 
         <div class="introduction-content">
-                <p class="introduction-description" itemprop="description">
-                        I write software, mostly for the web. Started in 2021 as a hobby and haven't stopped. Today I'm at Cosmic Society building an event platform that supports ~30,000 peak users at large-scale events before that I have experience of working in multiple companies which include international team, HEQS Group and FiveTwenty IT Services. Computer Science grad from Cavite State University.
+                <p class="introduction-description" itemprop="description" data-reveal>
+                        I write software, mostly for the web. Started in 2021 as a hobby and it turned into a career. Today I'm at Cosmic Society building a multi-brand event platform that supports ~30,000 peak users at large-scale events before that I have experience of working in multiple companies which include international team, HEQS Group and FiveTwenty IT Services. Computer Science grad from Cavite State University.
                 </p>
-                <p class="introduction-description-secondary">
-                        I work across the stack but lean toward backend depth REST APIs, role-based access, audit logging, query optimization, CI/CD. I care about clean architecture, accessibility, and code the next person can read. The rest of my time goes to whatever I'm currently learning.
+                <p class="introduction-description-secondary" data-reveal style="--reveal-delay: 0.08s">
+                        I work across the stack, but backend is where I go deepest: REST APIs, role-based access, audit logging, query optimization, CI/CD. I care about clean architecture, accessibility, and code the next person can read without a guided tour. The rest of my time goes to whatever I'm learning right now.
                 </p>
 
-                <section class="introduction-skills" aria-labelledby="skills-heading">
-                        <h3 id="skills-heading">What I build</h3>
+                <section class="introduction-skills" aria-labelledby="skills-heading" data-reveal style="--reveal-delay: 0.14s">
+                        <h3 id="skills-heading">
+                                <span aria-hidden="true">//</span> What I build
+                        </h3>
                         <ul class="skills-list" role="list">
                                 <li itemprop="knowsAbout">
                                         <SkillCard
                                                 title="Web platforms"
                                                 content="Production apps in TypeScript, Next.js, NestJS. Server-rendered, SPA, or hybrid."
                                                 icon={webIcon}
+                                                index="01"
                                         />
                                 </li>
                                 <li itemprop="knowsAbout">
@@ -76,6 +82,7 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                                                 title="Mobile apps"
                                                 content="Cross-platform with React Native + Expo. Offline-first, secure releases."
                                                 icon={mobileIcon}
+                                                index="02"
                                         />
                                 </li>
                                 <li itemprop="knowsAbout">
@@ -83,6 +90,7 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                                                 title="DevOps & deploys"
                                                 content="CI/CD pipelines, Docker containers, cloud hosting on Vercel, AWS, Azure, DigitalOcean, Heroku."
                                                 icon={devOpsIcon}
+                                                index="03"
                                         />
                                 </li>
                                 <li itemprop="knowsAbout">
@@ -90,12 +98,11 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                                                 title="Game dev"
                                                 content="Small 2D Unity prototypes when I want to think about something different."
                                                 icon={gameIcon}
+                                                index="04"
                                         />
                                 </li>
                         </ul>
                 </section>
-
-
         </div>
 </section>
 
@@ -109,9 +116,8 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                         "content";
                 justify-items: start;
                 width: 100%;
-                max-width: 1248px;
-                margin-top: 8vh;
-                padding-inline: 1.5rem;
+                max-width: calc(var(--container) + 2 * var(--gutter));
+                padding: clamp(4rem, 10vh, 7rem) var(--gutter) 2rem;
                 gap: 24px;
 
                 @media (min-width: 1024px) {
@@ -119,8 +125,8 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                         grid-template-areas:
                                 "head head"
                                 "image content";
-                        column-gap: 3rem;
-                        row-gap: 1.5rem;
+                        column-gap: 3.5rem;
+                        row-gap: 0.5rem;
                         align-items: start;
                 }
         }
@@ -128,19 +134,9 @@ import devOpsIcon from "../../assets/skill/devops.svg";
         .section-head {
                 grid-area: head;
                 width: 100%;
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
         }
 
-        .introduction-title {
-                width: 100%;
-                text-align: left;
-                font-size: clamp(2.4rem, 4.4vw, 3.4rem);
-                margin: 0;
-                letter-spacing: -0.02em;
-        }
-
+        /* Portrait as a technical plate: square, hairline, grayscale until hover */
         .introduction-image-container {
                 grid-area: image;
                 position: relative;
@@ -151,11 +147,12 @@ import devOpsIcon from "../../assets/skill/devops.svg";
 
         .introduction-image {
                 position: relative;
-                padding: 14px 14px 8px;
+                padding: 10px 10px 8px;
                 background: var(--color-surface);
                 border: 1px solid var(--color-border);
-                border-radius: 12px;
+                border-radius: var(--radius-sm);
                 margin: 0;
+                transition: border-color 0.3s ease;
         }
 
         .intro-portrait {
@@ -164,26 +161,35 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                 aspect-ratio: 4 / 5;
                 object-fit: cover;
                 object-position: center top;
-                border-radius: 8px;
+                border-radius: 0;
                 display: block;
-                transition: transform 0.3s ease-in-out;
+                filter: grayscale(1) contrast(1.04);
+                transition: filter 0.45s ease;
         }
 
-        .introduction-image:hover {
-                box-shadow: 0 4px 12px var(--color-shadow);
-        }
-
-        .introduction-image:hover .intro-portrait {
-                transform: scale(1.01);
+        @media (hover: hover) {
+                .introduction-image:hover {
+                        border-color: var(--color-text-muted);
+                }
+                .introduction-image:hover .intro-portrait {
+                        filter: grayscale(0) contrast(1);
+                }
         }
 
         .portrait-caption {
-                margin: 10px 4px 0;
+                margin: 10px 2px 2px;
                 font-family: var(--font-mono);
-                font-size: 0.72rem;
+                font-size: 0.7rem;
                 letter-spacing: 0.04em;
                 color: var(--color-text-muted);
                 line-height: 1;
+                display: flex;
+                justify-content: space-between;
+                align-items: baseline;
+        }
+
+        .caption-right {
+                color: var(--color-text-faint);
         }
 
         .introduction-content {
@@ -202,6 +208,7 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                 color: var(--color-text-secondary);
                 letter-spacing: 0.2px;
                 margin: 0;
+                max-width: 70ch;
 
                 &::first-letter {
                         float: left;
@@ -209,7 +216,7 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                         line-height: 0.9;
                         font-weight: 700;
                         margin: 4px 8px 0 0;
-                        font-family: 'Outfit Variable', sans-serif;
+                        font-family: var(--font-display);
                         color: var(--color-text-primary);
                 }
         }
@@ -221,96 +228,50 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                 color: var(--color-text-secondary);
                 letter-spacing: 0.2px;
                 margin: 0;
+                max-width: 70ch;
         }
 
         .introduction-skills {
-                display: grid;
-                grid-template-columns: 1fr;
-                gap: 1rem;
                 width: 100%;
-                margin-top: 1rem;
+                margin-top: 1.25rem;
         }
 
         .introduction-skills > h3 {
-                width: 100%;
-                margin: 0 0 0.25rem;
-                font-size: clamp(1.4rem, 2.4vw, 1.8rem);
-                line-height: 1.2;
-                letter-spacing: -0.01em;
+                margin: 0 0 1rem;
+                font-family: var(--font-mono);
+                font-size: 0.78rem;
+                font-weight: 600;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--color-text-primary);
+                line-height: 1;
         }
 
+        .introduction-skills > h3 > span {
+                color: var(--color-text-muted);
+                font-weight: 500;
+        }
+
+        /* Collapsed-border quadrant: 1px gaps on a hairline backdrop */
         .skills-list {
                 list-style: none;
-                padding: 0;
+                padding: 1px;
                 margin: 0;
-                display: contents;
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 1px;
+                background: var(--color-border);
+                border-radius: var(--radius-sm);
+        }
+
+        .skills-list > li {
+                display: flex;
+                min-width: 0;
         }
 
         @media (min-width: 640px) {
-                .introduction-skills {
+                .skills-list {
                         grid-template-columns: repeat(2, 1fr);
                 }
-                .introduction-skills > h3 {
-                        grid-column: 1 / -1;
-                }
         }
-
 </style>
-
-<script>
-        const run = async () => {
-                if (
-                        window.matchMedia("(prefers-reduced-motion: reduce)")
-                                .matches
-                )
-                        return;
-
-                const [{ default: gsap }, { ScrollTrigger }] =
-                        await Promise.all([
-                                import("gsap"),
-                                import("gsap/ScrollTrigger"),
-                        ]);
-
-                gsap.registerPlugin(ScrollTrigger);
-
-                const container = document.getElementById("introduction");
-                if (!container) return;
-
-                const targets = container.querySelectorAll(
-                        ".section-head, .introduction-image, .introduction-description, .introduction-description-secondary, .introduction-skills"
-                );
-
-                targets.forEach((el, i) => {
-                        gsap.set(el, {
-                                filter: "blur(16px)",
-                                opacity: 0,
-                                y: 24,
-                        });
-
-                        gsap.to(el, {
-                                filter: "blur(0px)",
-                                opacity: 1,
-                                y: 0,
-                                duration: 0.8,
-                                ease: "power2.out",
-                                delay: Math.min(i * 0.06, 0.36),
-                                scrollTrigger: {
-                                        trigger: el,
-                                        start: "top 95%",
-                                        end: "top 75%",
-                                        toggleActions: "play none none reverse",
-                                },
-                        });
-                });
-        };
-
-        if (typeof window !== "undefined") {
-                if (document.readyState === "loading") {
-                        addEventListener("DOMContentLoaded", run, {
-                                once: true,
-                        });
-                } else {
-                        run();
-                }
-        }
-</script>

@@ -14,7 +14,7 @@ export const experiences: ExperienceItem[] = [
 		company: "Cosmic Society",
 		period: "Mar 2026 – Present",
 		location: "Berlin, Germany · Remote (via Penbrothers, Manila)",
-		summary: "Building a Next.js + Supabase event platform serving ~30,000 peak users at large-scale events.",
+		summary: "Building a Next.js + Supabase multi-brand event platform serving ~30,000 peak users at large-scale events.",
 		highlights: [
 			"Shipping features with Next.js (TypeScript) + Supabase in a remote, international team",
 			"Async collaboration with Berlin-based team across time zones; daily workflow on GitHub Projects",
@@ -91,15 +91,17 @@ export const experiences: ExperienceItem[] = [
 		tech: ["React", "Express", "React Native", "Supabase"],
 	},
 	{
-		role: "Student Projects",
+		role: "Student Projects & Getting Started",
 		company: "Cavite State University Bacoor",
-		period: "2022 – 2024",
+		period: "2021 – 2024",
 		location: "Bacoor, Cavite",
-		summary: "Thesis and team projects with full-stack architecture, state management, and automated tests.",
+		summary: "Where it began: self-taught HTML, CSS, JS, Java, and Git in 2021, then thesis and team projects with full-stack architecture, state management, and automated tests.",
 		highlights: [
 			"Co-built a gender-fair NLP revision tool with FastAPI + spaCy (group thesis)",
 			"Chrome Tone, 2-player brain-teaser puzzle game (C# + Unity) where black/white characters cross color-matched platforms toward a portal; won 'Best Intro in Game Development Project 2024'",
 			"Online thrift store on the MERN stack (MongoDB, Express, React, Node) for the Software Engineering course",
+			"Mini-games in vanilla JS and Java/Android, snake, guessing games, brain teasers",
+			"Landing pages with web + mobile responsiveness and theming, designed in Figma",
 		],
 		tech: [
 			"React",
@@ -111,18 +113,9 @@ export const experiences: ExperienceItem[] = [
 			"Python",
 			"FastAPI",
 			"spaCy",
+			"Java",
+			"Figma",
+			"Git",
 		],
-	},
-	{
-		role: "Getting Started",
-		company: "Self-taught",
-		period: "2021",
-		location: "Online",
-		summary: "HTML, CSS, JS, Java, Git. Where it began.",
-		highlights: [
-			"Mini-games in vanilla JS and Java/Android, snake, guessing games, brain teasers",
-			"Landing pages with web + mobile responsiveness and theming, designed in Figma",
-		],
-		tech: ["HTML", "CSS", "JavaScript", "Java", "Android", "Figma", "Git"],
 	},
 ];

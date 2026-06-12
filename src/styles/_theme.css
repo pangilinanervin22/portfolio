@@ -79,4 +79,18 @@
 
     /* Font families */
     --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+    --font-display: 'Outfit Variable', 'Sora', system-ui, sans-serif;
+
+    /* Layout */
+    --container: 1200px;
+    --gutter: 1.5rem;
+    --radius-sm: 2px;
+    --radius-md: 4px;
+
+    /* Drafting-sheet structure */
+    --color-rail-line: rgba(17, 17, 17, 0.10);
+    --color-rail-tick: rgba(17, 17, 17, 0.16);
+    --color-dot-grid: rgba(17, 17, 17, 0.055);
+    --color-ghost-stroke: rgba(17, 17, 17, 0.16);
+    --grain-opacity: 0.17;
 }

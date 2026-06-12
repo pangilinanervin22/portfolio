@@ -3,9 +3,10 @@ interface Props {
         title: string;
         content: string;
         icon?: any;
+        index?: string; // "01" … "04"
 }
 
-const { title, content, icon: Icon } = Astro.props;
+const { title, content, icon: Icon, index } = Astro.props;
 const id = `skill-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")}`;
 ---
 
@@ -15,6 +16,7 @@ const id = `skill-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-
         itemscope
         itemtype="https://schema.org/DefinedTerm"
 >
+        {index && <span class="skill-card-index" aria-hidden="true">{index}</span>}
         <h4 id={`${id}-title`} class="skill-card-title" itemprop="name">
                 {Icon && (
                         <Icon
@@ -29,67 +31,92 @@ const id = `skill-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-
 </article>
 
 <style scoped>
-	.skill-card {
-		position: relative;
-		display: flex;
-		flex-direction: column;
-		width: 100%;
-		height: 100%;
-		padding: 18px 20px;
-		background: var(--color-surface);
-		border: 1px solid var(--color-border);
-		border-left: 2px solid transparent;
-		border-radius: 12px;
-		box-shadow: 0 1px 3px var(--color-shadow-soft);
-		transition:
-			transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-			box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-			border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-	}
+        /* Quadrant cell: square, flat, inverts to black on hover */
+        .skill-card {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                gap: 0.6rem;
+                width: 100%;
+                height: 100%;
+                padding: 1.4rem 1.5rem 1.5rem;
+                background: var(--color-background);
+                transition:
+                        background-color 0.25s ease,
+                        color 0.25s ease;
+        }
 
-	@media (hover: hover) {
-		.skill-card:hover {
-			transform: translateY(-2px);
-			box-shadow: 0 4px 12px var(--color-shadow);
-			border-left-color: var(--color-text-primary);
-		}
-	}
-
-        .skill-card:focus-within {
-                outline: 2px solid var(--color-focus-ring);
-                outline-offset: 2px;
+        .skill-card-index {
+                position: absolute;
+                top: 1.15rem;
+                right: 1.25rem;
+                font-family: var(--font-mono);
+                font-size: 0.68rem;
+                letter-spacing: 0.08em;
+                color: var(--color-text-faint);
+                line-height: 1;
+                transition: color 0.25s ease;
         }
 
         .skill-card-title {
-                font-size: 1.2rem;
+                font-family: var(--font-display);
+                font-size: 1.15rem;
                 line-height: 1.2;
-                font-weight: 800;
+                font-weight: 700;
+                letter-spacing: -0.01em;
                 display: flex;
                 align-items: center;
-                justify-content: flex-start;
+                gap: 0.6rem;
                 margin: 0;
-                letter-spacing: 0.5px;
-                /* background: linear-gradient(
-                        90deg,
-                        var(--color-primary),
-                        var(--color-primary-40)
-                ); */
-                -webkit-background-clip: text;
                 color: var(--color-text-primary);
-                gap: 0.55rem;
+                transition: color 0.25s ease;
         }
 
-        .skill-card-icon {
-                width: 1.6em;
-                height: 1.6em;
-                margin-bottom: 4px;
+        :global(.skill-card-icon) {
+                width: 1.35em;
+                height: 1.35em;
+                flex-shrink: 0;
+                color: var(--color-text-primary);
+                transition: color 0.25s ease;
         }
 
         .skill-card-content {
-                font-size: 1rem;
-                line-height: 1.8;
-                color: var(--color-text-primary);
+                font-size: 0.95rem;
+                line-height: 1.65;
+                color: var(--color-text-secondary);
                 margin: 0;
+                transition: color 0.25s ease;
         }
 
+        @media (hover: hover) {
+                .skill-card:hover {
+                        background: var(--color-text-primary);
+                }
+                .skill-card:hover .skill-card-title,
+                .skill-card:hover :global(.skill-card-icon) {
+                        color: var(--color-background);
+                }
+                .skill-card:hover .skill-card-content {
+                        color: var(--color-background);
+                        opacity: 0.85;
+                }
+                .skill-card:hover .skill-card-index {
+                        color: var(--color-background);
+                        opacity: 0.6;
+                }
+        }
+
+        .skill-card:focus-within {
+                outline: 2px solid var(--color-focus-ring);
+                outline-offset: -2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+                .skill-card,
+                .skill-card-title,
+                .skill-card-content,
+                .skill-card-index {
+                        transition: none;
+                }
+        }
 </style>

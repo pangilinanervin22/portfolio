@@ -1,6 +1,6 @@
 ---
 import ProjectCard from "./ProjectCard.astro";
-import SectionLabel from "../_common/SectionLabel.astro";
+import SectionHead from "../_common/SectionHead.astro";
 import { projects } from "../../data/projects";
 
 const [featured, ...rest] = projects;
@@ -13,20 +13,20 @@ const [featured, ...rest] = projects;
         itemtype="https://schema.org/ItemList"
         itemscope
 >
-        <div class="section-head">
-                <SectionLabel number="04" label="Work" />
-                <h2 id="projects-title" class="section-title" itemprop="name">
-                        Work
-                </h2>
-                <p class="section-intro">
-                        Things I've built across internship, freelance, and a couple of academic projects.
-                </p>
-        </div>
+        <div class="rail">
+                <SectionHead
+                        number="04"
+                        title="Work"
+                        headingId="projects-title"
+                        meta={`${projects.length} builds`}
+                        intro="Things I've built across internship, freelance, and a couple of academic projects."
+                />
 
-        <ul class="projects-grid" role="list">
-                {featured && <ProjectCard project={featured} index={0} featured />}
-                {rest.map((p, i) => <ProjectCard project={p} index={i + 1} />)}
-        </ul>
+                <ul class="projects-grid" role="list">
+                        {featured && <ProjectCard project={featured} index={0} featured />}
+                        {rest.map((p, i) => <ProjectCard project={p} index={i + 1} />)}
+                </ul>
+        </div>
 </section>
 
 <style>
@@ -35,45 +35,22 @@ const [featured, ...rest] = projects;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                padding: 4rem 1.5rem 5rem;
-                gap: 2rem;
-                margin-top: 6vh;
+                padding: clamp(4rem, 10vh, 7rem) var(--gutter) 4rem;
         }
 
-        .section-head {
-                max-width: 1200px;
+        .rail {
+                max-width: var(--container);
                 width: 100%;
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.6rem;
-        }
-
-        .section-title {
-                font-size: clamp(2.4rem, 4.5vw, 3.4rem);
-                letter-spacing: -0.02em;
-                font-weight: 600;
-                margin: 0;
-        }
-
-        .section-intro {
-                max-width: 64ch;
-                font-size: 1rem;
-                line-height: 1.65;
-                margin: 0;
-                color: var(--color-text-secondary);
         }
 
         .projects-grid {
-                --gap: 1.6rem;
                 list-style: none;
                 padding: 0;
                 margin: 0;
-                max-width: 1200px;
                 width: 100%;
                 display: grid;
                 grid-template-columns: 1fr;
-                gap: var(--gap);
+                gap: 1.5rem;
                 align-items: stretch;
         }
 
@@ -82,86 +59,4 @@ const [featured, ...rest] = projects;
                         grid-template-columns: repeat(2, 1fr);
                 }
         }
-
-        @media (prefers-reduced-motion: reduce) {
-                .projects-grid {
-                        animation: none;
-                }
-        }
 </style>
-
-<script>
-        import { gsap } from "gsap";
-        import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-        if (typeof window !== "undefined") {
-                const prefersReduced = window.matchMedia(
-                        "(prefers-reduced-motion: reduce)"
-                ).matches;
-
-                if (!prefersReduced) {
-                        gsap.registerPlugin(ScrollTrigger);
-
-                        const init = () => {
-                                const section = document.querySelector("#projects");
-                                if (!section) return;
-
-                                const head = section.querySelector(".section-head");
-                                if (head) {
-                                        gsap.fromTo(
-                                                head,
-                                                { filter: "blur(6px)", opacity: 0, y: 14 },
-                                                {
-                                                        filter: "blur(0px)",
-                                                        opacity: 1,
-                                                        y: 0,
-                                                        duration: 0.6,
-                                                        ease: "power2.out",
-                                                        scrollTrigger: {
-                                                                trigger: head,
-                                                                start: "top 70%",
-                                                                end: "top 20%",
-                                                                scrub: true,
-                                                        },
-                                                }
-                                        );
-                                }
-
-                                const cards = section.querySelectorAll(".project-card");
-                                if (cards.length) {
-                                        ScrollTrigger.batch(cards, {
-                                                start: "top 90%",
-                                                end: "top 60%",
-                                                once: true,
-                                                onEnter: (batch) => {
-                                                        gsap.fromTo(
-                                                                batch,
-                                                                {
-                                                                        opacity: 0,
-                                                                        y: 24,
-                                                                        filter: "blur(10px)",
-                                                                },
-                                                                {
-                                                                        opacity: 1,
-                                                                        y: 0,
-                                                                        filter: "blur(0px)",
-                                                                        duration: 0.5,
-                                                                        ease: "power2.out",
-                                                                        stagger: {
-                                                                                each: 0.12,
-                                                                                from: "start",
-                                                                        },
-                                                                }
-                                                        );
-                                                },
-                                        });
-                                }
-                        };
-
-                        requestAnimationFrame(() => {
-                                init();
-                                window.addEventListener("load", () => ScrollTrigger.refresh());
-                        });
-                }
-        }
-</script>

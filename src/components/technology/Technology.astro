@@ -1,6 +1,6 @@
 ---
-import SectionLabel from "../_common/SectionLabel.astro";
-import { skillTiers } from "../../data/technologies";
+import SectionHead from "../_common/SectionHead.astro";
+import { skillTiers, allSkills } from "../../data/technologies";
 
 const tierClass = (label: string) => `tier tier--${label.toLowerCase()}`;
 ---
@@ -12,40 +12,47 @@ const tierClass = (label: string) => `tier tier--${label.toLowerCase()}`;
 	itemscope
 	itemtype="https://schema.org/ItemList"
 >
-	<div class="section-head">
-		<SectionLabel number="03" label="Stack" />
-		<h2 id="tech-title" class="tech-title">Stack</h2>
-		<p class="tech-intro">
-			Tools I work with, sorted by how often I actually reach for them.
-		</p>
-	</div>
+	<div class="rail">
+		<SectionHead
+			number="03"
+			title="Stack"
+			headingId="tech-title"
+			meta={`${allSkills.length} tools`}
+			intro="Tools I work with, sorted by how often I actually reach for them."
+		/>
 
-	<div class="tiers">
-		{
-			skillTiers.map((tier, ti) => (
-				<div class={tierClass(tier.label)} data-index={ti}>
-					<p class="tier-label">
-						<span class="tier-mark" aria-hidden="true">//</span>
-						<span class="tier-name">{tier.label}</span>
-						<span class="tier-sep" aria-hidden="true">·</span>
-						<span class="tier-context">{tier.context}</span>
-					</p>
-					<ul class="pills" role="list">
-						{tier.skills.map((skill, si) => (
-							<li
-								class="pill"
-								itemprop="itemListElement"
-								itemscope
-								itemtype="https://schema.org/Thing"
-							>
-								<meta itemprop="position" content={String(ti * 10 + si + 1)} />
-								<span itemprop="name">{skill}</span>
-							</li>
-						))}
-					</ul>
-				</div>
-			))
-		}
+		<div class="tiers">
+			{
+				skillTiers.map((tier, ti) => (
+					<div
+						class={tierClass(tier.label)}
+						data-reveal
+						style={`--reveal-delay: ${ti * 0.06}s`}
+					>
+						<div class="tier-side">
+							<p class="tier-name">
+								<span class="tier-mark" aria-hidden="true">//</span>
+								{tier.label}
+							</p>
+							<p class="tier-context">{tier.context}</p>
+						</div>
+						<ul class="tier-skills" role="list">
+							{tier.skills.map((skill, si) => (
+								<li
+									class="skill"
+									itemprop="itemListElement"
+									itemscope
+									itemtype="https://schema.org/Thing"
+								>
+									<meta itemprop="position" content={String(ti * 10 + si + 1)} />
+									<span itemprop="name">{skill}</span>
+								</li>
+							))}
+						</ul>
+					</div>
+				))
+			}
+		</div>
 	</div>
 </section>
 
@@ -55,199 +62,141 @@ const tierClass = (label: string) => `tier tier--${label.toLowerCase()}`;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 2rem;
-		padding: clamp(2rem, 5vw, 3rem) 1.5rem clamp(2.5rem, 6vw, 3.5rem);
-		margin-top: 4vh;
+		padding: clamp(4rem, 10vh, 7rem) var(--gutter) 2rem;
 	}
 
-	.section-head {
-		max-width: 1200px;
+	.rail {
+		max-width: var(--container);
 		width: 100%;
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		gap: 0.6rem;
-	}
-
-	.tech-title {
-		font-size: clamp(2.4rem, 4.5vw, 3.4rem);
-		margin: 0;
-		letter-spacing: -0.02em;
-		font-weight: 600;
-	}
-
-	.tech-intro {
-		margin: 0;
-		font-family: var(--font-mono);
-		font-size: 0.85rem;
-		color: var(--color-text-muted);
-		letter-spacing: 0.02em;
 	}
 
 	.tiers {
-		max-width: 1200px;
-		width: 100%;
 		display: flex;
 		flex-direction: column;
-		gap: 1.6rem;
 	}
 
+	/* Colophon rows: tier label column | flowing type specimen */
 	.tier {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 0.85rem 3rem;
+		padding-block: 1.75rem;
+		border-top: 1px solid var(--color-border);
+	}
+
+	.tier:last-child {
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	@media (min-width: 850px) {
+		.tier {
+			grid-template-columns: 200px minmax(0, 1fr);
+			padding-block: 2.1rem;
+		}
+	}
+
+	.tier-side {
 		display: flex;
-		flex-direction: column;
-		gap: 0.7rem;
-	}
-
-	.tier-label {
-		font-family: var(--font-mono);
-		font-size: 0.78rem;
-		font-weight: 600;
-		letter-spacing: 0.08em;
-		color: var(--color-text-primary);
-		margin: 0;
-		line-height: 1;
-		display: inline-flex;
 		align-items: baseline;
-		gap: 0.45rem;
+		gap: 0.75rem;
 	}
 
-	.tier-mark {
-		color: var(--color-text-secondary);
-		opacity: 0.7;
-		font-weight: 500;
+	@media (min-width: 850px) {
+		.tier-side {
+			flex-direction: column;
+			gap: 0.45rem;
+		}
 	}
 
 	.tier-name {
+		font-family: var(--font-mono);
+		font-size: 0.78rem;
+		font-weight: 600;
+		letter-spacing: 0.1em;
 		color: var(--color-text-primary);
+		margin: 0;
+		line-height: 1.2;
 	}
 
-	.tier-sep {
+	.tier-mark {
 		color: var(--color-text-muted);
-		opacity: 0.6;
-		font-weight: 400;
+		font-weight: 500;
 	}
 
 	.tier-context {
+		font-family: var(--font-mono);
+		font-size: 0.7rem;
+		letter-spacing: 0.04em;
 		color: var(--color-text-muted);
-		font-weight: 400;
 		text-transform: lowercase;
+		margin: 0;
+		line-height: 1.2;
 	}
 
-	.pills {
+	.tier-skills {
 		list-style: none;
 		padding: 0;
 		margin: 0;
 		display: flex;
 		flex-wrap: wrap;
-		gap: 0.5rem;
+		align-items: baseline;
+		column-gap: 0.55em;
+		row-gap: 0.35em;
 	}
 
-	.pill {
-		font-family: var(--font-mono);
-		font-size: 0.78rem;
-		font-weight: 400;
-		padding: 0.35rem 0.65rem;
-		background: var(--color-surface-alt);
-		border-radius: 4px;
-		color: var(--color-text-secondary);
-		letter-spacing: 0.02em;
+	.skill {
+		line-height: 1.45;
 		cursor: default;
-		transition: color 0.2s ease, background-color 0.2s ease;
+		transition: color 0.2s ease;
 	}
 
-	/* Weight differentiation by tier */
-	.tier--core .pill {
+	.skill:not(:last-child)::after {
+		content: "·";
+		margin-left: 0.55em;
+		color: var(--color-text-faint);
+		font-weight: 400;
+	}
+
+	/* Type scale encodes frequency of use */
+	.tier--core .skill {
+		font-family: var(--font-display);
+		font-size: clamp(1.35rem, 2.2vw, 1.7rem);
+		font-weight: 600;
+		letter-spacing: -0.02em;
 		color: var(--color-text-primary);
-		font-weight: 500;
-		font-size: 0.82rem;
-		padding: 0.4rem 0.7rem;
 	}
 
-	.tier--often .pill {
+	.tier--often .skill {
+		font-size: clamp(1rem, 1.4vw, 1.15rem);
+		font-weight: 500;
 		color: var(--color-text-secondary);
 	}
 
-	.tier--sometimes .pill {
+	.tier--sometimes .skill {
+		font-size: 0.95rem;
+		font-weight: 400;
 		color: var(--color-text-muted);
 	}
 
-	.tier--tools .pill {
+	.tier--tools .skill {
+		font-family: var(--font-mono);
+		font-size: 0.8rem;
+		font-weight: 400;
+		letter-spacing: 0.02em;
 		color: var(--color-text-muted);
-		font-size: 0.75rem;
-		padding: 0.3rem 0.55rem;
 	}
 
 	@media (hover: hover) {
-		.pill:hover {
+		.tier--often .skill:hover,
+		.tier--sometimes .skill:hover,
+		.tier--tools .skill:hover {
 			color: var(--color-text-primary);
-			background: var(--color-surface-muted);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.skill {
+			transition: none;
 		}
 	}
 </style>
-
-<script>
-	import { gsap } from "gsap";
-	import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-	if (typeof window !== "undefined") {
-		const prefersReduced = window.matchMedia(
-			"(prefers-reduced-motion: reduce)"
-		).matches;
-
-		if (!prefersReduced) {
-			gsap.registerPlugin(ScrollTrigger);
-
-			const init = () => {
-				const section = document.querySelector("#tech");
-				if (!section) return;
-
-				const head = section.querySelector(".section-head");
-				if (head) {
-					gsap.fromTo(
-						head,
-						{ filter: "blur(6px)", opacity: 0, y: 16 },
-						{
-							filter: "blur(0px)",
-							opacity: 1,
-							y: 0,
-							duration: 0.6,
-							ease: "power2.out",
-							scrollTrigger: {
-								trigger: head,
-								start: "top 90%",
-								end: "top 60%",
-								scrub: true,
-							},
-						}
-					);
-				}
-
-				const tiers = section.querySelectorAll(".tier");
-				tiers.forEach((tier) => {
-					gsap.fromTo(
-						tier,
-						{ filter: "blur(8px)", opacity: 0, y: 18 },
-						{
-							filter: "blur(0px)",
-							opacity: 1,
-							y: 0,
-							duration: 0.6,
-							ease: "power2.out",
-							scrollTrigger: {
-								trigger: tier,
-								start: "top 92%",
-								end: "top 70%",
-								scrub: true,
-							},
-						}
-					);
-				});
-			};
-
-			requestAnimationFrame(() => {
-				init();
-				window.addEventListener("load", () => ScrollTrigger.refresh());
-			});
-		}
-	}
-</script>

@@ -1,24 +1,42 @@
 .theme-toggle {
-    background: var(--color-icon);
-    border: none;
-    border-radius: 50%;
-    width: auto;
-    height: 100%;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 8px;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm, 2px);
+    color: var(--color-text-primary);
     cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
 
-    &:hover {
-        transform: scale(1.1);
+.theme-toggle svg {
+    width: 17px;
+    height: 17px;
+    display: block;
+}
+
+@media (hover: hover) {
+    .theme-toggle:hover {
+        background: var(--color-text-primary);
+        border-color: var(--color-text-primary);
+        color: var(--color-background);
     }
+}
 
-    svg {
-        width: 24px;
-        height: 24px;
-        transition: transform 0.3s ease, opacity 0.3s ease;
+.theme-toggle:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .theme-toggle {
+        transition: none;
     }
-
 }
