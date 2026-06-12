@@ -9,7 +9,6 @@ interface Props {
         featured?: boolean;
 }
 const { project: p, index: i, featured = false } = Astro.props as Props;
-const indexLabel = `P.${String(i + 1).padStart(2, "0")}`;
 ---
 
 <li
@@ -34,7 +33,6 @@ const indexLabel = `P.${String(i + 1).padStart(2, "0")}`;
                                         itemscope
                                         itemtype="https://schema.org/ImageObject"
                                 />
-                                <span class="index-chip" aria-hidden="true">{indexLabel}</span>
                                 <figcaption class="visually-hidden">
                                         {p.imageAlt || p.title}
                                 </figcaption>
@@ -180,22 +178,6 @@ const indexLabel = `P.${String(i + 1).padStart(2, "0")}`;
                 object-fit: fill;
                 display: block;
                 transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
-        }
-
-        .index-chip {
-                position: absolute;
-                top: 0.8rem;
-                left: 0.8rem;
-                font-family: var(--font-mono);
-                font-size: 0.65rem;
-                font-weight: 600;
-                letter-spacing: 0.08em;
-                line-height: 1;
-                padding: 0.32rem 0.45rem;
-                background: var(--color-background);
-                border: 1px solid var(--color-border);
-                border-radius: var(--radius-sm);
-                color: var(--color-text-primary);
         }
 
         .visually-hidden {

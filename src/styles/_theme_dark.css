@@ -82,5 +82,5 @@
     --color-rail-tick: rgba(238, 238, 238, 0.18);
     --color-dot-grid: rgba(238, 238, 238, 0.05);
     --color-ghost-stroke: rgba(238, 238, 238, 0.17);
-    --grain-opacity: 0.15;
+    --grain-opacity: 0.150;
 }
