@@ -15,6 +15,7 @@ const id = `skill-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-
         aria-labelledby={`${id}-title`}
         itemscope
         itemtype="https://schema.org/DefinedTerm"
+        data-cursor
 >
         {index && <span class="skill-card-index" aria-hidden="true">{index}</span>}
         <h4 id={`${id}-title`} class="skill-card-title" itemprop="name">

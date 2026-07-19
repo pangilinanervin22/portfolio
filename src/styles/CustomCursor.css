@@ -1,47 +1,122 @@
-/* Difference-blend cursor: white ring + dot invert against whatever
-   they pass over, in both themes. */
-.cursor {
+/* Drafting-instrument cursor: a crosshair reticle at the pointer plus a
+   corner-bracket frame that locks onto interactive targets like a CAD
+   selection marquee, with a mono W×H readout of the target's real size.
+   Everything is difference-blended white so it inverts against whatever
+   it passes over, in both themes.
+
+   Blend-mode note: mix-blend-mode only reaches the page backdrop from the
+   element that owns the transform — a transformed parent isolates its
+   children's blending. So the blend lives on .cursor-cross / .cursor-frame
+   themselves and everything inside is painted plain white. */
+
+.cursor-cross {
     position: fixed;
     top: 0;
     left: 0;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    border: 1.5px solid #fff;
+    width: 19px; /* keep in sync with CROSS_SIZE in CustomCursor.tsx */
+    height: 19px;
+    /* Four hairline arms with a gap, plus a square anchor point at center */
+    background:
+        linear-gradient(#fff, #fff) center / 3px 3px no-repeat,
+        linear-gradient(#fff, #fff) left center / 6px 1px no-repeat,
+        linear-gradient(#fff, #fff) right center / 6px 1px no-repeat,
+        linear-gradient(#fff, #fff) center top / 1px 6px no-repeat,
+        linear-gradient(#fff, #fff) center bottom / 1px 6px no-repeat;
     mix-blend-mode: difference;
-    pointer-events: none;
-    z-index: 9999;
-    will-change: transform;
-    transition:
-        scale 0.25s cubic-bezier(0.22, 0.61, 0.36, 1),
-        opacity 0.2s ease;
-}
-
-.cursor--link {
-    scale: 1.55;
-}
-
-.center-dot {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 5px;
-    height: 5px;
-    background-color: #fff;
-    mix-blend-mode: difference;
-    border-radius: 50%;
     pointer-events: none;
     z-index: 10000;
     will-change: transform;
-    transition: opacity 0.2s ease;
+    transition:
+        rotate 0.2s cubic-bezier(0.22, 0.61, 0.36, 1),
+        opacity 0.2s ease;
 }
 
-.cursor--hidden {
+.cursor-cross.is-pressed {
+    rotate: 45deg;
+}
+
+.cursor-frame {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 26px;
+    height: 26px;
+    mix-blend-mode: difference;
+    pointer-events: none;
+    z-index: 9999;
+    will-change: transform, width, height;
+    transition:
+        scale 0.18s cubic-bezier(0.22, 0.61, 0.36, 1),
+        opacity 0.2s ease;
+}
+
+.cursor-frame.is-pressed {
+    scale: 0.92;
+}
+
+/* Corner brackets */
+.cursor-frame .c {
+    position: absolute;
+    width: 9px;
+    height: 9px;
+}
+
+.cursor-frame .tl {
+    top: 0;
+    left: 0;
+    border-top: 1px solid #fff;
+    border-left: 1px solid #fff;
+}
+
+.cursor-frame .tr {
+    top: 0;
+    right: 0;
+    border-top: 1px solid #fff;
+    border-right: 1px solid #fff;
+}
+
+.cursor-frame .bl {
+    bottom: 0;
+    left: 0;
+    border-bottom: 1px solid #fff;
+    border-left: 1px solid #fff;
+}
+
+.cursor-frame .br {
+    bottom: 0;
+    right: 0;
+    border-bottom: 1px solid #fff;
+    border-right: 1px solid #fff;
+}
+
+/* W×H readout, revealed only while locked on a target */
+.cursor-dims {
+    position: absolute;
+    top: calc(100% + 7px);
+    right: 0;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    line-height: 1;
+    white-space: nowrap;
+    color: #fff;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+
+.cursor-frame.is-locked .cursor-dims {
+    opacity: 1;
+}
+
+.is-hidden {
     opacity: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .cursor {
+    .cursor-cross,
+    .cursor-frame,
+    .cursor-dims {
         transition: none;
     }
 }

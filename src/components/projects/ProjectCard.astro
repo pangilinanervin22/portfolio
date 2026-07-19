@@ -21,7 +21,7 @@ const { project: p, index: i, featured = false } = Astro.props as Props;
 >
         <article class="card" aria-labelledby={`proj-${i}-title`}>
                 {p.image && (
-                        <figure class="media" itemprop="image">
+                        <figure class="media" itemprop="image" data-cursor>
                                 <img
                                         src={p.image.src}
                                         width={p.image.width}

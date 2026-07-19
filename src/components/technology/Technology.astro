@@ -43,6 +43,8 @@ const tierClass = (label: string) => `tier tier--${label.toLowerCase()}`;
 									itemprop="itemListElement"
 									itemscope
 									itemtype="https://schema.org/Thing"
+										data-cursor
+										data-cursor-label={`${String(si + 1).padStart(2, "0")} / ${String(tier.skills.length).padStart(2, "0")}`}
 								>
 									<meta itemprop="position" content={String(ti * 10 + si + 1)} />
 									<span itemprop="name">{skill}</span>

@@ -1,8 +1,6 @@
 ---
 import SectionHead from "../_common/SectionHead.astro";
 import { experiences } from "../../data/experiences";
-
-const pad2 = (n: number) => String(n + 1).padStart(2, "0");
 ---
 
 <section
@@ -36,22 +34,32 @@ const pad2 = (n: number) => String(n + 1).padStart(2, "0");
 								itemscope
 								itemtype="https://schema.org/WorkExperience"
 							>
-								<div class="entry-side">
-									<span class="entry-index" aria-hidden="true">
-										{pad2(i)}
-									</span>
-									<div class="entry-when">
-										<time itemprop="startDate">{item.period}</time>
-										{isCurrent && (
-											<span class="now-badge" aria-label="Current role">
-												<span aria-hidden="true">//</span> NOW
-											</span>
-										)}
-									</div>
+								<div class="entry-when">
+									<span class="entry-tick" aria-hidden="true" />
+									<time class="entry-period" itemprop="startDate">
+										{item.period}
+									</time>
+									{isCurrent && (
+										<span class="now-badge" aria-label="Current role">
+											<span aria-hidden="true">//</span> NOW
+										</span>
+									)}
 								</div>
 
 								<div class="entry-body">
 									<header class="entry-head">
+										{item.logo && (
+											<span class="entry-logo" data-cursor>
+												<img
+													src={item.logo.src}
+													width={item.logo.width}
+													height={item.logo.height}
+													alt={item.logoAlt || `${item.company} logo`}
+													loading="lazy"
+													decoding="async"
+												/>
+											</span>
+										)}
 										<h3
 											id={`exp-${i}-role`}
 											class="role"
@@ -134,7 +142,7 @@ const pad2 = (n: number) => String(n + 1).padStart(2, "0");
 	.entry-grid {
 		display: grid;
 		grid-template-columns: 1fr;
-		gap: 1rem 3rem;
+		gap: 1rem 2.5rem;
 		padding: 2rem 0.75rem;
 		margin-inline: -0.75rem;
 		transition: background-color 0.25s ease;
@@ -142,7 +150,7 @@ const pad2 = (n: number) => String(n + 1).padStart(2, "0");
 
 	@media (min-width: 850px) {
 		.entry-grid {
-			grid-template-columns: 200px minmax(0, 1fr);
+			grid-template-columns: 168px minmax(0, 1fr);
 			padding: 2.5rem 1rem;
 			margin-inline: -1rem;
 		}
@@ -154,52 +162,49 @@ const pad2 = (n: number) => String(n + 1).padStart(2, "0");
 		}
 	}
 
-	/* Left column: index + period */
-	.entry-side {
+	/* Left rail: chronology — the dates carry the timeline order */
+	.entry-when {
 		display: flex;
-		align-items: baseline;
-		gap: 0.85rem;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.55rem 0.75rem;
 	}
 
 	@media (min-width: 850px) {
-		.entry-side {
+		.entry-when {
 			flex-direction: column;
 			align-items: flex-start;
-			gap: 0.8rem;
+			gap: 0.7rem;
+			padding-top: 0.15rem;
 		}
 	}
 
-	.entry-index {
-		font-family: var(--font-mono);
-		font-size: 0.7rem;
-		font-weight: 600;
-		letter-spacing: 0.06em;
-		line-height: 1;
-		color: var(--color-text-muted);
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-sm);
-		padding: 0.32rem 0.45rem;
+	/* Ruler-tick marker: filled for the current role, hollow for past ones */
+	.entry-tick {
+		flex: none;
+		width: 9px;
+		height: 9px;
+		border: 1px solid var(--color-text-muted);
+		border-radius: 1px;
+		background: transparent;
 	}
 
-	.entry--current .entry-index {
-		color: var(--color-background);
+	.entry--current .entry-tick {
 		background: var(--color-text-primary);
 		border-color: var(--color-text-primary);
 	}
 
-	.entry-when {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		gap: 0.65rem;
+	.entry-period {
+		font-family: var(--font-mono);
+		font-size: 0.82rem;
+		font-weight: 500;
+		letter-spacing: 0.03em;
+		color: var(--color-text-primary);
+		white-space: nowrap;
 	}
 
-	.entry-when time {
-		font-family: var(--font-mono);
-		font-size: 0.78rem;
-		font-weight: 500;
-		letter-spacing: 0.04em;
-		color: var(--color-text-primary);
+	.entry--current .entry-period {
+		font-weight: 600;
 	}
 
 	.now-badge {
@@ -215,7 +220,7 @@ const pad2 = (n: number) => String(n + 1).padStart(2, "0");
 		text-transform: uppercase;
 	}
 
-	/* Right column: content */
+	/* Right column: company identity + detail */
 	.entry-body {
 		display: flex;
 		flex-direction: column;
@@ -226,7 +231,44 @@ const pad2 = (n: number) => String(n + 1).padStart(2, "0");
 	.entry-head {
 		display: flex;
 		flex-direction: column;
-		gap: 0.4rem;
+		align-items: flex-start;
+		gap: 0.45rem;
+	}
+
+	/* Company logo as a full-colour letterhead mark. A neutral, near-white
+	   plate keeps the three mixed-background logos (black / blue / transparent)
+	   reading consistently in both themes. */
+	.entry-logo {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		box-sizing: border-box;
+		width: 122px;
+		height: 52px;
+		margin-bottom: 0.35rem;
+		padding: 9px 12px;
+		background: var(--gray-0);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-sm);
+	}
+
+	/* The frame is wider than the widest logo's aspect ratio, so every logo
+	   is height-bound inside it: all three render at the same height and sit
+	   in an identical box, regardless of their differing proportions. */
+	.entry-logo img {
+		display: block;
+		width: auto;
+		height: auto;
+		max-width: 100%;
+		max-height: 100%;
+		object-fit: contain;
+	}
+
+	@media (min-width: 850px) {
+		.entry-logo {
+			width: 138px;
+			height: 58px;
+		}
 	}
 
 	.role {

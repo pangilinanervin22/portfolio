@@ -11,7 +11,15 @@
  	width: 100%;
  	background-color: var(--color-background);
  	box-sizing: border-box;
- 	cursor: none;
+ 	color: var(--color-text-primary);
+ }
+
+ /* The drafting cursor replaces the native one entirely, but only once the
+    island has mounted (it stamps this class) — if JS fails or the device is
+    touch, the native cursor and per-component pointer fallbacks survive. */
+ html.has-custom-cursor,
+ html.has-custom-cursor * {
+ 	cursor: none !important;
  }
 
  body {
@@ -107,13 +115,8 @@
  @media (hover: none),
  (pointer: coarse) {
 
- 	html,
- 	body {
- 		cursor: auto;
- 	}
-
- 	.cursor,
- 	.center-dot {
+ 	.cursor-cross,
+ 	.cursor-frame {
  		display: none !important;
  	}
  }
@@ -131,7 +134,16 @@
  	vertical-align: baseline;
  	box-sizing: border-box;
  	font-family: 'Sora', 'Outfit Variable', system-ui, sans-serif;
- 	color: var(--color-text-primary);
+ }
+
+ /* Color inherits from the page (not the * reset) so hover inversions
+    reach nested spans and currentColor icons. Form controls don't
+    inherit color by default, so opt them in. */
+ button,
+ input,
+ select,
+ textarea {
+ 	color: inherit;
  }
 
  h1, h2, h3 {

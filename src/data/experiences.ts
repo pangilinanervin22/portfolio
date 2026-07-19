@@ -1,3 +1,7 @@
+import cosmicSocietyLogo from "../assets/experience/Cosmic_Society.jpg";
+import heqsLogo from "../assets/experience/HEQS.png";
+import fiveTwentyLogo from "../assets/experience/520_IT_SERVICE.png";
+
 export interface ExperienceItem {
 	role: string;
 	company: string;
@@ -6,12 +10,16 @@ export interface ExperienceItem {
 	summary: string;
 	highlights: string[];
 	tech?: string[];
+	logo?: ImageMetadata;
+	logoAlt?: string;
 }
 
 export const experiences: ExperienceItem[] = [
 	{
 		role: "Full-stack Developer",
 		company: "Cosmic Society",
+		logo: cosmicSocietyLogo,
+		logoAlt: "Cosmic Society company logo",
 		period: "Mar 2026 – Present",
 		location: "Berlin, Germany · Remote (via Penbrothers, Manila)",
 		summary: "Building a Next.js + Supabase multi-brand event platform serving ~30,000 peak users at large-scale events.",
@@ -32,6 +40,8 @@ export const experiences: ExperienceItem[] = [
 	{
 		role: "Full-stack Developer",
 		company: "HEQS Group",
+		logo: heqsLogo,
+		logoAlt: "HEQS Group company logo",
 		period: "Sep 2025 – Mar 2026",
 		location: "Sydney, NSW · Remote",
 		summary: "Built and optimized production web applications across TypeScript, Next.js, NestJS, and Laravel.",
@@ -57,6 +67,8 @@ export const experiences: ExperienceItem[] = [
 	{
 		role: "Full-stack Developer",
 		company: "FiveTwenty IT Services",
+		logo: fiveTwentyLogo,
+		logoAlt: "FiveTwenty IT Services company logo",
 		period: "Jun 2024 – Jun 2025",
 		location: "Alabang, Muntinlupa · Hybrid (started as IT Intern, on-site)",
 		summary: "Built enterprise-grade applications end-to-end; started as IT intern, transitioned to full-stack.",
