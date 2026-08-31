@@ -1,4 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
+import AxeBuilder from "@axe-core/playwright";
 
 /** Collects console errors, uncaught exceptions and failed requests for the page. */
 function watchForProblems(page: Page): string[] {
@@ -124,3 +125,36 @@ test("removed pages are gone", async ({ page }) => {
 	const response = await page.goto("./about/");
 	expect(response?.status()).toBe(404);
 });
+
+for (const theme of ["light", "dark"] as const) {
+	test(`no WCAG 2.1 AA violations in ${theme} mode`, async ({ page }) => {
+		// The inline <head> script reads this before first paint.
+		await page.addInitScript((t) => {
+			try {
+				localStorage.setItem("theme", t);
+			} catch {
+				/* ignore */
+			}
+		}, theme);
+		await page.goto("./");
+		await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
+		// Reveal the scroll-animated sections so their text is audited too, then
+		// wait for every finite animation/transition (hero fade-ins, reveals) to
+		// settle; axe would otherwise sample half-faded text as low contrast.
+		await page.evaluate(async () => {
+			document.querySelectorAll("[data-reveal]").forEach((el) => el.classList.add("is-revealed"));
+			const finite = document
+				.getAnimations()
+				.filter((a) => a.effect?.getTiming().iterations !== Infinity);
+			await Promise.all(finite.map((a) => a.finished.catch(() => undefined)));
+		});
+
+		const results = await new AxeBuilder({ page })
+			.withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+			.analyze();
+		const violations = results.violations.map(
+			(v) => `${v.id} (${v.impact}): ${v.nodes.slice(0, 4).map((n) => n.target.join(" ")).join(" | ")}`,
+		);
+		expect(violations).toEqual([]);
+	});
+}

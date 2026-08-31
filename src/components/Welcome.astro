@@ -18,9 +18,9 @@ const resumeHref = `${base}/Ervin_Pangilinan_Resume.pdf`;
                         <p class="status">
                                 <span class="status-dot" aria-hidden="true"></span>
                                 <span class="status-text">CURRENTLY</span>
-                                <span class="status-sep" aria-hidden="true">·</span>
+                                <span class="status-sep" aria-hidden="true"></span>
                                 <span class="status-loc">Cosmic Society</span>
-                                <span class="status-sep" aria-hidden="true">·</span>
+                                <span class="status-sep" aria-hidden="true"></span>
                                 <span class="status-loc">Manila</span>
                         </p>
 
@@ -84,15 +84,15 @@ const resumeHref = `${base}/Ervin_Pangilinan_Resume.pdf`;
                                         </p>
                                         <ul class="exploring-list">
                                                 <li>
-                                                        <span class="exploring-idx" aria-hidden="true">01</span>
+                                                        <span class="exploring-idx" data-idx="01" aria-hidden="true"></span>
                                                         AI automation pipelines
                                                 </li>
                                                 <li>
-                                                        <span class="exploring-idx" aria-hidden="true">02</span>
+                                                        <span class="exploring-idx" data-idx="02" aria-hidden="true"></span>
                                                         Distributed system design
                                                 </li>
                                                 <li>
-                                                        <span class="exploring-idx" aria-hidden="true">03</span>
+                                                        <span class="exploring-idx" data-idx="03" aria-hidden="true"></span>
                                                         Event-driven architecture
                                                 </li>
                                         </ul>
@@ -164,6 +164,12 @@ const resumeHref = `${base}/Ervin_Pangilinan_Resume.pdf`;
 
         .status-sep {
                 opacity: 0.4;
+        }
+
+        /* Decorative glyphs live in CSS so they aren't text nodes for
+           assistive tech or contrast checks */
+        .status-sep::before {
+                content: "·";
         }
 
         .status-loc {
@@ -335,6 +341,10 @@ const resumeHref = `${base}/Ervin_Pangilinan_Resume.pdf`;
         .exploring-idx {
                 font-size: 0.68rem;
                 color: var(--color-text-faint);
+        }
+
+        .exploring-idx::before {
+                content: attr(data-idx);
         }
 
         /* Scroll hint */

@@ -41,7 +41,7 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                         />
                         <figcaption class="portrait-caption">
                                 <span class="caption-left"><span aria-hidden="true">//</span> Manila, PH · 2026</span>
-                                <span class="caption-right" aria-hidden="true">fig. 01</span>
+                                <span class="caption-right" data-label="fig. 01" aria-hidden="true"></span>
                         </figcaption>
                 </figure>
         </div>
@@ -180,6 +180,11 @@ import devOpsIcon from "../../assets/skill/devops.svg";
 
         .caption-right {
                 color: var(--color-text-faint);
+        }
+
+        /* Decorative plate label lives in CSS so it isn't a text node */
+        .caption-right::before {
+                content: attr(data-label);
         }
 
         .introduction-content {

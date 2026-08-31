@@ -103,7 +103,7 @@ export const experiences: ExperienceItem[] = [
 		tech: ["React", "Express", "React Native", "Supabase"],
 	},
 	{
-		role: "Student Projects & Getting Started",
+		role: "Computer Science Student",
 		company: "Cavite State University Bacoor",
 		period: "2021 – 2024",
 		location: "Bacoor, Cavite",

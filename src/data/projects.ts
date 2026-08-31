@@ -78,8 +78,8 @@ export const projects: ProjectItem[] = [
         {
                 title: "Ajapco Sales & Inventory System",
                 description:
-                        "Freelance project, a sales and inventory system for a Japanese sweets shop. Built solo, full stack.",
-                stack: ["React", "Node.js", "Express", "MySQL"],
+                        "Freelance build for Ajapco, a Japanese sweets shop: a sales and inventory system with a reporting dashboard (monthly sales, stock alerts, best-selling products) plus product, stock, sales, and employee management. Built solo, front to back.",
+                stack: ["React", "Zustand", "React Hook Form", "Node.js", "Express", "MySQL"],
                 year: "2023",
                 repo: "https://github.com/pangilinanervin22/inventory_react",
                 demo: "https://pangilinanervin22.github.io/inventory_react/",
@@ -89,7 +89,7 @@ export const projects: ProjectItem[] = [
         {
                 title: "GreenCycle Mobile App",
                 description:
-                        "Freelance project, a recycling app I built solo. Online-first backend with offline support and tested cloud↔local sync across Android and iOS.",
+                        "Freelance project, built solo: a React Native app for discovering ways to reuse and recycle fruit and vegetable waste, with liked posts and an admin dashboard for reviewing pending submissions. Online-first backend with offline support, cloud↔local sync tested on Android and iOS.",
                 stack: ["React Native", "Expo", "Supabase", "TypeScript"],
                 year: "2025",
                 repo: "https://github.com/pangilinanervin22/GreenCycle",

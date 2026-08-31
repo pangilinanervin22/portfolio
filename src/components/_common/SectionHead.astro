@@ -18,7 +18,7 @@ const { number, title, headingId, meta, intro } = Astro.props as Props;
 	</p>
 	<div class="s-title-row">
 		<h2 id={headingId} class="s-title">{title}</h2>
-		<span class="s-ghost" aria-hidden="true">{number}</span>
+		<span class="s-ghost" data-n={number} aria-hidden="true"></span>
 	</div>
 	{intro && <p class="s-intro">{intro}</p>}
 </header>
@@ -82,6 +82,11 @@ const { number, title, headingId, meta, intro } = Astro.props as Props;
 	}
 
 	/* Oversized outlined index, watermarked at the right edge */
+	/* Watermark numeral lives in CSS so it isn't a text node */
+	.s-ghost::before {
+		content: attr(data-n);
+	}
+
 	.s-ghost {
 		position: absolute;
 		right: 0;

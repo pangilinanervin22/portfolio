@@ -15,7 +15,7 @@ const id = `skill-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-
         aria-labelledby={`${id}-title`}
         data-cursor
 >
-        {index && <span class="skill-card-index" aria-hidden="true">{index}</span>}
+        {index && <span class="skill-card-index" data-idx={index} aria-hidden="true"></span>}
         <h4 id={`${id}-title`} class="skill-card-title">
                 {Icon && (
                         <Icon
@@ -55,6 +55,11 @@ const id = `skill-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-
                 color: var(--color-text-faint);
                 line-height: 1;
                 transition: color 0.25s ease;
+        }
+
+        /* Decorative index lives in CSS so it isn't a text node */
+        .skill-card-index::before {
+                content: attr(data-idx);
         }
 
         .skill-card-title {
