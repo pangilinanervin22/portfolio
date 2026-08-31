@@ -13,12 +13,10 @@ const id = `skill-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-
 <article
         class="skill-card"
         aria-labelledby={`${id}-title`}
-        itemscope
-        itemtype="https://schema.org/DefinedTerm"
         data-cursor
 >
         {index && <span class="skill-card-index" aria-hidden="true">{index}</span>}
-        <h4 id={`${id}-title`} class="skill-card-title" itemprop="name">
+        <h4 id={`${id}-title`} class="skill-card-title">
                 {Icon && (
                         <Icon
                                 class="skill-card-icon"
@@ -28,7 +26,7 @@ const id = `skill-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-
                 )}
                 {title}
         </h4>
-        <p class="skill-card-content" itemprop="description">{content}</p>
+        <p class="skill-card-content">{content}</p>
 </article>
 
 <style scoped>

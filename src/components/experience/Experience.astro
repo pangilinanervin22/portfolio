@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import SectionHead from "../_common/SectionHead.astro";
 import { experiences } from "../../data/experiences";
 ---
@@ -7,8 +8,6 @@ import { experiences } from "../../data/experiences";
 	id="experience"
 	class="experience-section"
 	aria-labelledby="experience-title"
-	itemscope
-	itemtype="https://schema.org/Person"
 >
 	<div class="rail">
 		<SectionHead
@@ -31,16 +30,13 @@ import { experiences } from "../../data/experiences";
 							<article
 								class="entry-grid"
 								aria-labelledby={`exp-${i}-role`}
-								itemscope
-								itemtype="https://schema.org/WorkExperience"
 							>
 								<div class="entry-when">
 									<span class="entry-tick" aria-hidden="true" />
-									<time class="entry-period" itemprop="startDate">
-										{item.period}
-									</time>
+									<span class="entry-period">{item.period}</span>
 									{isCurrent && (
-										<span class="now-badge" aria-label="Current role">
+										<span class="now-badge">
+											<span class="visually-hidden">Current role:</span>
 											<span aria-hidden="true">//</span> NOW
 										</span>
 									)}
@@ -50,36 +46,26 @@ import { experiences } from "../../data/experiences";
 									<header class="entry-head">
 										{item.logo && (
 											<span class="entry-logo" data-cursor>
-												<img
-													src={item.logo.src}
-													width={item.logo.width}
-													height={item.logo.height}
+												<Image
+													src={item.logo}
+													width={Math.min(item.logo.width, 280)}
+													format="webp"
+													quality={85}
 													alt={item.logoAlt || `${item.company} logo`}
 													loading="lazy"
 													decoding="async"
 												/>
 											</span>
 										)}
-										<h3
-											id={`exp-${i}-role`}
-											class="role"
-											itemprop="jobTitle"
-										>
+										<h3 id={`exp-${i}-role`} class="role">
 											{item.role}
 										</h3>
 										<p class="meta">
-											<span
-												class="company"
-												itemprop="worksFor"
-												itemscope
-												itemtype="https://schema.org/Organization"
-											>
-												<span itemprop="name">{item.company}</span>
-											</span>
+											<span class="company">{item.company}</span>
 											<span class="location">{item.location}</span>
 										</p>
 									</header>
-									<p class="summary" itemprop="description">
+									<p class="summary">
 										{item.summary}
 									</p>
 									{item.highlights.length > 0 && (
@@ -93,7 +79,8 @@ import { experiences } from "../../data/experiences";
 										</ul>
 									)}
 									{item.tech && (
-										<p class="tech-line" aria-label="Technologies used">
+										<p class="tech-line">
+											<span class="visually-hidden">Technologies used:</span>
 											{item.tech.map((cur) => (
 												<span class="tech-item">{cur}</span>
 											))}

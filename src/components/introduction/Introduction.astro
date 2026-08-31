@@ -14,8 +14,6 @@ import devOpsIcon from "../../assets/skill/devops.svg";
         id="introduction"
         class="introduction-main-container"
         aria-labelledby="about-heading"
-        itemscope
-        itemtype="https://schema.org/Person"
 >
         <div class="section-head">
                 <SectionHead
@@ -26,8 +24,8 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                 />
         </div>
 
-        <div class="introduction-image-container" aria-label="Portrait" data-reveal>
-                <figure class="introduction-image" itemscope itemtype="https://schema.org/ImageObject" data-cursor>
+        <div class="introduction-image-container" data-reveal>
+                <figure class="introduction-image" data-cursor>
                         <Image
                                 src={introImage}
                                 alt="Ervin Pangilinan - Full Stack Developer and Computer Science Graduate specializing in web applications, mobile development, and DevOps"
@@ -35,30 +33,22 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                                 height={720}
                                 loading="eager"
                                 decoding="async"
-                                fetchpriority="high"
                                 format="webp"
                                 quality={85}
                                 densities={[1, 1.5, 2]}
                                 sizes="(max-width: 480px) 280px, (max-width: 768px) 360px, (max-width: 1024px) 380px, 380px"
                                 class="intro-portrait"
-                                itemprop="image"
                         />
                         <figcaption class="portrait-caption">
                                 <span class="caption-left"><span aria-hidden="true">//</span> Manila, PH · 2026</span>
                                 <span class="caption-right" aria-hidden="true">fig. 01</span>
                         </figcaption>
-                        <meta itemprop="name" content="Ervin Pangilinan Professional Portrait" />
-                        <meta itemprop="description" content="Professional headshot of Ervin Pangilinan, Full Stack Developer and Computer Science graduate" />
-                        <meta itemprop="contentUrl" content={introImage.src} />
-                        <meta itemprop="thumbnailUrl" content={introImage.src} />
-                        <meta itemprop="author" content="Ervin Pangilinan" />
-                        <meta itemprop="copyrightHolder" content="Ervin Pangilinan" />
                 </figure>
         </div>
 
         <div class="introduction-content">
-                <p class="introduction-description" itemprop="description" data-reveal>
-                        I write software, mostly for the web. Started in 2021 as a hobby and it turned into a career. Today I'm at Cosmic Society building a multi-brand event platform that supports ~30,000 peak users at large-scale events before that I have experience of working in multiple companies which include international team, HEQS Group and FiveTwenty IT Services. Computer Science grad from Cavite State University.
+                <p class="introduction-description" data-reveal>
+                        I write software, mostly for the web. Started in 2021 as a hobby and it turned into a career. Today I'm at Cosmic Society building a multi-brand event platform that supports ~30,000 peak users at large-scale events. Before that I shipped production work for HEQS Group (Sydney) and FiveTwenty IT Services (Manila), and I'm a Computer Science grad from Cavite State University.
                 </p>
                 <p class="introduction-description-secondary" data-reveal style="--reveal-delay: 0.08s">
                         I work across the stack, but backend is where I go deepest: REST APIs, role-based access, audit logging, query optimization, CI/CD. I care about clean architecture, accessibility, and code the next person can read without a guided tour. The rest of my time goes to whatever I'm learning right now.
@@ -69,7 +59,7 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                                 <span aria-hidden="true">//</span> What I build
                         </h3>
                         <ul class="skills-list" role="list">
-                                <li itemprop="knowsAbout">
+                                <li>
                                         <SkillCard
                                                 title="Web platforms"
                                                 content="Production apps in TypeScript, Next.js, NestJS. Server-rendered, SPA, or hybrid."
@@ -77,7 +67,7 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                                                 index="01"
                                         />
                                 </li>
-                                <li itemprop="knowsAbout">
+                                <li>
                                         <SkillCard
                                                 title="Mobile apps"
                                                 content="Cross-platform with React Native + Expo. Offline-first, secure releases."
@@ -85,7 +75,7 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                                                 index="02"
                                         />
                                 </li>
-                                <li itemprop="knowsAbout">
+                                <li>
                                         <SkillCard
                                                 title="DevOps & deploys"
                                                 content="CI/CD pipelines, Docker containers, cloud hosting on Vercel, AWS, Azure, DigitalOcean, Heroku."
@@ -93,7 +83,7 @@ import devOpsIcon from "../../assets/skill/devops.svg";
                                                 index="03"
                                         />
                                 </li>
-                                <li itemprop="knowsAbout">
+                                <li>
                                         <SkillCard
                                                 title="Game dev"
                                                 content="Small 2D Unity prototypes when I want to think about something different."

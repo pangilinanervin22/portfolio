@@ -39,7 +39,7 @@
     /* Text */
     --color-text-primary: #eeeeee;
     --color-text-secondary: #bbbbbb;
-    --color-text-muted: #777777;
+    --color-text-muted: #858585; /* 5.1:1 on the page background (WCAG AA for small text) */
     --color-text-faint: #555555;
     --color-text-inverse: var(--gray-1000);
 

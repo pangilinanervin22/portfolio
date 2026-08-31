@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import type { ProjectItem } from "../../data/projects";
 import GithubIcon from "../../assets/icons/github.svg";
 import LinkIcon from "../../assets/icons/link.svg";
@@ -13,25 +14,23 @@ const { project: p, index: i, featured = false } = Astro.props as Props;
 
 <li
         class={`project-card${featured ? " project-card--featured" : ""}`}
-        itemprop="itemListElement"
-        itemscope
-        itemtype="https://schema.org/CreativeWork"
         data-reveal
         style={`--reveal-delay: ${Math.min((i % 2) * 0.08, 0.16)}s`}
 >
         <article class="card" aria-labelledby={`proj-${i}-title`}>
                 {p.image && (
-                        <figure class="media" itemprop="image" data-cursor>
-                                <img
-                                        src={p.image.src}
-                                        width={p.image.width}
-                                        height={p.image.height}
+                        <figure class="media" data-cursor>
+                                <Image
+                                        src={p.image}
+                                        widths={[480, 768, 1200].filter((w) => w <= p.image!.width)}
+                                        sizes={featured
+                                                ? "(min-width: 1024px) 660px, (min-width: 768px) 90vw, 100vw"
+                                                : "(min-width: 768px) 45vw, 100vw"}
+                                        format="webp"
+                                        quality={80}
                                         alt={p.imageAlt || `${p.title} - screenshot showcasing the ${p.stack.join(', ')} stack`}
                                         loading="lazy"
                                         decoding="async"
-                                        itemprop="image"
-                                        itemscope
-                                        itemtype="https://schema.org/ImageObject"
                                 />
                                 <figcaption class="visually-hidden">
                                         {p.imageAlt || p.title}
@@ -41,31 +40,27 @@ const { project: p, index: i, featured = false } = Astro.props as Props;
                 <div class="body">
                         <header class="card-head">
                                 {featured && (
-                                        <p class="featured-label" aria-label="Featured project">
+                                        <p class="featured-label">
                                                 <span aria-hidden="true">//</span> FEATURED
                                         </p>
                                 )}
                                 <div class="title-row">
-                                        <h3
-                                                id={`proj-${i}-title`}
-                                                class="card-title"
-                                                itemprop="headline"
-                                        >
+                                        <h3 id={`proj-${i}-title`} class="card-title">
                                                 {p.title}
                                         </h3>
                                         {p.year && (
-                                                <span class="year" aria-label="Year">
+                                                <span class="year">
                                                         {p.year}
                                                 </span>
                                         )}
                                 </div>
                         </header>
 
-                        <p class="card-desc" itemprop="description">{p.description}</p>
+                        <p class="card-desc">{p.description}</p>
 
                         <ul class="stack-line" role="list" aria-label="Tech stack">
                                 {p.stack.map((t) => (
-                                        <li class="stack-item" itemprop="keywords">
+                                        <li class="stack-item">
                                                 {t}
                                         </li>
                                 ))}
@@ -79,7 +74,6 @@ const { project: p, index: i, featured = false } = Astro.props as Props;
                                                         href={p.demo}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        itemprop="url"
                                                         aria-label={`Open live site for ${p.title}`}
                                                 >
                                                         <LinkIcon class="icon" aria-hidden="true" />
@@ -93,7 +87,6 @@ const { project: p, index: i, featured = false } = Astro.props as Props;
                                                         href={p.repo}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        itemprop="codeRepository"
                                                         aria-label={`Open GitHub repo for ${p.title}`}
                                                 >
                                                         <GithubIcon class="icon" aria-hidden="true" />
@@ -174,8 +167,9 @@ const { project: p, index: i, featured = false } = Astro.props as Props;
         .media img {
                 width: 100%;
                 height: 100%;
-                /* stretch so the full screenshot is always visible */
-                object-fit: fill;
+                /* letterbox on the surface backdrop: the whole screenshot stays
+                   visible and nothing gets stretched to fit the 16:9 plate */
+                object-fit: contain;
                 display: block;
                 transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
         }

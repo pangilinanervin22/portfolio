@@ -9,8 +9,6 @@ const tierClass = (label: string) => `tier tier--${label.toLowerCase()}`;
 	id="tech"
 	class="tech-section"
 	aria-labelledby="tech-title"
-	itemscope
-	itemtype="https://schema.org/ItemList"
 >
 	<div class="rail">
 		<SectionHead
@@ -40,14 +38,10 @@ const tierClass = (label: string) => `tier tier--${label.toLowerCase()}`;
 							{tier.skills.map((skill, si) => (
 								<li
 									class="skill"
-									itemprop="itemListElement"
-									itemscope
-									itemtype="https://schema.org/Thing"
-										data-cursor
-										data-cursor-label={`${String(si + 1).padStart(2, "0")} / ${String(tier.skills.length).padStart(2, "0")}`}
+									data-cursor
+									data-cursor-label={`${String(si + 1).padStart(2, "0")} / ${String(tier.skills.length).padStart(2, "0")}`}
 								>
-									<meta itemprop="position" content={String(ti * 10 + si + 1)} />
-									<span itemprop="name">{skill}</span>
+									{skill}
 								</li>
 							))}
 						</ul>

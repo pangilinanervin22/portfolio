@@ -39,7 +39,7 @@
     /* Text */
     --color-text-primary: #111111;
     --color-text-secondary: #555555;
-    --color-text-muted: #999999;
+    --color-text-muted: #707070; /* 4.7:1 on the page background (WCAG AA for small text) */
     --color-text-faint: #bbbbbb;
     --color-text-inverse: #ffffff;
 
@@ -79,7 +79,7 @@
 
     /* Font families */
     --font-mono: 'JetBrains Mono', 'Courier New', monospace;
-    --font-display: 'Outfit Variable', 'Sora', system-ui, sans-serif;
+    --font-display: 'Outfit Variable', system-ui, sans-serif;
 
     /* Layout */
     --container: 1200px;

@@ -6,19 +6,25 @@ import "@fontsource-variable/outfit/index.css";
 import "@fontsource/sora/400.css";
 import "@fontsource/sora/500.css";
 import "@fontsource/sora/600.css";
-import "@fontsource/sora/700.css";
 import "@fontsource/jetbrains-mono/400.css";
 import "@fontsource/jetbrains-mono/500.css";
 
 import "../styles/global.css"; // Ensure global styles are imported
 import CustomCursor from "../components/react/CustomCursor";
-import SpeedInsights from "@vercel/speed-insights/astro";
+// The two faces that paint the hero (display + body) are preloaded so the LCP
+// text doesn't wait for the browser to discover them through the CSS.
+import outfitWoff2 from "@fontsource-variable/outfit/files/outfit-latin-wght-normal.woff2?url";
+import soraWoff2 from "@fontsource/sora/files/sora-latin-400-normal.woff2?url";
 ---
 
 <html lang="en">
         <head>
+                <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+                <link rel="preload" href={outfitWoff2} as="font" type="font/woff2" crossorigin />
+                <link rel="preload" href={soraWoff2} as="font" type="font/woff2" crossorigin />
                 <script is:inline>
-                        // Apply saved/system theme before first paint to avoid a light-mode flash
+                        // Apply saved/system theme before first paint to avoid a light-mode flash,
+                        // and keep the browser chrome (theme-color) in step with it.
                         (function () {
                                 try {
                                         var t =
@@ -27,10 +33,11 @@ import SpeedInsights from "@vercel/speed-insights/astro";
                                                         ? "dark"
                                                         : "light");
                                         document.documentElement.setAttribute("data-theme", t);
+                                        var meta = document.querySelector('meta[name="theme-color"]');
+                                        if (meta) meta.setAttribute("content", t === "dark" ? "#111110" : "#faf8f6");
                                 } catch (e) {}
                         })();
                 </script>
-                <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
                 <noscript>
                         <style>
                                 [data-reveal] {
@@ -49,7 +56,6 @@ import SpeedInsights from "@vercel/speed-insights/astro";
                         <slot />
                 </main>
                 <Footer />
-                <SpeedInsights />
         </body>
 </html>
 

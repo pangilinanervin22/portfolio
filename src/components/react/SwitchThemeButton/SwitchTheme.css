@@ -22,6 +22,17 @@
     display: block;
 }
 
+/* Both icons are server-rendered; the active theme decides which one shows,
+   so the markup never depends on client-only state (no hydration mismatch). */
+.theme-toggle .theme-icon--sun,
+html[data-theme="dark"] .theme-toggle .theme-icon--moon {
+    display: none;
+}
+
+html[data-theme="dark"] .theme-toggle .theme-icon--sun {
+    display: block;
+}
+
 @media (hover: hover) {
     .theme-toggle:hover {
         background: var(--color-text-primary);

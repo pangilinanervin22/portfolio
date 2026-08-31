@@ -2,38 +2,31 @@
 import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
 ---
 
-<nav class="navbar" aria-label="Main navigation" itemscope itemtype="https://schema.org/SiteNavigationElement">
-        <a class="navbar-brand" href={`${import.meta.env.BASE_URL}#welcome`} aria-label="Back to top">
+<nav class="navbar" aria-label="Main navigation">
+        <a class="navbar-brand" href="#welcome" aria-label="EP, back to top">
                 <span class="navbar-stamp">EP</span>
         </a>
 
-        <!-- Hidden checkbox toggles the menu (CSS-only) -->
-        <input
-                id="nav-toggle"
-                class="nav-toggle"
-                type="checkbox"
-                aria-hidden="true"
-                tabindex="-1"
-        />
-
-        <!-- Label acts as the hamburger button -->
-        <label
-                for="nav-toggle"
+        <!-- Hamburger: a real button, so it works from the keyboard and reports its state -->
+        <button
                 class="menu-btn"
-                aria-label="Toggle menu"
-                role="button"
-                tabindex="0"
+                type="button"
+                aria-label="Menu"
+                aria-expanded="false"
+                aria-controls="nav-menu"
         >
                 <span class="hamburger" aria-hidden="true"></span>
-        </label>
+        </button>
 
-        <ul class="nav-list">
-                <li><a href={`${import.meta.env.BASE_URL}#welcome`} itemprop="url" data-section="welcome">Home</a></li>
-                <li><a href={`${import.meta.env.BASE_URL}#introduction`} itemprop="url" data-section="introduction"><span class="nav-idx" aria-hidden="true">01</span>About</a></li>
-                <li><a href={`${import.meta.env.BASE_URL}#experience`} itemprop="url" data-section="experience"><span class="nav-idx" aria-hidden="true">02</span>Experience</a></li>
-                <li><a href={`${import.meta.env.BASE_URL}#tech`} itemprop="url" data-section="tech"><span class="nav-idx" aria-hidden="true">03</span>Stack</a></li>
-                <li><a href={`${import.meta.env.BASE_URL}#projects`} itemprop="url" data-section="projects"><span class="nav-idx" aria-hidden="true">04</span>Work</a></li>
-                <li><a href={`${import.meta.env.BASE_URL}#footer`} itemprop="url" data-section="footer">Contact</a></li>
+        <!-- Plain hash links on purpose: the page is served at "/portfolio/", so a
+             "/portfolio#section" href is a different path and reloads the document -->
+        <ul id="nav-menu" class="nav-list">
+                <li><a href="#welcome" data-section="welcome">Home</a></li>
+                <li><a href="#introduction" data-section="introduction"><span class="nav-idx" aria-hidden="true">01</span>About</a></li>
+                <li><a href="#experience" data-section="experience"><span class="nav-idx" aria-hidden="true">02</span>Experience</a></li>
+                <li><a href="#tech" data-section="tech"><span class="nav-idx" aria-hidden="true">03</span>Stack</a></li>
+                <li><a href="#projects" data-section="projects"><span class="nav-idx" aria-hidden="true">04</span>Work</a></li>
+                <li><a href="#footer" data-section="footer">Contact</a></li>
                 <li class="theme-switch"><SwitchTheme client:load /></li>
         </ul>
 
@@ -88,20 +81,13 @@ import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
                 }
         }
 
-        /* hide the checkbox visually but keep it accessible */
-        .nav-toggle {
-                position: absolute !important;
-                opacity: 0 !important;
-                width: 0 !important;
-                height: 0 !important;
-                pointer-events: none !important;
-        }
 
         /* Hamburger button (hidden on desktop) */
         .menu-btn {
                 display: none;
                 background: none;
                 border: none;
+                color: inherit;
                 cursor: pointer;
                 padding: 6px;
                 margin-left: 12px;
@@ -210,18 +196,18 @@ import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
                         z-index: 10;
                 }
 
-                .nav-toggle:checked ~ .nav-list {
+                .navbar.is-open .nav-list {
                         display: flex;
                 }
 
-                .nav-toggle:checked + .menu-btn .hamburger {
+                .navbar.is-open .hamburger {
                         background: transparent;
                 }
-                .nav-toggle:checked + .menu-btn .hamburger::before {
+                .navbar.is-open .hamburger::before {
                         transform: rotate(45deg);
                         top: 0;
                 }
-                .nav-toggle:checked + .menu-btn .hamburger::after {
+                .navbar.is-open .hamburger::after {
                         transform: rotate(-45deg);
                         top: 0;
                 }
@@ -317,6 +303,27 @@ if (typeof window !== "undefined") {
                         { passive: true }
                 );
                 update();
+        }
+
+        // Mobile menu: the button toggles it (click, Enter, Space), choosing a link
+        // or pressing Escape closes it, and aria-expanded mirrors the state.
+        const nav = document.querySelector(".navbar");
+        const menuBtn = nav?.querySelector(".menu-btn");
+        if (nav instanceof HTMLElement && menuBtn instanceof HTMLButtonElement) {
+                const setOpen = (open: boolean) => {
+                        nav.classList.toggle("is-open", open);
+                        menuBtn.setAttribute("aria-expanded", String(open));
+                };
+                menuBtn.addEventListener("click", () => setOpen(!nav.classList.contains("is-open")));
+                nav.querySelectorAll(".nav-list a").forEach((a) =>
+                        a.addEventListener("click", () => setOpen(false))
+                );
+                document.addEventListener("keydown", (e) => {
+                        if (e.key === "Escape" && nav.classList.contains("is-open")) {
+                                setOpen(false);
+                                menuBtn.focus();
+                        }
+                });
         }
 
         // Active-section indicator

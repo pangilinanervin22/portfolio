@@ -19,7 +19,7 @@ export const projects: ProjectItem[] = [
         {
                 title: "Priceworth Furniture",
                 description:
-                        "E-commerce platform for an Australian-made furniture retailer. I build and maintain the production stack across Next.js, NestJS, and Laravel: migrated the legacy Pages Router to App Router for 30%+ faster page loads and better Core Web Vitals, shipped technical SEO and dynamic sitemaps that lifted organic visits by ~2,000+, and cut cloud costs ~45% with CDN-based asset caching and SSR strategies. CI/CD on GitHub Actions across Vercel, Heroku, AWS, and Azure.",
+                        "Storefront and back office for an Australian furniture retailer: a Next.js front end over NestJS and Laravel services. At HEQS I owned the App Router migration (30%+ faster page loads), the technical SEO and dynamic sitemaps (~2,000 extra organic visits), and the CDN and SSR caching work that cut cloud spend by ~45%, with GitHub Actions pipelines deploying to Vercel, Heroku, AWS, and Azure.",
                 stack: [
                         "Next.js",
                         "NestJS",
@@ -60,7 +60,7 @@ export const projects: ProjectItem[] = [
         {
                 title: "Fair Write (Gender Fair Revision)",
                 description:
-                        "Group thesis project, a writing tool that flags biased terms and suggests inclusive alternatives in real time. I worked on the backend and NLP side: REST APIs, the bias-detection pipeline, and the LanguageTool + spaCy integration. Live demo's still online.",
+                        "Group thesis project, a writing tool that flags biased terms and suggests inclusive alternatives in real time. I worked on the backend and NLP side: REST APIs, the bias-detection pipeline, and the LanguageTool + spaCy integration. The live demo is still online.",
                 stack: [
                         "Svelte",
                         "Tailwind",

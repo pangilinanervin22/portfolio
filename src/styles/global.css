@@ -93,6 +93,31 @@
  	filter: none;
  }
 
+ /* Blur is the expensive part of the reveal; skip it on small screens, where
+    sections are tall and GPUs are weak. */
+ @media (max-width: 767px) {
+ 	[data-reveal] {
+ 		filter: none;
+ 	}
+ }
+
+ /* Anything that doesn't scroll (print, reader mode, link-preview screenshots)
+    must still see the content. */
+ @media print {
+ 	[data-reveal] {
+ 		opacity: 1;
+ 		transform: none;
+ 		filter: none;
+ 		transition: none;
+ 	}
+ 	body::before,
+ 	body::after,
+ 	.cursor-cross,
+ 	.cursor-frame {
+ 		display: none;
+ 	}
+ }
+
  @media (prefers-reduced-motion: reduce) {
  	[data-reveal] {
  		opacity: 1;
@@ -146,12 +171,28 @@
  	color: inherit;
  }
 
+ /* Sora is deliberately not in this stack: while Outfit loads, a Sora fallback
+    would make the browser fetch Sora's bold weights that nothing else uses. */
  h1, h2, h3 {
- 	font-family: 'Outfit Variable', 'Sora', system-ui, sans-serif;
+ 	font-family: 'Outfit Variable', system-ui, sans-serif;
  }
 
  section[id] {
  	scroll-margin-top: clamp(4rem, 10vh, 6rem);
+ }
+
+ /* Screen-reader-only text for labels that would clutter the visual layout */
+ .visually-hidden {
+ 	position: absolute !important;
+ 	width: 1px;
+ 	height: 1px;
+ 	padding: 0;
+ 	margin: -1px;
+ 	overflow: hidden;
+ 	clip: rect(0 0 0 0);
+ 	clip-path: inset(50%);
+ 	border: 0;
+ 	white-space: nowrap;
  }
 
  /* Restore focus indicators for keyboard navigation */

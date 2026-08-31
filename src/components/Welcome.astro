@@ -8,12 +8,10 @@ import EmailIcon from "../assets/icons/email.svg";
         id="welcome"
         class="hero"
         aria-labelledby="welcome-heading"
-        itemscope
-        itemtype="https://schema.org/Person"
 >
         <div class="hero-inner">
                 <header class="content">
-                        <p class="status" aria-label="Current state">
+                        <p class="status">
                                 <span class="status-dot" aria-hidden="true"></span>
                                 <span class="status-text">CURRENTLY</span>
                                 <span class="status-sep" aria-hidden="true">·</span>
@@ -22,18 +20,18 @@ import EmailIcon from "../assets/icons/email.svg";
                                 <span class="status-loc">Manila</span>
                         </p>
 
-                        <h1 id="welcome-heading" itemprop="name" class="name">
+                        <h1 id="welcome-heading" class="name">
                                 <span class="name-line">Ervin</span>
                                 <span class="name-line name-line--shift">Pangilinan</span>
                         </h1>
 
                         <div class="hero-grid">
                                 <div class="hero-main">
-                                        <p class="tagline" itemprop="description">
+                                        <p class="tagline">
                                                 I've been writing software since 2021. Today I build software that helps people connect
-                                                and engage at <span class="tagline-mark">Cosmic Society</span> and chase whatever rabbit
-                                                hole catches, my weapon currently <span class="tagline-mark">TypeScript</span>, <span class="tagline-mark">Next.js</span>, <span class="tagline-mark">Supabase</span>, <span class="tagline-mark">NestJS</span>,
-                                                and digging into <span class="tagline-mark">AI automation</span> and <span class="tagline-mark">depth system design</span>.
+                                                and engage at <span class="tagline-mark">Cosmic Society</span>, and chase whatever rabbit
+                                                hole catches my attention — right now <span class="tagline-mark">TypeScript</span>, <span class="tagline-mark">Next.js</span>, <span class="tagline-mark">Supabase</span> and <span class="tagline-mark">NestJS</span>, with detours
+                                                into <span class="tagline-mark">AI automation</span> and <span class="tagline-mark">systems design</span>.
                                         </p>
 
                                         <nav class="text-links" aria-label="Contact links">
@@ -41,7 +39,6 @@ import EmailIcon from "../assets/icons/email.svg";
                                                         href="mailto:pangilinanervin22@gmail.com"
                                                         class="text-link"
                                                         aria-label="Email"
-                                                        itemprop="email"
                                                 >
                                                         <EmailIcon class="text-link-icon" aria-hidden="true" />
                                                         <span>Email</span>
@@ -52,7 +49,6 @@ import EmailIcon from "../assets/icons/email.svg";
                                                         rel="noopener noreferrer"
                                                         class="text-link"
                                                         aria-label="GitHub"
-                                                        itemprop="sameAs"
                                                 >
                                                         <GithubIcon class="text-link-icon" aria-hidden="true" />
                                                         <span>GitHub</span>
@@ -63,7 +59,6 @@ import EmailIcon from "../assets/icons/email.svg";
                                                         rel="noopener noreferrer"
                                                         class="text-link"
                                                         aria-label="LinkedIn"
-                                                        itemprop="sameAs"
                                                 >
                                                         <LinkedinIcon class="text-link-icon" aria-hidden="true" />
                                                         <span>LinkedIn</span>
@@ -94,7 +89,7 @@ import EmailIcon from "../assets/icons/email.svg";
                 </header>
         </div>
 
-        <a class="scroll-hint" href="#introduction" aria-label="Scroll to About section">
+        <a class="scroll-hint" href="#introduction">
                 <svg width="14" height="9" viewBox="0 0 16 10" fill="none" aria-hidden="true">
                         <path d="M1 1L8 8L15 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
