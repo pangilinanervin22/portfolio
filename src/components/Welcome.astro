@@ -2,6 +2,10 @@
 import GithubIcon from "../assets/icons/github.svg";
 import LinkedinIcon from "../assets/icons/linkedin.svg";
 import EmailIcon from "../assets/icons/email.svg";
+import DownloadIcon from "../assets/icons/download.svg";
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const resumeHref = `${base}/Ervin_Pangilinan_Resume.pdf`;
 ---
 
 <section
@@ -30,11 +34,19 @@ import EmailIcon from "../assets/icons/email.svg";
                                         <p class="tagline">
                                                 I've been writing software since 2021. Today I build software that helps people connect
                                                 and engage at <span class="tagline-mark">Cosmic Society</span>, and chase whatever rabbit
-                                                hole catches my attention — right now <span class="tagline-mark">TypeScript</span>, <span class="tagline-mark">Next.js</span>, <span class="tagline-mark">Supabase</span> and <span class="tagline-mark">NestJS</span>, with detours
+                                                hole catches my attention right now <span class="tagline-mark">TypeScript</span>, <span class="tagline-mark">Next.js</span>, <span class="tagline-mark">Supabase</span> and <span class="tagline-mark">NestJS</span>, with detours
                                                 into <span class="tagline-mark">AI automation</span> and <span class="tagline-mark">systems design</span>.
                                         </p>
 
-                                        <nav class="text-links" aria-label="Contact links">
+                                        <nav class="text-links" aria-label="Resume and contact links">
+                                                <a
+                                                        href={resumeHref}
+                                                        class="text-link text-link--primary"
+                                                        download
+                                                >
+                                                        <DownloadIcon class="text-link-icon" aria-hidden="true" />
+                                                        <span>Resume</span>
+                                                </a>
                                                 <a
                                                         href="mailto:pangilinanervin22@gmail.com"
                                                         class="text-link"
@@ -258,6 +270,18 @@ import EmailIcon from "../assets/icons/email.svg";
                 color: var(--color-background);
                 background: var(--color-text-primary);
                 border-color: var(--color-text-primary);
+        }
+
+        /* Primary action: filled by default, inverts on hover like everything else */
+        .text-link--primary {
+                color: var(--color-background);
+                background: var(--color-text-primary);
+                border-color: var(--color-text-primary);
+        }
+
+        .text-link--primary:hover {
+                color: var(--color-text-primary);
+                background: transparent;
         }
 
         :global(.text-link-icon) {

@@ -7,7 +7,7 @@ export const GET: APIRoute = () => {
 	const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 
 	const manifest = {
-		name: `${SITE_TITLE} — Portfolio`,
+		name: `${SITE_TITLE} Portfolio`,
 		short_name: "Ervin P.",
 		description: "Personal portfolio of Ervin Pangilinan, full-stack developer.",
 		start_url: base,

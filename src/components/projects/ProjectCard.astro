@@ -150,7 +150,9 @@ const { project: p, index: i, featured = false } = Astro.props as Props;
                 width: 100%;
                 margin: 0;
                 overflow: hidden;
-                background: var(--color-surface-alt);
+                /* Same tone as the card, so a screenshot that doesn't fill the
+                   16:9 plate reads as padding around the whole image, not bars */
+                background: var(--color-surface);
                 border-bottom: 1px solid var(--color-border);
         }
 

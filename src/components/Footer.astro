@@ -2,6 +2,8 @@
 import { execSync } from "node:child_process";
 
 const year = new Date().getFullYear();
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const resumeHref = `${base}/Ervin_Pangilinan_Resume.pdf`;
 
 // "Updated" means the last content commit, not the last deploy. Falls back to
 // the build time if git isn't available where the site is built.
@@ -24,7 +26,7 @@ const buildDate = updatedAt.toLocaleDateString("en-US", {
 
         <section class="cta-block" aria-labelledby="cta-heading">
                 <p class="cta-label">
-                        <span aria-hidden="true">//</span> 05 — Say hi
+                        <span aria-hidden="true">//</span> 05 / Say hi
                 </p>
                 <h3 id="cta-heading" class="cta-headline">
                         Want to talk about code, projects, or anything in between?
@@ -34,6 +36,10 @@ const buildDate = updatedAt.toLocaleDateString("en-US", {
                         <span class="cta-mail-arrow" aria-hidden="true">↗</span>
                 </a>
                 <div class="cta-secondary">
+                        <a class="cta-link" href={resumeHref} download>
+                                Resume <span aria-hidden="true">↓</span>
+                        </a>
+                        <span class="cta-sep" aria-hidden="true">·</span>
                         <a
                                 class="cta-link"
                                 href="https://www.linkedin.com/in/ervin-pangilinan-9b9410231"

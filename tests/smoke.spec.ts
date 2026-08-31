@@ -109,6 +109,17 @@ test("project screenshots are letterboxed, never stretched", async ({ page }) =>
 	for (const fit of fits) expect(fit).toBe("contain");
 });
 
+test("resume button points at a downloadable PDF that exists", async ({ page }) => {
+	await page.goto("./");
+	const link = page.getByRole("navigation", { name: /resume/i }).getByRole("link", { name: "Resume" });
+	await expect(link).toHaveAttribute("download", "");
+	const href = await link.getAttribute("href");
+	expect(href).toMatch(/\/Ervin_Pangilinan_Resume\.pdf$/);
+	const response = await page.request.get(href!);
+	expect(response.status()).toBe(200);
+	expect(response.headers()["content-type"]).toContain("pdf");
+});
+
 test("removed pages are gone", async ({ page }) => {
 	const response = await page.goto("./about/");
 	expect(response?.status()).toBe(404);
