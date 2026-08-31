@@ -150,6 +150,22 @@ test("custom cursor stays under the pointer while pressed", async ({ page, isMob
 	}
 });
 
+test("web fonts are served and applied", async ({ page }) => {
+	const problems = watchForProblems(page);
+	await page.goto("./");
+	await page.evaluate(() => document.fonts.ready);
+	const loaded = await page.evaluate(() =>
+		[...document.fonts].filter((f) => f.status === "loaded").map((f) => f.family.replace(/["']/g, "")),
+	);
+	// The Fonts API hashes family names ("Outfit-d506c…") and adds "… fallback: Arial" faces.
+	for (const family of ["Outfit", "Sora", "JetBrains Mono"]) {
+		expect(loaded.some((f) => f.startsWith(family) && !f.includes("fallback"))).toBe(true);
+	}
+	expect(await page.locator("h1").evaluate((el) => getComputedStyle(el).fontFamily)).toContain("Outfit");
+	expect(await page.locator(".tagline").first().evaluate((el) => getComputedStyle(el).fontFamily)).toContain("Sora");
+	expect(problems).toEqual([]);
+});
+
 test("resume button points at a downloadable PDF that exists", async ({ page }) => {
 	await page.goto("./");
 	const link = page.getByRole("navigation", { name: /resume/i }).getByRole("link", { name: "Resume" });

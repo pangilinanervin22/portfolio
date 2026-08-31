@@ -14,9 +14,6 @@
         },
         "dependencies": {
                 "@astrojs/sitemap": "^3.7.3",
-                "@fontsource-variable/outfit": "^5.2.8",
-                "@fontsource/jetbrains-mono": "^5.2.8",
-                "@fontsource/sora": "^5.2.8",
                 "astro": "^7.0.6"
         },
         "devDependencies": {

@@ -56,6 +56,7 @@ The single-page layout (`src/pages/index.astro`) composes sections in order:
 - CSS custom properties are defined in `src/styles/_theme.css` (light) and `src/styles/_theme_dark.css` (dark).
 - Theme is persisted to `localStorage` and applied via the `data-theme` attribute on `<html>` (inline script in `Layout.astro` before paint, `SwitchTheme.astro` on toggle).
 - All color usage should reference the CSS variables (e.g. `var(--color-primary)`, `var(--color-surface)`) rather than hardcoded values.
+- Fonts go through Astro's Fonts API (`fonts[]` in `astro.config.mjs`, local woff2 files in `src/assets/fonts/`). It defines `--font-outfit`, `--font-sora`, `--font-jetbrains-mono` (family + metric-matched fallbacks); `_theme.css` maps them to `--font-display`, `--font-body`, `--font-mono`, which is what components use. Add weights/files in the config, never via `@font-face` or fontsource imports.
 
 ### Animations
 

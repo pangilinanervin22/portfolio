@@ -10,6 +10,7 @@ Personal portfolio built as a single-page static site with [Astro](https://astro
 - **No client framework**: the theme toggle and custom cursor are Astro components with small vanilla scripts
 - **TypeScript**: typed content data and components
 - **Plain CSS**: design tokens as custom properties, light/dark themes, no CSS framework
+- **Self-hosted fonts** via Astro's Fonts API (local woff2 files, generated `@font-face`, metric-matched fallbacks, preloads)
 
 ## Commands
 

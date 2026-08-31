@@ -78,8 +78,11 @@
     --gradient-inset: linear-gradient(180deg, #2b2b2b, #111111);
 
     /* Font families */
-    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
-    --font-display: 'Outfit Variable', system-ui, sans-serif;
+    /* Families come from the Fonts API (astro.config fonts[]), which defines
+       --font-outfit / --font-sora / --font-jetbrains-mono with their fallbacks */
+    --font-display: var(--font-outfit);
+    --font-body: var(--font-sora);
+    --font-mono: var(--font-jetbrains-mono);
 
     /* Layout */
     --container: 1200px;
