@@ -1,0 +1,73 @@
+---
+// Theme toggle. Both icons are server-rendered and SwitchTheme.css shows the
+// one for the active theme, so the markup never depends on client-only state.
+// The inline <head> script in Layout applies the saved/system theme before
+// first paint; this script only handles clicks, persistence, and the label.
+import "../styles/SwitchTheme.css";
+---
+
+<button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch theme">
+        <!-- Sun: shown in dark mode -->
+        <svg
+                class="theme-icon theme-icon--sun"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                aria-hidden="true"
+        >
+                <circle cx="12" cy="12" r="4.2"></circle>
+                <line x1="12" y1="2.5" x2="12" y2="5"></line>
+                <line x1="12" y1="19" x2="12" y2="21.5"></line>
+                <line x1="2.5" y1="12" x2="5" y2="12"></line>
+                <line x1="19" y1="12" x2="21.5" y2="12"></line>
+                <line x1="5.3" y1="5.3" x2="7" y2="7"></line>
+                <line x1="17" y1="17" x2="18.7" y2="18.7"></line>
+                <line x1="5.3" y1="18.7" x2="7" y2="17"></line>
+                <line x1="17" y1="7" x2="18.7" y2="5.3"></line>
+        </svg>
+        <!-- Moon: shown in light mode -->
+        <svg
+                class="theme-icon theme-icon--moon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+        >
+                <path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"></path>
+        </svg>
+</button>
+
+<script>
+        type Theme = "light" | "dark";
+
+        const THEME_COLOR: Record<Theme, string> = { light: "#faf8f6", dark: "#111110" };
+        const root = document.documentElement;
+        const toggles = document.querySelectorAll<HTMLButtonElement>("[data-theme-toggle]");
+
+        const current = (): Theme => (root.getAttribute("data-theme") === "dark" ? "dark" : "light");
+
+        const apply = (theme: Theme) => {
+                root.setAttribute("data-theme", theme);
+                document
+                        .querySelector('meta[name="theme-color"]')
+                        ?.setAttribute("content", THEME_COLOR[theme]);
+                try {
+                        localStorage.setItem("theme", theme);
+                } catch {
+                        // localStorage unavailable (private mode): the theme still applies
+                }
+                const next: Theme = theme === "dark" ? "light" : "dark";
+                toggles.forEach((button) => button.setAttribute("aria-label", `Switch to ${next} theme`));
+        };
+
+        // Persist the system-derived theme and set the label on first load.
+        apply(current());
+        toggles.forEach((button) =>
+                button.addEventListener("click", () => apply(current() === "dark" ? "light" : "dark")),
+        );
+</script>

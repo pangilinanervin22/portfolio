@@ -1,0 +1,133 @@
+---
+// Drafting-instrument cursor: a crosshair reticle at the pointer plus a
+// corner-bracket frame that locks onto interactive targets with a mono W×H
+// readout. Plain script, no framework. The elements start hidden and the
+// script only switches them on for fine pointers, so touch devices and
+// no-JS visitors keep the native cursor (see global.css).
+import "../styles/CustomCursor.css";
+---
+
+<div class="cursor-cross" aria-hidden="true" hidden></div>
+<div class="cursor-frame" aria-hidden="true" hidden>
+        <span class="c tl"></span>
+        <span class="c tr"></span>
+        <span class="c bl"></span>
+        <span class="c br"></span>
+        <span class="cursor-dims"></span>
+</div>
+
+<script>
+        const CROSS_SIZE = 19; // keep in sync with .cursor-cross in CustomCursor.css
+        const IDLE_SIZE = 26; // frame box when not locked onto a target
+        const LOCK_PAD = 6; // breathing room between a locked target and the brackets
+        const LERP = 0.22;
+
+        // Native interactive elements, plus anything opting in via data-cursor.
+        // data-cursor-label="…" replaces the W×H readout with a custom annotation.
+        const INTERACTIVE = 'a, button, [role="button"], label, input, summary, [data-cursor]';
+
+        const start = () => {
+                const cross = document.querySelector<HTMLElement>(".cursor-cross");
+                const frame = document.querySelector<HTMLElement>(".cursor-frame");
+                const dims = frame?.querySelector<HTMLElement>(".cursor-dims");
+                if (!cross || !frame || !dims) return;
+
+                const coarse =
+                        matchMedia("(hover: none)").matches ||
+                        matchMedia("(pointer: coarse)").matches ||
+                        "ontouchstart" in window;
+                if (coarse) return;
+
+                cross.hidden = false;
+                frame.hidden = false;
+                // The native cursor is only hidden once this runs (see global.css),
+                // so a script failure never leaves the page cursorless.
+                document.documentElement.classList.add("has-custom-cursor");
+
+                const lerp = matchMedia("(prefers-reduced-motion: reduce)").matches ? 1 : LERP;
+                const mouse = { x: 0, y: 0 };
+                const box = { x: 0, y: 0, w: IDLE_SIZE, h: IDLE_SIZE };
+                let locked: Element | null = null;
+                let dimsText = "";
+
+                document.addEventListener("mousemove", (e) => {
+                        mouse.x = e.clientX;
+                        mouse.y = e.clientY;
+                        // Position through the `translate` property, not `transform`: the press
+                        // effects use `rotate`/`scale`, and individual transform properties are
+                        // applied outside `transform`, which would rotate/scale the offset itself
+                        // and throw the reticle away from the pointer on every click.
+                        cross.style.translate = `${e.clientX - CROSS_SIZE / 2}px ${e.clientY - CROSS_SIZE / 2}px`;
+
+                        // Lock the bracket frame onto interactive targets
+                        const target = e.target instanceof Element ? e.target.closest(INTERACTIVE) : null;
+                        if (target !== locked) {
+                                locked = target;
+                                frame.classList.toggle("is-locked", Boolean(target));
+                        }
+                });
+
+                const setPressed = (on: boolean) => {
+                        cross.classList.toggle("is-pressed", on);
+                        frame.classList.toggle("is-pressed", on);
+                };
+                const setHidden = (on: boolean) => {
+                        cross.classList.toggle("is-hidden", on);
+                        frame.classList.toggle("is-hidden", on);
+                };
+                document.addEventListener("mousedown", () => setPressed(true));
+                document.addEventListener("mouseup", () => setPressed(false));
+                document.documentElement.addEventListener("mouseleave", () => setHidden(true));
+                document.documentElement.addEventListener("mouseenter", () => setHidden(false));
+
+                const animate = () => {
+                        let tx: number;
+                        let ty: number;
+                        let tw: number;
+                        let th: number;
+
+                        if (locked?.isConnected) {
+                                // Re-measure every frame so the brackets track scrolling and
+                                // any hover transforms on the target itself.
+                                const r = locked.getBoundingClientRect();
+                                tx = r.left - LOCK_PAD;
+                                ty = r.top - LOCK_PAD;
+                                tw = r.width + LOCK_PAD * 2;
+                                th = r.height + LOCK_PAD * 2;
+
+                                const text =
+                                        locked.getAttribute("data-cursor-label") ||
+                                        `${Math.round(r.width)}×${Math.round(r.height)}`;
+                                if (text !== dimsText) {
+                                        dimsText = text;
+                                        dims.textContent = text;
+                                }
+                        } else {
+                                if (locked) {
+                                        locked = null;
+                                        frame.classList.remove("is-locked");
+                                }
+                                tw = IDLE_SIZE;
+                                th = IDLE_SIZE;
+                                tx = mouse.x - IDLE_SIZE / 2;
+                                ty = mouse.y - IDLE_SIZE / 2;
+                        }
+
+                        box.x += (tx - box.x) * lerp;
+                        box.y += (ty - box.y) * lerp;
+                        box.w += (tw - box.w) * lerp;
+                        box.h += (th - box.h) * lerp;
+
+                        frame.style.translate = `${box.x}px ${box.y}px`;
+                        frame.style.width = `${box.w}px`;
+                        frame.style.height = `${box.h}px`;
+
+                        requestAnimationFrame(animate);
+                };
+                animate();
+        };
+
+        // Nothing here is needed for first paint; start once the browser is idle.
+        if ("requestIdleCallback" in window) requestIdleCallback(start);
+        else setTimeout(start, 1);
+</script>

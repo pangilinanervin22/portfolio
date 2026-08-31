@@ -28,7 +28,7 @@ Create a `.env` file at the root to override these for local development.
 
 ## Architecture
 
-This is an **Astro 7** static site (portfolio) with a React island integration for interactive components.
+This is an **Astro 7** static site (portfolio) with no client-side framework: the two interactive pieces (theme toggle, custom cursor) are Astro components with small vanilla scripts.
 
 ### Page Structure
 
@@ -39,12 +39,12 @@ The single-page layout (`src/pages/index.astro`) composes sections in order:
 4. `Techs` (Technology) — technology icons grid
 5. `Projects` — project cards grid
 
-`src/layouts/Layout.astro` wraps all pages and injects `BaseHead`, fonts, global CSS, `CustomCursor` (React island), and `Footer`.
+`src/layouts/Layout.astro` wraps all pages and injects `BaseHead`, fonts, global CSS, `CustomCursor`, and `Footer`.
 
 ### Component Conventions
 
 - **Astro components** (`.astro`) handle all static structure and CSS. Scoped styles are co-located within each component file.
-- **React components** (`src/components/react/`) are used only where client-side interactivity is required: the theme toggle (`client:load`) and the custom cursor (`client:idle`). Their server-rendered markup must not depend on client-only state (theme, `localStorage`) — the toggle renders both icons and lets CSS pick one to avoid hydration mismatches.
+- **Client-side behaviour** lives in Astro `<script>` blocks (`SwitchTheme.astro`, `CustomCursor.astro`, `NavBar.astro`, `Layout.astro`); there is no React or other client framework. Server-rendered markup must not depend on client-only state (theme, `localStorage`): the toggle renders both icons and lets CSS pick one, and the cursor starts `hidden` and enables itself only for fine pointers.
 - Content for `Experience`, `Projects`, and the Stack tiers lives in typed arrays in `src/data/` — edit those files to add entries.
 - **In-page links are plain `#hash` anchors**, never `${import.meta.env.BASE_URL}#hash`: the site is served at `/portfolio/`, so `/portfolio#hash` is a different path and forces a full reload (the dev server's `/` base hides this).
 - **Raster images go through `astro:assets` `<Image>`** (webp, sized `widths`/`densities`), never a raw `<img src={img.src}>`, which ships the original file. Project screenshots are letterboxed with `object-fit: contain`; don't reintroduce `fill`.
@@ -54,7 +54,7 @@ The single-page layout (`src/pages/index.astro`) composes sections in order:
 ### Theming
 
 - CSS custom properties are defined in `src/styles/_theme.css` (light) and `src/styles/_theme_dark.css` (dark).
-- Theme is persisted to `localStorage` and applied via `data-theme` attribute on `<html>` by `SwitchTheme.tsx`.
+- Theme is persisted to `localStorage` and applied via the `data-theme` attribute on `<html>` (inline script in `Layout.astro` before paint, `SwitchTheme.astro` on toggle).
 - All color usage should reference the CSS variables (e.g. `var(--color-primary)`, `var(--color-surface)`) rather than hardcoded values.
 
 ### Animations

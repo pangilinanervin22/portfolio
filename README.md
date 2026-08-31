@@ -7,7 +7,7 @@ Personal portfolio built as a single-page static site with [Astro](https://astro
 ## Stack
 
 - **Astro 7**: static output, all structure and styling in `.astro` components with scoped CSS
-- **React 19 islands**: only where client-side interactivity is needed (custom cursor, theme toggle), loaded with `client:load`
+- **No client framework**: the theme toggle and custom cursor are Astro components with small vanilla scripts
 - **TypeScript**: typed content data and components
 - **Plain CSS**: design tokens as custom properties, light/dark themes, no CSS framework
 
@@ -37,7 +37,8 @@ All commands are run from the root of the project:
 │   ├── assets/                    # Portrait, project screenshots, tech + company logos
 │   ├── components/
 │   │   ├── _common/               # SectionHead (rule + sheet index + ghost numeral)
-│   │   ├── react/                 # CustomCursor, SwitchTheme (React islands)
+│   │   ├── CustomCursor.astro     # Drafting-instrument cursor (vanilla script)
+│   │   ├── SwitchTheme.astro      # Theme toggle (vanilla script)
 │   │   ├── experience/            # Work-history chronology
 │   │   ├── introduction/          # About section with skill cards
 │   │   ├── projects/              # Project cards ("plates" with fig. captions)

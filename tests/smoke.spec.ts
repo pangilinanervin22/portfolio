@@ -110,6 +110,46 @@ test("project screenshots are letterboxed, never stretched", async ({ page }) =>
 	for (const fit of fits) expect(fit).toBe("contain");
 });
 
+test("custom cursor activates only for fine pointers", async ({ page, isMobile }) => {
+	await page.goto("./");
+	const html = page.locator("html");
+	if (isMobile) {
+		await page.waitForTimeout(500);
+		await expect(html).not.toHaveClass(/has-custom-cursor/);
+		await expect(page.locator(".cursor-cross")).toBeHidden();
+	} else {
+		await expect(html).toHaveClass(/has-custom-cursor/);
+		await page.mouse.move(300, 300);
+		await expect(page.locator(".cursor-cross")).toBeVisible();
+	}
+});
+
+test("custom cursor stays under the pointer while pressed", async ({ page, isMobile }) => {
+	test.skip(isMobile, "no custom cursor on touch devices");
+	await page.goto("./");
+	await expect(page.locator("html")).toHaveClass(/has-custom-cursor/);
+
+	const centre = async (selector: string) => {
+		const box = await page.locator(selector).boundingBox();
+		if (!box) throw new Error(`${selector} has no box`);
+		return { x: box.x + box.width / 2, y: box.y + box.height / 2 };
+	};
+
+	await page.mouse.move(400, 400);
+	await page.waitForTimeout(400); // let the lerped frame catch up
+	const idle = await centre(".cursor-cross");
+	await page.mouse.down();
+	await page.waitForTimeout(300); // press transitions (rotate / scale) finish
+	const pressedCross = await centre(".cursor-cross");
+	const pressedFrame = await centre(".cursor-frame");
+	await page.mouse.up();
+
+	for (const c of [idle, pressedCross, pressedFrame]) {
+		expect(Math.abs(c.x - 400)).toBeLessThan(4);
+		expect(Math.abs(c.y - 400)).toBeLessThan(4);
+	}
+});
+
 test("resume button points at a downloadable PDF that exists", async ({ page }) => {
 	await page.goto("./");
 	const link = page.getByRole("navigation", { name: /resume/i }).getByRole("link", { name: "Resume" });

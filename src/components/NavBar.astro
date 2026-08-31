@@ -1,5 +1,5 @@
 ---
-import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
+import SwitchTheme from "./SwitchTheme.astro";
 ---
 
 <nav class="navbar" aria-label="Main navigation">
@@ -27,7 +27,7 @@ import SwitchTheme from "./react/SwitchThemeButton/SwitchTheme";
                 <li><a href="#tech" data-section="tech"><span class="nav-idx" aria-hidden="true">03</span>Stack</a></li>
                 <li><a href="#projects" data-section="projects"><span class="nav-idx" aria-hidden="true">04</span>Work</a></li>
                 <li><a href="#footer" data-section="footer">Contact</a></li>
-                <li class="theme-switch"><SwitchTheme client:load /></li>
+                <li class="theme-switch"><SwitchTheme /></li>
         </ul>
 
         <span class="nav-progress" aria-hidden="true"></span>

@@ -9,7 +9,7 @@ import "@fontsource/jetbrains-mono/400.css";
 import "@fontsource/jetbrains-mono/500.css";
 
 import "../styles/global.css"; // Ensure global styles are imported
-import CustomCursor from "../components/react/CustomCursor";
+import CustomCursor from "../components/CustomCursor.astro";
 // The two faces that paint the hero (display + body) are preloaded so the LCP
 // text doesn't wait for the browser to discover them through the CSS.
 import outfitWoff2 from "@fontsource-variable/outfit/files/outfit-latin-wght-normal.woff2?url";
@@ -50,7 +50,7 @@ import soraWoff2 from "@fontsource/sora/files/sora-latin-400-normal.woff2?url";
         <body>
                 <a href="#main-content" class="skip-link">Skip to main content</a>
                 <div class="sheet-rails" aria-hidden="true"></div>
-                <CustomCursor client:idle />
+                <CustomCursor />
                 <main id="main-content">
                         <slot />
                 </main>
