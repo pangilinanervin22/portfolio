@@ -8,9 +8,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 npm run dev       # Start dev server at localhost:4321
 npm run build     # Build production site to ./dist/
 npm run preview   # Preview the production build locally
+npm run check     # astro check (types, props, unused imports)
+npm test          # Playwright smoke tests against a production build (base path /portfolio)
 ```
 
-No test runner is configured in this project.
+The smoke tests in `tests/` build and preview the site themselves; locally they drive the installed Chrome (`channel: "chrome"`), in CI a downloaded Chromium. CI (`.github/workflows/ci.yml`) runs `astro check`, the build, and the tests on every push and pull request; `deploy.yml` publishes `main` to GitHub Pages.
 
 ## Environment Variables
 
@@ -26,7 +28,7 @@ Create a `.env` file at the root to override these for local development.
 
 ## Architecture
 
-This is an **Astro 6** static site (portfolio) with a React island integration for interactive components.
+This is an **Astro 7** static site (portfolio) with a React island integration for interactive components.
 
 ### Page Structure
 
@@ -42,8 +44,12 @@ The single-page layout (`src/pages/index.astro`) composes sections in order:
 ### Component Conventions
 
 - **Astro components** (`.astro`) handle all static structure and CSS. Scoped styles are co-located within each component file.
-- **React components** (`src/components/react/`) are used only where client-side interactivity is required (custom cursor, theme toggle). They use `client:load` directive.
-- Data for `Experience` and `Projects` sections is hardcoded as typed arrays directly inside the component frontmatter with `// TODO: Move to CMS` comments — update the arrays in place when adding entries.
+- **React components** (`src/components/react/`) are used only where client-side interactivity is required: the theme toggle (`client:load`) and the custom cursor (`client:idle`). Their server-rendered markup must not depend on client-only state (theme, `localStorage`) — the toggle renders both icons and lets CSS pick one to avoid hydration mismatches.
+- Content for `Experience`, `Projects`, and the Stack tiers lives in typed arrays in `src/data/` — edit those files to add entries.
+- **In-page links are plain `#hash` anchors**, never `${import.meta.env.BASE_URL}#hash`: the site is served at `/portfolio/`, so `/portfolio#hash` is a different path and forces a full reload (the dev server's `/` base hides this).
+- **Raster images go through `astro:assets` `<Image>`** (webp, sized `widths`/`densities`), never a raw `<img src={img.src}>`, which ships the original file. Project screenshots are letterboxed with `object-fit: contain`; don't reintroduce `fill`.
+- Muted text (`--color-text-muted`) is tuned to pass WCAG AA (4.5:1) on the page background in both themes; keep it there when adjusting the palette.
+- In multi-line prose with inline tags (e.g. `.tagline-mark` spans), Astro trims the whitespace on either side of a line break that touches a tag, gluing words together ("andNestJS"). Break lines only between two plain words; `tests/smoke.spec.ts` checks the hero for this.
 
 ### Theming
 
@@ -63,4 +69,4 @@ Monochrome "drafting sheet" aesthetic: a faint dot grid on `body::before`, an an
 
 `src/components/BaseHead.astro` manages all meta tags including OG, Twitter cards, JSON-LD structured data (Schema.org `Person`), and canonical URLs. Site constants (title, description) live in `src/consts.ts`.
 
-`src/pages/robots.txt.ts` dynamically generates `robots.txt` with the correct sitemap URL from `context.site`.
+`src/pages/site.webmanifest.ts` generates the web app manifest from the configured base path. There is deliberately no `robots.txt` route: on a project GitHub Pages site it would be served under `/portfolio/`, where crawlers never look — submit `/portfolio/sitemap-index.xml` in Search Console instead.

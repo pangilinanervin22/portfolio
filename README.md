@@ -21,6 +21,8 @@ All commands are run from the root of the project:
 | `npm run dev`          | Start dev server at `localhost:4321`         |
 | `npm run build`        | Build the production site to `./dist/`       |
 | `npm run preview`      | Preview the production build locally         |
+| `npm run check`        | Type-check with `astro check`                |
+| `npm test`             | Playwright smoke tests against a prod build  |
 | `npm run format`       | Format `src/` with Prettier                  |
 | `npm run format:check` | Check formatting without writing             |
 
@@ -28,6 +30,7 @@ All commands are run from the root of the project:
 
 ```text
 /
+├── .github/workflows/ci.yml       # astro check + build + Playwright smoke tests on every push/PR
 ├── .github/workflows/deploy.yml   # Build + deploy to GitHub Pages on push to main
 ├── public/
 ├── src/
@@ -41,9 +44,10 @@ All commands are run from the root of the project:
 │   │   └── technology/            # Skill tiers grid
 │   ├── data/                      # experiences.ts, projects.ts, technologies.ts
 │   ├── layouts/Layout.astro       # Base head, fonts, scroll reveals, sheet rails
-│   ├── pages/                     # index.astro, dynamic robots.txt.ts
+│   ├── pages/                     # index.astro, dynamic site.webmanifest.ts
 │   ├── styles/                    # global.css, _theme.css (light), _theme_dark.css
 │   └── consts.ts                  # Site title and description
+├── tests/                         # Playwright smoke tests (see playwright.config.ts)
 └── astro.config.mjs
 ```
 
@@ -53,8 +57,8 @@ The page composes five sections in order: **Welcome** (cover sheet), **Introduct
 
 - **Theming** — CSS custom properties defined per theme in `src/styles/_theme.css` and `_theme_dark.css`; the choice persists to `localStorage` and applies via a `data-theme` attribute on `<html>`.
 - **Motion** — scroll reveals run through a single `IntersectionObserver` (elements opt in with `data-reveal`); hero animations are pure CSS keyframes. Everything respects `prefers-reduced-motion`, with a `<noscript>` fallback that force-reveals all content.
-- **Imagery as plates** — the portrait and project screenshots render grayscale until hover, letterboxed in 16:9 frames without cropping, each captioned `fig. 0N` with the image's real pixel dimensions.
-- **SEO** — `BaseHead.astro` handles Open Graph/Twitter meta, canonical URLs, and JSON-LD (`Person`); a sitemap is generated at build time and `robots.txt` is generated dynamically from the site URL.
+- **Imagery as plates** — the portrait renders grayscale until hover and carries a `fig. 01` caption; project screenshots are letterboxed in 16:9 plates (`object-fit: contain`), never cropped or stretched. All raster images go through `astro:assets` and ship as sized WebP.
+- **SEO** — `BaseHead.astro` handles Open Graph/Twitter meta, canonical URLs, and JSON-LD (`Person`); a sitemap is generated at build time (submit `/portfolio/sitemap-index.xml` in Search Console — a project GitHub Pages site has no origin-level `robots.txt`), and `site.webmanifest` is generated from the base path.
 
 ## Configuration
 
