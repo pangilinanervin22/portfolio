@@ -1,8 +1,9 @@
 ---
-import { Image } from 'astro:assets';
+import { Image } from "astro:assets";
 import introImage from "../../assets/me.jpg";
 import SkillCard from "./skill_card.astro";
 import SectionHead from "../_common/SectionHead.astro";
+import Dimension from "../_common/Dimension.astro";
 
 import gameIcon from "../../assets/skill/game.svg";
 import webIcon from "../../assets/skill/web.svg";
@@ -11,262 +12,259 @@ import devOpsIcon from "../../assets/skill/devops.svg";
 ---
 
 <section
-        id="introduction"
-        class="introduction-main-container"
-        aria-labelledby="about-heading"
+	id="introduction"
+	class="introduction-main-container"
+	aria-labelledby="about-heading"
+	data-sheet="02"
+	data-sheet-title="About"
 >
-        <div class="section-head">
-                <SectionHead
-                        number="01"
-                        title="About"
-                        headingId="about-heading"
-                        meta="writing software since 2021"
-                />
-        </div>
+	<div class="section-head">
+		<SectionHead
+			number="02"
+			title="About"
+			headingId="about-heading"
+			meta="writing software since 2021"
+		/>
+	</div>
 
-        <div class="introduction-image-container" data-reveal>
-                <figure class="introduction-image" data-cursor>
-                        <Image
-                                src={introImage}
-                                alt="Ervin Pangilinan - Full Stack Developer and Computer Science Graduate specializing in web applications, mobile development, and DevOps"
-                                width={480}
-                                height={720}
-                                loading="eager"
-                                decoding="async"
-                                format="webp"
-                                quality={85}
-                                densities={[1, 1.5, 2]}
-                                sizes="(max-width: 480px) 280px, (max-width: 768px) 360px, (max-width: 1024px) 380px, 380px"
-                                class="intro-portrait"
-                        />
-                        <figcaption class="portrait-caption">
-                                <span class="caption-left"><span aria-hidden="true">//</span> Manila, PH · 2026</span>
-                                <span class="caption-right" data-label="fig. 01" aria-hidden="true"></span>
-                        </figcaption>
-                </figure>
-        </div>
+	<div class="introduction-image-container">
+		<figure class="introduction-image" data-cursor>
+			<Image
+				src={introImage}
+				alt="Ervin Pangilinan - Full Stack Developer and Computer Science Graduate specializing in web applications, mobile development, and DevOps"
+				width={480}
+				height={720}
+				loading="eager"
+				decoding="async"
+				format="webp"
+				quality={85}
+				densities={[1, 1.5, 2]}
+				sizes="(max-width: 480px) 280px, (max-width: 768px) 360px, (max-width: 1024px) 380px, 380px"
+				class="intro-portrait"
+			/>
+			<figcaption class="portrait-caption">
+				<span>Manila, 2026</span>
+				<span class="caption-right">fig. 01</span>
+			</figcaption>
+		</figure>
+		<!-- Vertical dimension beside the plate: the portrait's rendered height -->
+		<div class="portrait-dim" aria-hidden="true">
+			<Dimension target=".intro-portrait" axis="y" />
+		</div>
+	</div>
 
-        <div class="introduction-content">
-                <p class="introduction-description" data-reveal>
-                        I write software, mostly for the web. Started in 2021 as a hobby and it turned into a career. Today I'm at Cosmic Society building a multi-brand event and retail-activation platform that supports ~30,000 peak users at large-scale events. Before that I shipped production work for HEQS Group (Sydney) and FiveTwenty IT Services (Manila), and I'm a Computer Science grad from Cavite State University.
-                </p>
-                <p class="introduction-description-secondary" data-reveal style="--reveal-delay: 0.08s">
-                        I work across the stack, but backend is where I go deepest: REST APIs, role-based access, row-level security, audit logging, query optimization, CI/CD. I care about clean architecture, accessibility, and code the next person can read without a guided tour. The rest of my time goes to whatever I'm learning right now.
-                </p>
+	<div class="introduction-content">
+		<p class="introduction-description">
+			I write software, mostly for the web. Started in 2021 as a hobby and it turned into a
+			career. Today I'm at Cosmic Society building a multi-brand event and retail-activation
+			platform that supports ~30,000 peak users at large-scale events. Before that I shipped
+			production work for HEQS Group (Sydney) and FiveTwenty IT Services (Manila), and I'm a
+			Computer Science grad from Cavite State University.
+		</p>
+		<p class="introduction-description-secondary">
+			I work across the stack, but backend is where I go deepest: REST APIs, role-based
+			access, row-level security, audit logging, query optimization, CI/CD. I care about clean
+			architecture, accessibility, and code the next person can read without a guided tour.
+			The rest of my time goes to whatever I'm learning right now.
+		</p>
 
-                <section class="introduction-skills" aria-labelledby="skills-heading" data-reveal style="--reveal-delay: 0.14s">
-                        <h3 id="skills-heading">
-                                <span aria-hidden="true">//</span> What I build
-                        </h3>
-                        <ul class="skills-list" role="list">
-                                <li>
-                                        <SkillCard
-                                                title="Web platforms"
-                                                content="Production apps in TypeScript, Next.js, NestJS. Server-rendered, SPA, or hybrid."
-                                                icon={webIcon}
-                                                index="01"
-                                        />
-                                </li>
-                                <li>
-                                        <SkillCard
-                                                title="Mobile apps"
-                                                content="Cross-platform with React Native + Expo. Offline-first, secure releases."
-                                                icon={mobileIcon}
-                                                index="02"
-                                        />
-                                </li>
-                                <li>
-                                        <SkillCard
-                                                title="DevOps & deploys"
-                                                content="CI/CD pipelines, Docker containers, cloud hosting on Vercel, AWS, Azure, DigitalOcean, Heroku."
-                                                icon={devOpsIcon}
-                                                index="03"
-                                        />
-                                </li>
-                                <li>
-                                        <SkillCard
-                                                title="Game dev"
-                                                content="Small 2D Unity prototypes when I want to think about something different."
-                                                icon={gameIcon}
-                                                index="04"
-                                        />
-                                </li>
-                        </ul>
-                </section>
-        </div>
+		<section class="introduction-skills" aria-labelledby="skills-heading">
+			<h3 id="skills-heading">What I build</h3>
+			<ul class="skills-list" role="list">
+				<li>
+					<SkillCard
+						title="Web platforms"
+						content="Production apps in TypeScript, Next.js, NestJS. Server-rendered, SPA, or hybrid."
+						icon={webIcon}
+					/>
+				</li>
+				<li>
+					<SkillCard
+						title="Mobile apps"
+						content="Cross-platform with React Native + Expo. Offline-first, secure releases."
+						icon={mobileIcon}
+					/>
+				</li>
+				<li>
+					<SkillCard
+						title="DevOps & deploys"
+						content="CI/CD pipelines, Docker containers, cloud hosting on Vercel, AWS, Azure, DigitalOcean, Heroku."
+						icon={devOpsIcon}
+					/>
+				</li>
+				<li>
+					<SkillCard
+						title="Game dev"
+						content="Small 2D Unity prototypes when I want to think about something different."
+						icon={gameIcon}
+					/>
+				</li>
+			</ul>
+		</section>
+	</div>
 </section>
 
 <style>
-        .introduction-main-container {
-                display: grid;
-                grid-template-columns: 1fr;
-                grid-template-areas:
-                        "head"
-                        "image"
-                        "content";
-                justify-items: start;
-                width: 100%;
-                max-width: calc(var(--container) + 2 * var(--gutter));
-                padding: clamp(4rem, 10vh, 7rem) var(--gutter) 2rem;
-                gap: 24px;
+	.introduction-main-container {
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-template-areas:
+			"head"
+			"image"
+			"content";
+		justify-items: start;
+		width: 100%;
+		max-width: calc(var(--container) + 2 * var(--gutter));
+		padding: clamp(4rem, 10vh, 7rem) var(--gutter) 2rem;
+		gap: 24px;
 
-                @media (min-width: 1024px) {
-                        grid-template-columns: minmax(280px, 380px) 1fr;
-                        grid-template-areas:
-                                "head head"
-                                "image content";
-                        column-gap: 3.5rem;
-                        row-gap: 0.5rem;
-                        align-items: start;
-                }
-        }
+		@media (min-width: 1024px) {
+			grid-template-columns: minmax(280px, 380px) 1fr;
+			grid-template-areas:
+				"head head"
+				"image content";
+			column-gap: 3.5rem;
+			row-gap: 0.5rem;
+			align-items: start;
+		}
+	}
 
-        .section-head {
-                grid-area: head;
-                width: 100%;
-        }
+	.section-head {
+		grid-area: head;
+		width: 100%;
+	}
 
-        /* Portrait as a technical plate: square, hairline, grayscale until hover */
-        .introduction-image-container {
-                grid-area: image;
-                position: relative;
-                width: 100%;
-                max-width: 380px;
-                margin: 0;
-        }
+	/* Portrait as a technical plate: square, hairline, grayscale until hover */
+	.introduction-image-container {
+		grid-area: image;
+		position: relative;
+		width: 100%;
+		max-width: 380px;
+		margin: 0;
+	}
 
-        .introduction-image {
-                position: relative;
-                padding: 10px 10px 8px;
-                background: var(--color-surface);
-                border: 1px solid var(--color-border);
-                border-radius: var(--radius-sm);
-                margin: 0;
-                transition: border-color 0.3s ease;
-        }
+	.introduction-image {
+		position: relative;
+		padding: 10px 10px 8px;
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-sm);
+		margin: 0;
+		transition: border-color 0.3s ease;
+	}
 
-        .intro-portrait {
-                width: 100%;
-                height: auto;
-                aspect-ratio: 4 / 5;
-                object-fit: cover;
-                object-position: center top;
-                border-radius: 0;
-                display: block;
-                filter: grayscale(1) contrast(1.04);
-                transition: filter 0.45s ease;
-        }
+	.intro-portrait {
+		width: 100%;
+		height: auto;
+		aspect-ratio: 4 / 5;
+		object-fit: cover;
+		object-position: center top;
+		border-radius: 0;
+		display: block;
+		filter: grayscale(1) contrast(1.04);
+		transition: filter 0.45s ease;
+	}
 
-        @media (hover: hover) {
-                .introduction-image:hover {
-                        border-color: var(--color-text-muted);
-                }
-                .introduction-image:hover .intro-portrait {
-                        filter: grayscale(0) contrast(1);
-                }
-        }
+	@media (hover: hover) {
+		.introduction-image:hover {
+			border-color: var(--color-text-muted);
+		}
+		.introduction-image:hover .intro-portrait {
+			filter: grayscale(0) contrast(1);
+		}
+	}
 
-        .portrait-caption {
-                margin: 10px 2px 2px;
-                font-family: var(--font-mono);
-                font-size: 0.7rem;
-                letter-spacing: 0.04em;
-                color: var(--color-text-muted);
-                line-height: 1;
-                display: flex;
-                justify-content: space-between;
-                align-items: baseline;
-        }
+	.portrait-caption {
+		margin: 10px 2px 2px;
+		font-family: var(--font-mono);
+		font-size: 0.74rem;
+		color: var(--color-text-muted);
+		line-height: 1;
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+	}
 
-        .caption-right {
-                color: var(--color-text-faint);
-        }
+	/* The dimension hangs in the margin to the right of the plate */
+	.portrait-dim {
+		display: none;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		right: -1.6rem;
+		width: 1px;
+	}
 
-        /* Decorative plate label lives in CSS so it isn't a text node */
-        .caption-right::before {
-                content: attr(data-label);
-        }
+	@media (min-width: 640px) {
+		.portrait-dim {
+			display: block;
+		}
+	}
 
-        .introduction-content {
-                grid-area: content;
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1.25rem;
-                width: 100%;
-        }
+	.introduction-content {
+		grid-area: content;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 1.25rem;
+		width: 100%;
+	}
 
-        .introduction-description {
-                font-size: 1.05rem;
-                line-height: 1.7;
-                font-weight: 400;
-                color: var(--color-text-secondary);
-                letter-spacing: 0.2px;
-                margin: 0;
-                max-width: 70ch;
+	.introduction-description,
+	.introduction-description-secondary {
+		font-size: 1.05rem;
+		line-height: 1.7;
+		font-weight: 400;
+		color: var(--color-text-secondary);
+		margin: 0;
+		max-width: 68ch;
+	}
 
-                &::first-letter {
-                        float: left;
-                        font-size: 3.2rem;
-                        line-height: 0.9;
-                        font-weight: 700;
-                        margin: 4px 8px 0 0;
-                        font-family: var(--font-display);
-                        color: var(--color-text-primary);
-                }
-        }
+	.introduction-description-secondary {
+		font-size: 1rem;
+	}
 
-        .introduction-description-secondary {
-                font-size: 1rem;
-                line-height: 1.7;
-                font-weight: 400;
-                color: var(--color-text-secondary);
-                letter-spacing: 0.2px;
-                margin: 0;
-                max-width: 70ch;
-        }
+	.introduction-skills {
+		width: 100%;
+		margin-top: 1.25rem;
+	}
 
-        .introduction-skills {
-                width: 100%;
-                margin-top: 1.25rem;
-        }
+	.introduction-skills > h3 {
+		margin: 0 0 1rem;
+		font-family: var(--font-mono);
+		font-size: 0.84rem;
+		font-weight: 500;
+		color: var(--color-text-primary);
+		line-height: 1;
+	}
 
-        .introduction-skills > h3 {
-                margin: 0 0 1rem;
-                font-family: var(--font-mono);
-                font-size: 0.78rem;
-                font-weight: 600;
-                letter-spacing: 0.1em;
-                text-transform: uppercase;
-                color: var(--color-text-primary);
-                line-height: 1;
-        }
+	/* Collapsed-border quadrant: 1px gaps on a hairline backdrop */
+	.skills-list {
+		list-style: none;
+		padding: 1px;
+		margin: 0;
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1px;
+		background: var(--color-border);
+		border-radius: var(--radius-sm);
+	}
 
-        .introduction-skills > h3 > span {
-                color: var(--color-text-muted);
-                font-weight: 500;
-        }
+	.skills-list > li {
+		display: flex;
+		min-width: 0;
+	}
 
-        /* Collapsed-border quadrant: 1px gaps on a hairline backdrop */
-        .skills-list {
-                list-style: none;
-                padding: 1px;
-                margin: 0;
-                display: grid;
-                grid-template-columns: 1fr;
-                gap: 1px;
-                background: var(--color-border);
-                border-radius: var(--radius-sm);
-        }
+	@media (min-width: 640px) {
+		.skills-list {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
 
-        .skills-list > li {
-                display: flex;
-                min-width: 0;
-        }
-
-        @media (min-width: 640px) {
-                .skills-list {
-                        grid-template-columns: repeat(2, 1fr);
-                }
-        }
+	@media (prefers-reduced-motion: reduce) {
+		.introduction-image,
+		.intro-portrait {
+			transition: none;
+		}
+	}
 </style>

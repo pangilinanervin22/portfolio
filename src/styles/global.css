@@ -1,6 +1,14 @@
 @import './_theme.css';
 @import './_theme_dark.css';
 
+ :root {
+ 	color-scheme: light;
+ }
+
+ :root[data-theme='dark'] {
+ 	color-scheme: dark;
+ }
+
  html,
  body {
  	margin: 0;
@@ -15,7 +23,7 @@
  }
 
  /* The drafting cursor replaces the native one entirely, but only once the
-    island has mounted (it stamps this class) — if JS fails or the device is
+    script has run (it stamps this class). If JS fails or the device is
     touch, the native cursor and per-component pointer fallbacks survive. */
  html.has-custom-cursor,
  html.has-custom-cursor * {
@@ -74,56 +82,15 @@
  	87.5% { transform: translate3d(-1.8%, 1.4%, 0); }
  }
 
- /* Scroll-reveal system: elements opt in via data-reveal; a single
-    IntersectionObserver in Layout adds .is-revealed exactly once. */
- [data-reveal] {
- 	opacity: 0;
- 	transform: translateY(18px);
- 	filter: blur(8px);
- 	transition:
- 		opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
- 		transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
- 		filter 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
- 	transition-delay: var(--reveal-delay, 0s);
- }
-
- [data-reveal].is-revealed {
- 	opacity: 1;
- 	transform: none;
- 	filter: none;
- }
-
- /* Blur is the expensive part of the reveal; skip it on small screens, where
-    sections are tall and GPUs are weak. */
- @media (max-width: 767px) {
- 	[data-reveal] {
- 		filter: none;
- 	}
- }
-
- /* Anything that doesn't scroll (print, reader mode, link-preview screenshots)
-    must still see the content. */
+ /* Anything that does not scroll (print, reader mode, link-preview
+    screenshots) should see plain paper. */
  @media print {
- 	[data-reveal] {
- 		opacity: 1;
- 		transform: none;
- 		filter: none;
- 		transition: none;
- 	}
  	body::before,
  	body::after,
  	.cursor-cross,
- 	.cursor-frame {
+ 	.cursor-frame,
+ 	.title-block {
  		display: none;
- 	}
- }
-
- @media (prefers-reduced-motion: reduce) {
- 	[data-reveal] {
- 		opacity: 1;
- 		transform: none;
- 		filter: none;
- 		transition: none;
  	}
  }
 
@@ -162,7 +129,7 @@
  }
 
  /* Color inherits from the page (not the * reset) so hover inversions
-    reach nested spans and currentColor icons. Form controls don't
+    reach nested spans and currentColor icons. Form controls do not
     inherit color by default, so opt them in. */
  button,
  input,
@@ -173,6 +140,11 @@
 
  h1, h2, h3 {
  	font-family: var(--font-display);
+ }
+
+ ::selection {
+ 	background: var(--color-selection-bg);
+ 	color: var(--color-selection-text);
  }
 
  section[id] {

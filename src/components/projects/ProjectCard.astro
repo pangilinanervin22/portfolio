@@ -5,333 +5,266 @@ import GithubIcon from "../../assets/icons/github.svg";
 import LinkIcon from "../../assets/icons/link.svg";
 
 interface Props {
-        project: ProjectItem;
-        index: number;
-        featured?: boolean;
+	project: ProjectItem;
+	index: number;
+	featured?: boolean;
 }
 const { project: p, index: i, featured = false } = Astro.props as Props;
+const plate = String(i + 1).padStart(2, "0");
 ---
 
-<li
-        class={`project-card${featured ? " project-card--featured" : ""}`}
-        data-reveal
-        style={`--reveal-delay: ${Math.min((i % 2) * 0.08, 0.16)}s`}
->
-        <article class="card" aria-labelledby={`proj-${i}-title`}>
-                {p.image && (
-                        <figure class="media" data-cursor>
-                                <Image
-                                        src={p.image}
-                                        widths={[480, 768, 1200].filter((w) => w <= p.image!.width)}
-                                        sizes={featured
-                                                ? "(min-width: 1024px) 660px, (min-width: 768px) 90vw, 100vw"
-                                                : "(min-width: 768px) 45vw, 100vw"}
-                                        format="webp"
-                                        quality={80}
-                                        alt={p.imageAlt || `${p.title} - screenshot showcasing the ${p.stack.join(', ')} stack`}
-                                        loading="lazy"
-                                        decoding="async"
-                                />
-                                <figcaption class="visually-hidden">
-                                        {p.imageAlt || p.title}
-                                </figcaption>
-                        </figure>
-                )}
-                <div class="body">
-                        <header class="card-head">
-                                {featured && (
-                                        <p class="featured-label">
-                                                <span aria-hidden="true">//</span> FEATURED
-                                        </p>
-                                )}
-                                <div class="title-row">
-                                        <h3 id={`proj-${i}-title`} class="card-title">
-                                                {p.title}
-                                        </h3>
-                                        {p.year && (
-                                                <span class="year">
-                                                        {p.year}
-                                                </span>
-                                        )}
-                                </div>
-                        </header>
-
-                        <p class="card-desc">{p.description}</p>
-
-                        <ul class="stack-line" role="list" aria-label="Tech stack">
-                                {p.stack.map((t) => (
-                                        <li class="stack-item">
-                                                {t}
-                                        </li>
-                                ))}
-                        </ul>
-
-                        {(p.demo || p.repo) && (
-                                <nav class="links" aria-label="Project links">
-                                        {p.demo && (
-                                                <a
-                                                        class="link"
-                                                        href={p.demo}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        aria-label={`Open live site for ${p.title}`}
-                                                >
-                                                        <LinkIcon class="icon" aria-hidden="true" />
-                                                        <span>Live</span>
-                                                        <span class="link-arrow" aria-hidden="true">→</span>
-                                                </a>
-                                        )}
-                                        {p.repo && (
-                                                <a
-                                                        class="link"
-                                                        href={p.repo}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        aria-label={`Open GitHub repo for ${p.title}`}
-                                                >
-                                                        <GithubIcon class="icon" aria-hidden="true" />
-                                                        <span>GitHub</span>
-                                                        <span class="link-arrow" aria-hidden="true">→</span>
-                                                </a>
-                                        )}
-                                </nav>
-                        )}
-                </div>
-        </article>
+<li class={`plate${featured ? " plate--featured" : ""}`}>
+	<article class="plate-inner" aria-labelledby={`proj-${i}-title`}>
+		{
+			p.image && (
+				<figure class="media" data-cursor>
+					<Image
+						src={p.image}
+						widths={[480, 768, 1200].filter((w) => w <= p.image!.width)}
+						sizes={
+							featured
+								? "(min-width: 1024px) 660px, (min-width: 768px) 90vw, 100vw"
+								: "(min-width: 768px) 45vw, 100vw"
+						}
+						format="webp"
+						quality={80}
+						alt={
+							p.imageAlt ||
+							`${p.title} - screenshot showcasing the ${p.stack.join(", ")} stack`
+						}
+						loading="lazy"
+						decoding="async"
+					/>
+					<figcaption class="visually-hidden">{p.imageAlt || p.title}</figcaption>
+				</figure>
+			)
+		}
+		<div class="body">
+			<p class="plate-row">
+				<span class="plate-num">Plate {plate}</span>
+				{p.year && <span class="plate-year">{p.year}</span>}
+			</p>
+			<h3 id={`proj-${i}-title`} class="plate-title">
+				{p.title}
+			</h3>
+			<p class="plate-desc">{p.description}</p>
+			<p class="stack-line">
+				<span class="visually-hidden">Stack: </span>
+				{p.stack.join(", ")}
+			</p>
+			{
+				(p.demo || p.repo) && (
+					<nav class="links" aria-label="Project links">
+						{p.demo && (
+							<a
+								class="link"
+								href={p.demo}
+								target="_blank"
+								rel="noopener noreferrer"
+								aria-label={`Open live site for ${p.title}`}
+							>
+								<LinkIcon class="icon" aria-hidden="true" />
+								<span>Live site</span>
+							</a>
+						)}
+						{p.repo && (
+							<a
+								class="link"
+								href={p.repo}
+								target="_blank"
+								rel="noopener noreferrer"
+								aria-label={`Open GitHub repo for ${p.title}`}
+							>
+								<GithubIcon class="icon" aria-hidden="true" />
+								<span>GitHub</span>
+							</a>
+						)}
+					</nav>
+				)
+			}
+		</div>
+	</article>
 </li>
 
-<style scoped lang="css">
-        .project-card {
-                position: relative;
-                min-width: 0;
-        }
+<style>
+	/* A plate: the screenshot framed on hatched ground, a ruled caption row,
+	   and the notes beneath. No box around the whole thing. */
+	.plate {
+		position: relative;
+		min-width: 0;
+	}
 
-        @media (min-width: 768px) {
-                .project-card--featured {
-                        grid-column: 1 / -1;
-                }
-        }
+	@media (min-width: 768px) {
+		.plate--featured {
+			grid-column: 1 / -1;
+		}
+	}
 
-        .card {
-                position: relative;
-                background: var(--color-surface);
-                border: 1px solid var(--color-border);
-                border-radius: var(--radius-sm);
-                display: flex;
-                flex-direction: column;
-                height: 100%;
-                overflow: hidden;
-                transition: border-color 0.25s ease;
-        }
+	.plate-inner {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+	}
 
-        @media (min-width: 1024px) {
-                .project-card--featured .card {
-                        display: grid;
-                        grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-                }
-        }
+	@media (min-width: 1024px) {
+		.plate--featured .plate-inner {
+			display: grid;
+			grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+			gap: 2.25rem;
+		}
+	}
 
-        @media (hover: hover) {
-                .card:hover {
-                        border-color: var(--color-text-primary);
-                }
-                .card:hover .media img {
-                        transform: scale(1.015);
-                }
-                .card:hover .link-arrow {
-                        transform: translateX(3px);
-                }
-        }
+	/* Hatching fills whatever the letterboxed screenshot leaves empty, the
+	   way a draughtsman hatches a cut surface rather than leaving it blank */
+	.media {
+		position: relative;
+		aspect-ratio: 16/9;
+		width: 100%;
+		margin: 0;
+		overflow: hidden;
+		border: 1px solid var(--color-border);
+		background-image: repeating-linear-gradient(
+			-45deg,
+			var(--color-hatch) 0 1px,
+			transparent 1px 9px
+		);
+		transition: border-color 0.25s ease;
+	}
 
-        /* Media flush to the card edges, ruled off from the body */
-        .media {
-                position: relative;
-                aspect-ratio: 16/9;
-                width: 100%;
-                margin: 0;
-                overflow: hidden;
-                /* Same tone as the card, so a screenshot that doesn't fill the
-                   16:9 plate reads as padding around the whole image, not bars */
-                background: var(--color-surface);
-                border-bottom: 1px solid var(--color-border);
-        }
+	@media (min-width: 1024px) {
+		.plate--featured .media {
+			aspect-ratio: auto;
+			height: 100%;
+			min-height: 320px;
+		}
+	}
 
-        @media (min-width: 1024px) {
-                .project-card--featured .media {
-                        aspect-ratio: auto;
-                        height: 100%;
-                        min-height: 320px;
-                        border-bottom: 0;
-                        border-right: 1px solid var(--color-border);
-                }
-        }
+	.media img {
+		width: 100%;
+		height: 100%;
+		/* letterbox on the hatched ground: the whole screenshot stays
+		   visible and nothing gets stretched to fit the plate */
+		object-fit: contain;
+		display: block;
+	}
 
-        .media img {
-                width: 100%;
-                height: 100%;
-                /* letterbox on the surface backdrop: the whole screenshot stays
-                   visible and nothing gets stretched to fit the 16:9 plate */
-                object-fit: contain;
-                display: block;
-                transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
-        }
+	@media (hover: hover) {
+		.plate-inner:hover .media {
+			border-color: var(--color-text-primary);
+		}
+	}
 
-        .visually-hidden {
-                position: absolute;
-                width: 1px;
-                height: 1px;
-                padding: 0;
-                margin: -1px;
-                overflow: hidden;
-                clip: rect(0 0 0 0);
-                white-space: nowrap;
-                border: 0;
-        }
+	.body {
+		display: flex;
+		flex-direction: column;
+		gap: 0.9rem;
+		flex-grow: 1;
+		padding-top: 1rem;
+	}
 
-        .body {
-                display: flex;
-                flex-direction: column;
-                gap: 0.95rem;
-                flex-grow: 1;
-                padding: 1.4rem 1.5rem 1.6rem;
-        }
+	@media (min-width: 1024px) {
+		.plate--featured .body {
+			padding-top: 0;
+		}
+	}
 
-        .project-card--featured .body {
-                padding: 1.75rem 1.85rem 1.9rem;
-        }
+	.plate-row {
+		display: flex;
+		justify-content: space-between;
+		gap: 1rem;
+		margin: 0;
+		padding-bottom: 0.6rem;
+		border-bottom: 1px solid var(--color-border);
+		font-family: var(--font-mono);
+		font-size: 0.8rem;
+		color: var(--color-text-muted);
+	}
 
-        .card-head {
-                display: flex;
-                flex-direction: column;
-                gap: 0.5rem;
-        }
+	.plate-num {
+		color: var(--color-text-primary);
+		font-weight: 500;
+	}
 
-        .featured-label {
-                font-family: var(--font-mono);
-                font-size: 0.68rem;
-                font-weight: 600;
-                letter-spacing: 0.1em;
-                color: var(--color-text-muted);
-                margin: 0;
-                line-height: 1;
-                text-transform: uppercase;
-        }
+	.plate-year {
+		white-space: nowrap;
+	}
 
-        .title-row {
-                display: flex;
-                align-items: baseline;
-                justify-content: space-between;
-                gap: 0.75rem;
-                flex-wrap: wrap;
-        }
+	.plate-title {
+		margin: 0;
+		font-family: var(--font-display);
+		font-size: 1.35rem;
+		line-height: 1.2;
+		font-weight: 700;
+		letter-spacing: -0.015em;
+	}
 
-        .card-title {
-                margin: 0;
-                font-family: var(--font-display);
-                font-size: 1.35rem;
-                line-height: 1.2;
-                font-weight: 700;
-                letter-spacing: -0.015em;
-        }
+	.plate--featured .plate-title {
+		font-size: clamp(1.6rem, 2.4vw, 2.1rem);
+	}
 
-        .project-card--featured .card-title {
-                font-size: clamp(1.6rem, 2.4vw, 2.1rem);
-        }
+	.plate-desc {
+		margin: 0;
+		font-size: 0.98rem;
+		line-height: 1.65;
+		color: var(--color-text-secondary);
+		flex-grow: 1;
+	}
 
-        .project-card--featured .card-desc {
-                font-size: 1.02rem;
-        }
+	.plate--featured .plate-desc {
+		font-size: 1.02rem;
+	}
 
-        .year {
-                font-family: var(--font-mono);
-                font-size: 0.72rem;
-                letter-spacing: 0.04em;
-                color: var(--color-text-muted);
-                white-space: nowrap;
-        }
+	.stack-line {
+		margin: 0;
+		font-family: var(--font-mono);
+		font-size: 0.78rem;
+		line-height: 1.7;
+		color: var(--color-text-muted);
+	}
 
-        .card-desc {
-                margin: 0;
-                font-size: 0.98rem;
-                line-height: 1.65;
-                color: var(--color-text-secondary);
-                flex-grow: 1;
-        }
+	.links {
+		display: flex;
+		gap: 0.7rem;
+		margin-top: 0.25rem;
+	}
 
-        /* Stack as a ruled mono line */
-        .stack-line {
-                list-style: none;
-                display: flex;
-                flex-wrap: wrap;
-                margin: 0;
-                padding: 0.75rem 0 0;
-                border-top: 1px solid var(--color-border);
-                font-family: var(--font-mono);
-                font-size: 0.72rem;
-                letter-spacing: 0.02em;
-                line-height: 1.9;
-                color: var(--color-text-muted);
-        }
+	.link {
+		font-family: var(--font-mono);
+		font-size: 0.8rem;
+		font-weight: 500;
+		padding: 0.5rem 0.8rem;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-sm);
+		background: transparent;
+		color: var(--color-text-primary);
+		text-decoration: none;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		transition:
+			background-color 0.2s ease,
+			border-color 0.2s ease,
+			color 0.2s ease;
+	}
 
-        .stack-item:not(:last-child)::after {
-                content: " · ";
-                color: var(--color-text-faint);
-                white-space: pre;
-        }
+	:global(.icon) {
+		width: 0.95rem;
+		height: 0.95rem;
+		display: block;
+	}
 
-        .links {
-                display: flex;
-                gap: 0.7rem;
-                margin-top: 0.25rem;
-        }
+	@media (hover: hover) {
+		.link:hover {
+			background: var(--color-text-primary);
+			border-color: var(--color-text-primary);
+			color: var(--color-background);
+		}
+	}
 
-        .link {
-                position: relative;
-                font-family: var(--font-mono);
-                font-size: 0.72rem;
-                letter-spacing: 0.05em;
-                font-weight: 500;
-                text-transform: uppercase;
-                padding: 0.5rem 0.8rem;
-                border: 1px solid var(--color-border);
-                border-radius: var(--radius-sm);
-                background: transparent;
-                color: var(--color-text-primary);
-                text-decoration: none;
-                transition:
-                        background-color 0.2s ease,
-                        border-color 0.2s ease,
-                        color 0.2s ease;
-                display: inline-flex;
-                align-items: center;
-                gap: 0.45rem;
-        }
-
-        :global(.icon) {
-                width: 0.95rem;
-                height: 0.95rem;
-                display: block;
-        }
-
-        .link-arrow {
-                display: inline-block;
-                transition: transform 0.25s cubic-bezier(0.22, 0.61, 0.36, 1);
-        }
-
-        @media (hover: hover) {
-                .link:hover {
-                        background: var(--color-text-primary);
-                        border-color: var(--color-text-primary);
-                        color: var(--color-background);
-                }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-                .card,
-                .link,
-                .media img,
-                .link-arrow {
-                        transition: none;
-                }
-        }
+	@media (prefers-reduced-motion: reduce) {
+		.media,
+		.link {
+			transition: none;
+		}
+	}
 </style>

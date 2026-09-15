@@ -1,6 +1,6 @@
 # Ervin Pangilinan Portfolio
 
-Personal portfolio built as a single-page static site with [Astro](https://astro.build). The design is a monochrome "drafting sheet": the page reads as a numbered drawing set (sheets 00–05) with dot-grid paper, film grain, ruler-tick margin rails, hairline rules instead of boxed cards, and black↔white inversion as the only hover color.
+Personal portfolio built as a single-page static site with [Astro](https://astro.build). The design is a monochrome "drafting sheet": the page reads as a numbered drawing set (sheets 01 to 06) with a title block in the corner that counts sheets as you scroll, dimension lines that measure the page itself, dot-grid paper, film grain, ruler-tick margin rails, hairline rules instead of boxed cards, and inversion as the only hover colour. Dark mode is a blueprint: white lines on Prussian blue.
 
 **Live site:** <https://pangilinanervin22.github.io/portfolio>
 
@@ -37,29 +37,32 @@ All commands are run from the root of the project:
 ├── src/
 │   ├── assets/                    # Portrait, project screenshots, tech + company logos
 │   ├── components/
-│   │   ├── _common/               # SectionHead (rule + sheet index + ghost numeral)
+│   │   ├── _common/               # SectionHead (sheet rule + title), Dimension (measured line)
 │   │   ├── CustomCursor.astro     # Drafting-instrument cursor (vanilla script)
 │   │   ├── SwitchTheme.astro      # Theme toggle (vanilla script)
-│   │   ├── experience/            # Work-history chronology
-│   │   ├── introduction/          # About section with skill cards
-│   │   ├── projects/              # Project cards ("plates" with fig. captions)
-│   │   └── technology/            # Skill tiers grid
+│   │   ├── TitleBlock.astro       # Sheet counter, revision date, name and role
+│   │   ├── experience/            # Work-history ledger
+│   │   ├── introduction/          # About section with the portrait plate and skill cards
+│   │   ├── projects/              # Project plates on hatched ground
+│   │   └── technology/            # Stack tiers
 │   ├── data/                      # experiences.ts, projects.ts, technologies.ts
-│   ├── layouts/Layout.astro       # Base head, fonts, scroll reveals, sheet rails
+│   ├── layouts/Layout.astro       # Base head, fonts, sheet tracker, sheet rails
+│   ├── lib/updated.ts             # Last-commit date for the title block and footer
 │   ├── pages/                     # index.astro, dynamic site.webmanifest.ts
-│   ├── styles/                    # global.css, _theme.css (light), _theme_dark.css
-│   └── consts.ts                  # Site title and description
+│   ├── styles/                    # global.css, _theme.css (sheet), _theme_dark.css (blueprint)
+│   └── consts.ts                  # Site title, role and description
 ├── tests/                         # Playwright smoke tests (see playwright.config.ts)
 └── astro.config.mjs
 ```
 
-The page composes five sections in order: **Welcome** (cover sheet), **Introduction**, **Experience**, **Technologies**, and **Projects**. Section content is plain typed arrays in `src/data/`; edit those files to add an entry.
+The page is six sheets in order: **Welcome** (cover sheet), **Introduction**, **Experience**, **Technologies**, **Projects**, and the **Contact** footer. Section content is plain typed arrays in `src/data/`; edit those files to add an entry.
 
 ## Design notes
 
 - **Theming**: CSS custom properties defined per theme in `src/styles/_theme.css` and `_theme_dark.css`; the choice persists to `localStorage` and applies via a `data-theme` attribute on `<html>`.
-- **Motion**: scroll reveals run through a single `IntersectionObserver` (elements opt in with `data-reveal`); hero animations are pure CSS keyframes. Everything respects `prefers-reduced-motion`, with a `<noscript>` fallback that force-reveals all content.
-- **Imagery as plates**: the portrait renders grayscale until hover and carries a `fig. 01` caption; project screenshots are letterboxed in 16:9 plates (`object-fit: contain`), never cropped or stretched. All raster images go through `astro:assets` and ship as sized WebP.
+- **Title block**: the ruled box in the bottom-right corner (static at the foot of the cover sheet on small screens) carries the name, role, sheet counter and revision date. A small scroll listener in `Layout.astro` keeps the counter and the active nav link on the current sheet.
+- **Motion**: one moment only. On load the name draws itself in outline and fills, then the dimension line under it extends. There are no scroll reveals. Everything respects `prefers-reduced-motion`.
+- **Imagery as plates**: the portrait renders grayscale until hover, carries a `fig. 01` caption and a vertical dimension of its rendered height; project screenshots sit on hatched ground in 16:9 plates (`object-fit: contain`), never cropped or stretched. All raster images go through `astro:assets` and ship as sized WebP.
 - **SEO**: `BaseHead.astro` handles Open Graph/Twitter meta, canonical URLs, and JSON-LD (`Person`); a sitemap is generated at build time (submit `/portfolio/sitemap-index.xml` in Search Console; a project GitHub Pages site has no origin-level `robots.txt`), and `site.webmanifest` is generated from the base path.
 
 ## Configuration

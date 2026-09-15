@@ -1,3 +1,8 @@
+/* Blueprint. The dark theme is a cyanotype sheet: white lines on Prussian
+   blue. It stays monochrome (one hue, no accent), so every device that
+   inverts black<->white on the light sheet inverts white<->blue here through
+   the same tokens. Muted text is tuned to pass WCAG AA on both the sheet and
+   the surface tone. */
 :root[data-theme='dark'] {
     /* Grayscale scale (keep same canonical values) */
     --gray-0: #eeeeee;
@@ -16,71 +21,71 @@
     --gray-950: #0a0a0a;
     --gray-1000: #000000;
 
-    /* Base — warm dark tones */
-    --color-background: #111110;
-    --color-background-alt: #1a1a18;
-    --color-surface: #1c1c1a;
-    --color-surface-alt: #2a2a26;
-    --color-surface-muted: #333330;
-    --color-border: #2a2a28;
-    --color-background-blur: rgba(17, 17, 16, 0.8);
+    /* Base: the blue of the print */
+    --color-background: #0e2f63;
+    --color-background-alt: #12376f;
+    --color-surface: #12376f;
+    --color-surface-alt: #173f7d;
+    --color-surface-muted: #1c4787;
+    --color-border: rgba(242, 246, 252, 0.2);
+    --color-background-blur: rgba(14, 47, 99, 0.82);
 
     /* Primary / semantic (inverted vs light theme) */
-    --color-primary: var(--gray-0);
-    --color-primary-80: var(--gray-200);
-    --color-primary-60: var(--gray-400);
-    --color-primary-40: var(--gray-600);
-    --color-primary-20: var(--gray-800);
-    --color-primary-10: var(--gray-900);
+    --color-primary: #f2f6fc;
+    --color-primary-80: #dde7f5;
+    --color-primary-60: #b7c8e3;
+    --color-primary-40: #7f98c2;
+    --color-primary-20: #3f5f96;
+    --color-primary-10: #25457c;
 
-    --color-secondary: var(--gray-800);
-    --color-secondary-alt: var(--gray-750);
+    --color-secondary: #173f7d;
+    --color-secondary-alt: #1c4787;
 
-    /* Text */
-    --color-text-primary: #eeeeee;
-    --color-text-secondary: #bbbbbb;
-    --color-text-muted: #858585; /* 5.1:1 on the page background (WCAG AA for small text) */
-    --color-text-faint: #555555;
-    --color-text-inverse: var(--gray-1000);
+    /* Text: the white lines */
+    --color-text-primary: #f2f6fc;
+    --color-text-secondary: #c6d4ea;
+    --color-text-muted: #9bb1d2; /* 6.0:1 on the sheet, 5.3:1 on the surface (WCAG AA) */
+    --color-text-faint: #5b78a8; /* decorative only, never for readable text */
+    --color-text-inverse: #0e2f63;
 
-    /* Accent — white is the accent in dark mode */
+    /* Accent: white is the accent on a blueprint */
     --color-accent: #ffffff;
-    --color-accent-hover: #dddddd;
-    --color-accent-muted: #ffffff30;
-    --color-accent-subtle: #ffffff12;
+    --color-accent-hover: #dde7f5;
+    --color-accent-muted: rgba(255, 255, 255, 0.19);
+    --color-accent-subtle: rgba(255, 255, 255, 0.07);
 
     /* Links */
-    --color-link: #eeeeee;
-    --color-link-hover: #dddddd;
-    --color-link-active: var(--gray-0);
-    --color-link-visited: var(--gray-200);
-    --color-link-underline: var(--gray-500);
+    --color-link: #f2f6fc;
+    --color-link-hover: #dde7f5;
+    --color-link-active: #ffffff;
+    --color-link-visited: #dde7f5;
+    --color-link-underline: #7f98c2;
 
     /* Icons */
-    --color-icon: var(--gray-300);
-    --color-icon-muted: var(--gray-600);
-    --color-icon-inverse: var(--gray-1000);
+    --color-icon: #dde7f5;
+    --color-icon-muted: #7f98c2;
+    --color-icon-inverse: #0e2f63;
 
     /* States */
     --color-focus-ring: #ffffff;
-    --color-outline: var(--gray-300);
-    --color-selection-bg: var(--gray-0);
-    --color-selection-text: var(--gray-1000);
+    --color-outline: #f2f6fc;
+    --color-selection-bg: #f2f6fc;
+    --color-selection-text: #0e2f63;
 
     /* Shadows / depth */
-    --color-shadow-soft: rgba(0, 0, 0, 0.15);
-    --color-shadow: rgba(0, 0, 0, 0.25);
-    --color-shadow-strong: rgba(0, 0, 0, 0.35);
-    --color-backdrop: rgba(0, 0, 0, 0.70);
+    --color-shadow-soft: rgba(0, 0, 0, 0.18);
+    --color-shadow: rgba(0, 0, 0, 0.28);
+    --color-shadow-strong: rgba(0, 0, 0, 0.38);
+    --color-backdrop: rgba(4, 18, 44, 0.72);
 
     /* Gradients */
-    --gradient-soft: linear-gradient(180deg, #1c1c1a, #111110);
-    --gradient-inset: linear-gradient(180deg, #2a2a26, #1c1c1a);
+    --gradient-soft: linear-gradient(180deg, #12376f, #0e2f63);
+    --gradient-inset: linear-gradient(180deg, #173f7d, #12376f);
 
-    /* Drafting-sheet structure */
-    --color-rail-line: rgba(238, 238, 238, 0.10);
-    --color-rail-tick: rgba(238, 238, 238, 0.18);
-    --color-dot-grid: rgba(238, 238, 238, 0.05);
-    --color-ghost-stroke: rgba(238, 238, 238, 0.17);
-    --grain-opacity: 0.150;
+    /* Drafting-sheet structure, drawn in white */
+    --color-rail-line: rgba(242, 246, 252, 0.14);
+    --color-rail-tick: rgba(242, 246, 252, 0.24);
+    --color-dot-grid: rgba(242, 246, 252, 0.09);
+    --color-hatch: rgba(242, 246, 252, 0.14);
+    --grain-opacity: 0.14;
 }

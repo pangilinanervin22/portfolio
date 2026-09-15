@@ -1,478 +1,404 @@
 ---
-import { execSync } from "node:child_process";
+import { updatedAt } from "../lib/updated";
 
 const year = new Date().getFullYear();
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const resumeHref = `${base}/Ervin_Pangilinan_Resume.pdf`;
-
-// "Updated" means the last content commit, not the last deploy. Falls back to
-// the build time if git isn't available where the site is built.
-let updatedAt = new Date();
-try {
-        const lastCommit = execSync("git log -1 --format=%cI", { encoding: "utf8" }).trim();
-        if (lastCommit) updatedAt = new Date(lastCommit);
-} catch {
-        /* keep the build time */
-}
 const buildDate = updatedAt.toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "short",
-        day: "2-digit",
+	year: "numeric",
+	month: "short",
+	day: "2-digit",
 });
 ---
 
-<footer id="footer" class="footer-container" aria-labelledby="footer-heading">
-        <h2 id="footer-heading" class="visually-hidden">Site footer</h2>
+<footer
+	id="footer"
+	class="footer-container"
+	aria-labelledby="footer-heading"
+	data-sheet="06"
+	data-sheet-title="Contact"
+>
+	<h2 id="footer-heading" class="visually-hidden">Site footer</h2>
 
-        <section class="cta-block" aria-labelledby="cta-heading">
-                <p class="cta-label">
-                        <span aria-hidden="true">//</span> 05 / Say hi
-                </p>
-                <h3 id="cta-heading" class="cta-headline">
-                        Want to talk about code, projects, or anything in between?
-                </h3>
-                <a class="cta-mail" href="mailto:pangilinanervin22@gmail.com">
-                        <span class="cta-mail-text">pangilinanervin22@gmail.com</span>
-                        <span class="cta-mail-arrow" aria-hidden="true">↗</span>
-                </a>
-                <div class="cta-secondary">
-                        <a class="cta-link" href={resumeHref} download>
-                                Resume <span aria-hidden="true">↓</span>
-                        </a>
-                        <span class="cta-sep" aria-hidden="true"></span>
-                        <a
-                                class="cta-link"
-                                href="https://www.linkedin.com/in/pangilinanervin22"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                        >
-                                LinkedIn <span aria-hidden="true">↗</span>
-                        </a>
-                        <span class="cta-sep" aria-hidden="true"></span>
-                        <a
-                                class="cta-link"
-                                href="https://github.com/pangilinanervin22"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                        >
-                                GitHub <span aria-hidden="true">↗</span>
-                        </a>
-                </div>
-        </section>
+	<section class="cta-block" aria-labelledby="cta-heading">
+		<p class="cta-rule" aria-hidden="true">
+			<span class="cta-num">Sheet 06</span>
+			<span class="cta-line"></span>
+		</p>
+		<h3 id="cta-heading" class="cta-headline">
+			Want to talk about code, projects, or anything in between?
+		</h3>
+		<a class="cta-mail" href="mailto:pangilinanervin22@gmail.com">pangilinanervin22@gmail.com</a>
+		<div class="cta-secondary">
+			<a class="cta-link" href={resumeHref} download>Resume</a>
+			<a
+				class="cta-link"
+				href="https://www.linkedin.com/in/pangilinanervin22"
+				target="_blank"
+				rel="me noopener noreferrer"
+			>
+				LinkedIn
+			</a>
+			<a
+				class="cta-link"
+				href="https://github.com/pangilinanervin22"
+				target="_blank"
+				rel="me noopener noreferrer"
+			>
+				GitHub
+			</a>
+		</div>
+	</section>
 
-        <div class="footer-inner">
-                <div class="cluster primary">
-                        <p class="brand">
-                                &copy; {year}
-                                <span class="name">Ervin Pangilinan</span>
-                        </p>
-                        <p class="tagline">Manila, Philippines · Full-stack developer</p>
-                </div>
+	<div class="footer-inner">
+		<div class="cluster primary">
+			<p class="brand">
+				&copy; {year}
+				<span class="name">Ervin Pangilinan</span>
+			</p>
+			<p class="tagline">Full-stack developer, Manila, Philippines</p>
+		</div>
 
-                <nav aria-label="Footer navigation" class="mini-nav">
-                        <h3 class="heading">
-                                <span aria-hidden="true">//</span> NAVIGATE
-                        </h3>
-                        <ul class="mini-list">
-                                <li><a href="#welcome">Home</a></li>
-                                <li><a href="#introduction">About</a></li>
-                                <li><a href="#experience">Experience</a></li>
-                                <li><a href="#projects">Work</a></li>
-                        </ul>
-                </nav>
+		<nav aria-label="Footer navigation" class="mini-nav">
+			<h3 class="heading">Navigate</h3>
+			<ul class="mini-list">
+				<li><a href="#welcome">Home</a></li>
+				<li><a href="#introduction">About</a></li>
+				<li><a href="#experience">Experience</a></li>
+				<li><a href="#projects">Work</a></li>
+			</ul>
+		</nav>
 
-                <nav aria-label="Social links" class="social-nav">
-                        <h3 class="heading">
-                                <span aria-hidden="true">//</span> CONNECT
-                        </h3>
-                        <ul class="social-list">
-                                <li>
-                                        <a
-                                                href="https://github.com/pangilinanervin22"
-                                                rel="me noopener noreferrer"
-                                                target="_blank">GitHub</a>
-                                </li>
-                                <li>
-                                        <a
-                                                href="mailto:pangilinanervin22@gmail.com">Email</a>
-                                </li>
-                                <li>
-                                        <a
-                                                href="https://www.linkedin.com/in/pangilinanervin22"
-                                                target="_blank">LinkedIn</a>
-                                </li>
-                        </ul>
-                </nav>
+		<nav aria-label="Social links" class="social-nav">
+			<h3 class="heading">Connect</h3>
+			<ul class="social-list">
+				<li>
+					<a href="https://github.com/pangilinanervin22" rel="me noopener noreferrer" target="_blank"
+						>GitHub</a
+					>
+				</li>
+				<li>
+					<a href="mailto:pangilinanervin22@gmail.com">Email</a>
+				</li>
+				<li>
+					<a
+						href="https://www.linkedin.com/in/pangilinanervin22"
+						rel="me noopener noreferrer"
+						target="_blank">LinkedIn</a
+					>
+				</li>
+			</ul>
+		</nav>
 
-                <div class="meta-block">
-                        <p class="stack" aria-label="Tech stack">
-                                Stack: <span>Astro</span> · <span>TypeScript</span> · <span>CSS</span>
-                        </p>
-                        <p class="meta">
-                                Built with <a href="https://astro.build" target="_blank">Astro</a>. Updated {buildDate}.
-                        </p>
-                        <p class="meta small">
-                                <button id="backToTopBtn" class="top-btn" type="button">Back to top ↑</button>
-                        </p>
-                </div>
-        </div>
-
-        <div class="eof-row" aria-hidden="true">
-                <span class="eof-line"></span>
-                <span class="eof-text" data-label="// EOF"></span>
-                <span class="eof-line"></span>
-        </div>
+		<div class="meta-block">
+			<p class="meta">
+				Built with <a href="https://astro.build" target="_blank" rel="noopener noreferrer">Astro</a
+				>, TypeScript and CSS.
+			</p>
+			<p class="meta">Updated {buildDate}.</p>
+			<p class="meta">
+				<button id="backToTopBtn" class="top-btn" type="button">Back to top</button>
+			</p>
+		</div>
+	</div>
 </footer>
 
 <script>
-        const btn = document.getElementById("backToTopBtn");
-        if (btn) {
-                btn.addEventListener("click", () => {
-                        window.scrollTo({ top: 0, behavior: "smooth" });
-                });
-        }
+	const btn = document.getElementById("backToTopBtn");
+	if (btn) {
+		btn.addEventListener("click", () => {
+			window.scrollTo({ top: 0, behavior: "smooth" });
+		});
+	}
 </script>
 
 <style>
-        .footer-container {
-                width: 100%;
-                margin-top: 2rem;
-                padding: 0 var(--gutter) 2rem;
-                font-size: 0.95rem;
-                color: var(--color-text-muted);
-                border-top: 1px solid var(--color-border);
-        }
+	.footer-container {
+		width: 100%;
+		margin-top: 2rem;
+		padding: 0 var(--gutter) 2rem;
+		font-size: 0.95rem;
+		color: var(--color-text-muted);
+		border-top: 1px solid var(--color-border);
+	}
 
-        .footer-inner {
-                max-width: var(--container);
-                width: 100%;
-                margin-inline: auto;
-                display: grid;
-                gap: 2rem;
-                padding-top: 2.5rem;
-                border-top: 1px solid var(--color-border);
-        }
-        @media (min-width: 640px) {
-                .footer-inner {
-                        grid-template-columns: repeat(
-                                auto-fit,
-                                minmax(180px, 1fr)
-                        );
-                        align-items: start;
-                }
-        }
-        @media (min-width: 960px) {
-                .footer-inner {
-                        grid-template-columns: 1.3fr 1fr 1fr 1.4fr;
-                }
-        }
+	/* On desktop the fixed title block sits in the bottom margin of the
+	   sheet, so the last sheet leaves that margin clear */
+	@media (min-width: 1024px) {
+		.footer-container {
+			padding-bottom: 10.5rem;
+		}
+	}
 
-        .primary {
-                display: flex;
-                flex-direction: column;
-                gap: 0.5rem;
-        }
-        .brand {
-                margin: 0;
-                font-weight: 500;
-                letter-spacing: 0.5px;
-        }
-        .brand .name {
-                color: var(--color-text-primary);
-                font-weight: 500;
-        }
-        .tagline {
-                margin: 0;
-                font-size: 0.88rem;
-                line-height: 1.4;
-                max-width: 28ch;
-                color: var(--color-text-secondary);
-        }
+	.footer-inner {
+		max-width: var(--container);
+		width: 100%;
+		margin-inline: auto;
+		display: grid;
+		gap: 2rem;
+		padding-top: 2.5rem;
+		border-top: 1px solid var(--color-border);
+	}
+	@media (min-width: 640px) {
+		.footer-inner {
+			grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+			align-items: start;
+		}
+	}
+	@media (min-width: 960px) {
+		.footer-inner {
+			grid-template-columns: 1.3fr 1fr 1fr 1.4fr;
+		}
+	}
 
-        .heading {
-                font-family: var(--font-mono);
-                margin: 0 0 0.65rem;
-                font-size: 0.72rem;
-                text-transform: uppercase;
-                letter-spacing: 0.08em;
-                font-weight: 500;
-                color: var(--color-text-muted);
-        }
+	.primary {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+	.brand {
+		margin: 0;
+		font-weight: 500;
+	}
+	.brand .name {
+		color: var(--color-text-primary);
+		font-weight: 500;
+	}
+	.tagline {
+		margin: 0;
+		font-size: 0.88rem;
+		line-height: 1.4;
+		max-width: 28ch;
+		color: var(--color-text-secondary);
+	}
 
-        .mini-nav,
-        .social-nav {
-                display: flex;
-                flex-direction: column;
-        }
-        .mini-list,
-        .social-list {
-                list-style: none;
-                margin: 0;
-                padding: 0;
-                display: flex;
-                flex-direction: column;
-                gap: 0.45rem;
-        }
-        .mini-list a,
-        .social-list a {
-                position: relative;
-                text-decoration: none;
-                color: var(--color-text-secondary);
-                font-weight: 500;
-                letter-spacing: 0.03em;
-                padding: 2px 0;
-        }
-        .mini-list a::after,
-        .social-list a::after {
-                content: "";
-                position: absolute;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                height: 1px;
-                background: currentColor;
-                transform: scaleX(0);
-                transform-origin: left;
-                transition: transform 0.25s ease;
-                opacity: 0.5;
-        }
-        .mini-list a:hover::after,
-        .mini-list a:focus-visible::after,
-        .social-list a:hover::after,
-        .social-list a:focus-visible::after {
-                transform: scaleX(1);
-        }
-        .mini-list a:focus-visible,
-        .social-list a:focus-visible {
-                outline: 2px solid var(--color-focus-ring);
-                outline-offset: 2px;
-                border-radius: var(--radius-sm);
-        }
+	.heading {
+		font-family: var(--font-mono);
+		margin: 0 0 0.65rem;
+		font-size: 0.78rem;
+		font-weight: 500;
+		color: var(--color-text-muted);
+	}
 
-        .meta-block {
-                display: flex;
-                flex-direction: column;
-                gap: 0.4rem;
-        }
-        .stack {
-                font-family: var(--font-mono);
-                margin: 0;
-                font-size: 0.72rem;
-                letter-spacing: 0.04em;
-                text-transform: uppercase;
-                font-weight: 400;
-                color: var(--color-text-muted);
-        }
-        .stack span {
-                color: var(--color-text-secondary);
-                font-weight: 500;
-        }
-        /* No opacity here: it would push the muted colour below AA contrast */
-        .meta {
-                font-family: var(--font-mono);
-                margin: 0;
-                font-size: 0.75rem;
-                line-height: 1.4;
-        }
-        .meta a {
-                color: inherit;
-                text-decoration: none;
-        }
-        .meta a:hover {
-                text-decoration: underline;
-        }
+	.mini-nav,
+	.social-nav {
+		display: flex;
+		flex-direction: column;
+	}
+	.mini-list,
+	.social-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.45rem;
+	}
+	.mini-list a,
+	.social-list a {
+		position: relative;
+		text-decoration: none;
+		color: var(--color-text-secondary);
+		font-weight: 500;
+		padding: 2px 0;
+	}
+	.mini-list a::after,
+	.social-list a::after {
+		content: "";
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		height: 1px;
+		background: currentColor;
+		transform: scaleX(0);
+		transform-origin: left;
+		transition: transform 0.25s ease;
+		opacity: 0.5;
+	}
+	.mini-list a:hover::after,
+	.mini-list a:focus-visible::after,
+	.social-list a:hover::after,
+	.social-list a:focus-visible::after {
+		transform: scaleX(1);
+	}
+	.mini-list a:focus-visible,
+	.social-list a:focus-visible {
+		outline: 2px solid var(--color-focus-ring);
+		outline-offset: 2px;
+		border-radius: var(--radius-sm);
+	}
 
-        .top-btn {
-                background: none;
-                border: none;
-                padding: 0;
-                font: inherit;
-                color: var(--color-text-secondary);
-                cursor: pointer;
-                position: relative;
-        }
-        .top-btn::after {
-                content: "";
-                position: absolute;
-                left: 0;
-                right: 0;
-                bottom: -1px;
-                height: 1px;
-                background: currentColor;
-                transform: scaleX(0);
-                transform-origin: left;
-                transition: transform 0.25s ease;
-                opacity: 0.5;
-        }
-        .top-btn:hover::after,
-        .top-btn:focus-visible::after {
-                transform: scaleX(1);
-        }
-        .top-btn:focus-visible {
-                outline: 2px solid var(--color-focus-ring);
-                outline-offset: 2px;
-                border-radius: var(--radius-sm);
-        }
+	.meta-block {
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+	}
+	/* No opacity here: it would push the muted colour below AA contrast */
+	.meta {
+		font-family: var(--font-mono);
+		margin: 0;
+		font-size: 0.78rem;
+		line-height: 1.5;
+	}
+	.meta a {
+		color: var(--color-text-secondary);
+		text-decoration: none;
+	}
+	.meta a:hover {
+		text-decoration: underline;
+	}
 
-        .visually-hidden {
-                position: absolute !important;
-                width: 1px;
-                height: 1px;
-                padding: 0;
-                margin: -1px;
-                overflow: hidden;
-                clip: rect(0 0 0 0);
-                clip-path: inset(50%);
-                border: 0;
-                white-space: nowrap;
-        }
+	.top-btn {
+		background: none;
+		border: none;
+		padding: 0;
+		font: inherit;
+		color: var(--color-text-secondary);
+		cursor: pointer;
+		position: relative;
+	}
+	.top-btn::after {
+		content: "";
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: -1px;
+		height: 1px;
+		background: currentColor;
+		transform: scaleX(0);
+		transform-origin: left;
+		transition: transform 0.25s ease;
+		opacity: 0.5;
+	}
+	.top-btn:hover::after,
+	.top-btn:focus-visible::after {
+		transform: scaleX(1);
+	}
+	.top-btn:focus-visible {
+		outline: 2px solid var(--color-focus-ring);
+		outline-offset: 2px;
+		border-radius: var(--radius-sm);
+	}
 
-        @media (prefers-reduced-motion: reduce) {
-                .mini-list a::after,
-                .social-list a::after,
-                .top-btn::after {
-                        transition: none;
-                }
-        }
+	.visually-hidden {
+		position: absolute !important;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0 0 0 0);
+		clip-path: inset(50%);
+		border: 0;
+		white-space: nowrap;
+	}
 
-        /* Top CTA block — the email IS the design */
-        .cta-block {
-                max-width: var(--container);
-                width: 100%;
-                margin: 0 auto 2.75rem;
-                padding: clamp(3.5rem, 8vh, 5.5rem) 0 0;
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1.25rem;
-        }
+	/* Contact sheet: the email address is the design */
+	.cta-block {
+		max-width: var(--container);
+		width: 100%;
+		margin: 0 auto 2.75rem;
+		padding: clamp(3.5rem, 8vh, 5.5rem) 0 0;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 1.25rem;
+	}
 
-        .cta-label {
-                font-family: var(--font-mono);
-                font-size: 0.78rem;
-                font-weight: 500;
-                letter-spacing: 0.06em;
-                text-transform: uppercase;
-                color: var(--color-text-muted);
-                margin: 0;
-                line-height: 1;
-        }
+	.cta-rule {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin: 0 0 0.25rem;
+		line-height: 1;
+	}
 
-        .cta-headline {
-                font-family: var(--font-display);
-                font-size: clamp(1.6rem, 3.4vw, 2.6rem);
-                font-weight: 700;
-                line-height: 1.15;
-                letter-spacing: -0.025em;
-                color: var(--color-text-primary);
-                margin: 0;
-                max-width: 26ch;
-        }
+	.cta-num {
+		font-family: var(--font-mono);
+		font-size: 0.8rem;
+		font-weight: 500;
+		color: var(--color-text-primary);
+		white-space: nowrap;
+	}
 
-        .cta-mail {
-                display: inline-flex;
-                align-items: baseline;
-                gap: 0.5rem;
-                margin-top: 0.5rem;
-                font-family: var(--font-mono);
-                font-size: clamp(1.05rem, 2.8vw, 1.9rem);
-                font-weight: 500;
-                letter-spacing: -0.01em;
-                color: var(--color-text-primary);
-                text-decoration: none;
-                border-bottom: 2px solid var(--color-text-primary);
-                padding-bottom: 0.3rem;
-                max-width: 100%;
-                overflow-wrap: anywhere;
-                transition: opacity 0.2s ease;
-        }
+	.cta-line {
+		flex: 1;
+		height: 1px;
+		background: var(--color-border);
+	}
 
-        .cta-mail-arrow {
-                font-family: var(--font-display);
-                transition: transform 0.25s cubic-bezier(0.22, 0.61, 0.36, 1);
-        }
+	.cta-headline {
+		font-family: var(--font-display);
+		font-size: clamp(1.6rem, 3.4vw, 2.6rem);
+		font-weight: 700;
+		line-height: 1.15;
+		letter-spacing: -0.025em;
+		color: var(--color-text-primary);
+		margin: 0;
+		max-width: 26ch;
+	}
 
-        @media (hover: hover) {
-                .cta-mail:hover {
-                        opacity: 0.65;
-                }
-                .cta-mail:hover .cta-mail-arrow {
-                        transform: translate(3px, -3px);
-                }
-        }
+	.cta-mail {
+		display: inline-block;
+		margin-top: 0.5rem;
+		font-family: var(--font-mono);
+		font-size: clamp(1.05rem, 2.8vw, 1.9rem);
+		font-weight: 500;
+		letter-spacing: -0.01em;
+		color: var(--color-text-primary);
+		text-decoration: none;
+		border-bottom: 2px solid var(--color-text-primary);
+		padding-bottom: 0.3rem;
+		max-width: 100%;
+		overflow-wrap: anywhere;
+		transition: opacity 0.2s ease;
+	}
 
-        .cta-mail:focus-visible {
-                outline: 2px solid var(--color-focus-ring);
-                outline-offset: 4px;
-        }
+	@media (hover: hover) {
+		.cta-mail:hover {
+			opacity: 0.65;
+		}
+	}
 
-        .cta-secondary {
-                display: flex;
-                align-items: baseline;
-                gap: 0.85rem;
-                font-family: var(--font-mono);
-                font-size: 0.82rem;
-        }
+	.cta-mail:focus-visible {
+		outline: 2px solid var(--color-focus-ring);
+		outline-offset: 4px;
+	}
 
-        .cta-sep {
-                color: var(--color-text-faint);
-        }
+	.cta-secondary {
+		display: flex;
+		align-items: baseline;
+		gap: 1.4rem;
+		font-family: var(--font-mono);
+		font-size: 0.84rem;
+	}
 
-        .cta-sep::before {
-                content: "·";
-        }
+	.cta-link {
+		color: var(--color-text-secondary);
+		text-decoration: none;
+		font-weight: 500;
+		transition: color 0.2s ease;
+	}
 
-        .cta-link {
-                color: var(--color-text-secondary);
-                text-decoration: none;
-                font-weight: 500;
-                letter-spacing: 0.02em;
-                transition: color 0.2s ease;
-        }
+	.cta-link:hover {
+		color: var(--color-text-primary);
+	}
 
-        .cta-link:hover {
-                color: var(--color-text-primary);
-        }
+	.cta-link:focus-visible {
+		outline: 2px solid var(--color-focus-ring);
+		outline-offset: 2px;
+		border-radius: var(--radius-sm);
+	}
 
-        .cta-link:focus-visible {
-                outline: 2px solid var(--color-focus-ring);
-                outline-offset: 2px;
-                border-radius: var(--radius-sm);
-        }
-
-        /* EOF mark */
-        .eof-row {
-                max-width: var(--container);
-                width: 100%;
-                margin: 3rem auto 0;
-                display: flex;
-                align-items: center;
-                gap: 1rem;
-        }
-
-        .eof-line {
-                flex: 1;
-                height: 1px;
-                background: var(--color-border);
-        }
-
-        .eof-text::before {
-                content: attr(data-label);
-        }
-
-        .eof-text {
-                font-family: var(--font-mono);
-                font-size: 0.68rem;
-                font-weight: 500;
-                letter-spacing: 0.12em;
-                color: var(--color-text-faint);
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-                .cta-mail,
-                .cta-mail-arrow,
-                .cta-link {
-                        transition: none;
-                }
-        }
+	@media (prefers-reduced-motion: reduce) {
+		.mini-list a::after,
+		.social-list a::after,
+		.top-btn::after,
+		.cta-mail,
+		.cta-link {
+			transition: none;
+		}
+	}
 </style>

@@ -1,0 +1,138 @@
+---
+// The title block of the drawing set: the ruled box every drafting sheet
+// carries in its corner, with the drawing title, sheet number and revision.
+// On desktop it is fixed to the bottom-right of the viewport and the sheet
+// counter ticks over as sections scroll past (see the tracker in Layout).
+// On small screens it sits statically at the foot of the cover sheet.
+import { SITE_TITLE, SITE_ROLE } from "../consts";
+import { updatedIso } from "../lib/updated";
+
+interface Props {
+	sheets: number; // total number of sheets in the set
+}
+
+const { sheets } = Astro.props;
+const total = String(sheets).padStart(2, "0");
+---
+
+<aside class="title-block" aria-label="Sheet information">
+	<dl class="tb">
+		<div class="tb-cell tb-drawing">
+			<dt class="visually-hidden">Drawing</dt>
+			<dd class="tb-name">{SITE_TITLE}</dd>
+			<dd class="tb-sub">{SITE_ROLE}</dd>
+		</div>
+		<div class="tb-cell tb-sheet">
+			<dt class="tb-key">Sheet</dt>
+			<dd class="tb-val">
+				<span data-tb-index>01</span><span class="tb-of"> / {total}</span>
+			</dd>
+			<dd class="tb-sub" data-tb-name>Cover</dd>
+		</div>
+		<div class="tb-cell tb-now">
+			<dt class="tb-key">Now at</dt>
+			<dd class="tb-val">Cosmic Society</dd>
+			<dd class="tb-sub">from Manila, Philippines</dd>
+		</div>
+		<div class="tb-cell tb-rev">
+			<dt class="tb-key">Rev</dt>
+			<dd class="tb-val"><time datetime={updatedIso}>{updatedIso}</time></dd>
+		</div>
+	</dl>
+</aside>
+
+<style>
+	.title-block {
+		width: 100%;
+		max-width: 26rem;
+		margin-top: 2.75rem;
+	}
+
+	@media (min-width: 1024px) {
+		.title-block {
+			position: fixed;
+			right: 1.25rem;
+			bottom: 1.25rem;
+			width: 20rem;
+			max-width: none;
+			margin: 0;
+			z-index: 90;
+			background: var(--color-background);
+		}
+	}
+
+	.tb {
+		margin: 0;
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		border: 1px solid var(--color-text-primary);
+		line-height: 1.35;
+	}
+
+	.tb-cell {
+		min-width: 0;
+		padding: 0.6rem 0.8rem 0.65rem;
+	}
+
+	.tb-sheet,
+	.tb-rev {
+		min-width: 6.75rem;
+		border-left: 1px solid var(--color-text-primary);
+	}
+
+	.tb-now,
+	.tb-rev {
+		border-top: 1px solid var(--color-text-primary);
+	}
+
+	.tb dd {
+		margin: 0;
+	}
+
+	.tb-name {
+		font-family: var(--font-display);
+		font-size: 0.98rem;
+		font-weight: 700;
+		letter-spacing: -0.01em;
+		color: var(--color-text-primary);
+	}
+
+	.tb-key {
+		font-family: var(--font-mono);
+		font-size: 0.68rem;
+		color: var(--color-text-muted);
+		margin-bottom: 0.1rem;
+	}
+
+	.tb-val {
+		font-family: var(--font-mono);
+		font-size: 0.82rem;
+		font-weight: 500;
+		color: var(--color-text-primary);
+		white-space: nowrap;
+	}
+
+	.tb-of {
+		color: var(--color-text-muted);
+		font-weight: 400;
+	}
+
+	.tb-sub {
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		color: var(--color-text-muted);
+	}
+
+	.visually-hidden {
+		position: absolute !important;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0 0 0 0);
+		clip-path: inset(50%);
+		border: 0;
+		white-space: nowrap;
+	}
+</style>

@@ -3,366 +3,279 @@ import SwitchTheme from "./SwitchTheme.astro";
 ---
 
 <nav class="navbar" aria-label="Main navigation">
-        <a class="navbar-brand" href="#welcome" aria-label="EP, back to top">
-                <span class="navbar-stamp">EP</span>
-        </a>
+	<a class="navbar-brand" href="#welcome" aria-label="EP, back to top">
+		<span class="navbar-stamp">EP</span>
+	</a>
 
-        <!-- Hamburger: a real button, so it works from the keyboard and reports its state -->
-        <button
-                class="menu-btn"
-                type="button"
-                aria-label="Menu"
-                aria-expanded="false"
-                aria-controls="nav-menu"
-        >
-                <span class="hamburger" aria-hidden="true"></span>
-        </button>
+	<!-- Hamburger: a real button, so it works from the keyboard and reports its state -->
+	<button
+		class="menu-btn"
+		type="button"
+		aria-label="Menu"
+		aria-expanded="false"
+		aria-controls="nav-menu"
+	>
+		<span class="hamburger" aria-hidden="true"></span>
+	</button>
 
-        <!-- Plain hash links on purpose: the page is served at "/portfolio/", so a
-             "/portfolio#section" href is a different path and reloads the document -->
-        <ul id="nav-menu" class="nav-list">
-                <li><a href="#welcome" data-section="welcome">Home</a></li>
-                <li><a href="#introduction" data-section="introduction"><span class="nav-idx" aria-hidden="true">01</span>About</a></li>
-                <li><a href="#experience" data-section="experience"><span class="nav-idx" aria-hidden="true">02</span>Experience</a></li>
-                <li><a href="#tech" data-section="tech"><span class="nav-idx" aria-hidden="true">03</span>Stack</a></li>
-                <li><a href="#projects" data-section="projects"><span class="nav-idx" aria-hidden="true">04</span>Work</a></li>
-                <li><a href="#footer" data-section="footer">Contact</a></li>
-                <li class="theme-switch"><SwitchTheme /></li>
-        </ul>
-
-        <span class="nav-progress" aria-hidden="true"></span>
+	<!-- Plain hash links on purpose: the page is served at "/portfolio/", so a
+	     "/portfolio#section" href is a different path and reloads the document.
+	     The active link is set by the sheet tracker in Layout.astro. -->
+	<ul id="nav-menu" class="nav-list">
+		<li><a href="#welcome" data-section="welcome">Home</a></li>
+		<li><a href="#introduction" data-section="introduction">About</a></li>
+		<li><a href="#experience" data-section="experience">Experience</a></li>
+		<li><a href="#tech" data-section="tech">Stack</a></li>
+		<li><a href="#projects" data-section="projects">Work</a></li>
+		<li><a href="#footer" data-section="footer">Contact</a></li>
+		<li class="theme-switch"><SwitchTheme /></li>
+	</ul>
 </nav>
 
 <style>
-        /* Sticky navbar with backdrop blur */
-        .navbar {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: clamp(10px, 1.8vh, 18px) clamp(16px, 4vw, 48px);
-                width: 100%;
-                position: sticky;
-                top: 0;
-                z-index: 100;
-                background: var(--color-background-blur);
-                backdrop-filter: blur(12px);
-                -webkit-backdrop-filter: blur(12px);
-                border-bottom: 1px solid var(--color-border);
-        }
+	/* Sticky navbar with backdrop blur */
+	.navbar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: clamp(10px, 1.8vh, 18px) clamp(16px, 4vw, 48px);
+		width: 100%;
+		position: sticky;
+		top: 0;
+		z-index: 100;
+		background: var(--color-background-blur);
+		backdrop-filter: blur(12px);
+		-webkit-backdrop-filter: blur(12px);
+		border-bottom: 1px solid var(--color-border);
+	}
 
-        /* Brand stamp */
-        .navbar-brand {
-                display: inline-flex;
-                text-decoration: none;
-        }
+	/* Brand stamp */
+	.navbar-brand {
+		display: inline-flex;
+		text-decoration: none;
+	}
 
-        .navbar-stamp {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                width: 34px;
-                height: 34px;
-                font-family: var(--font-display);
-                font-size: 0.95rem;
-                font-weight: 800;
-                letter-spacing: 0.02em;
-                color: var(--color-text-primary);
-                border: 1px solid var(--color-text-primary);
-                border-radius: var(--radius-sm);
-                transition:
-                        background-color 0.2s ease,
-                        color 0.2s ease;
-        }
+	.navbar-stamp {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 34px;
+		height: 34px;
+		font-family: var(--font-display);
+		font-size: 0.95rem;
+		font-weight: 800;
+		letter-spacing: 0.02em;
+		color: var(--color-text-primary);
+		border: 1px solid var(--color-text-primary);
+		border-radius: var(--radius-sm);
+		transition:
+			background-color 0.2s ease,
+			color 0.2s ease;
+	}
 
-        @media (hover: hover) {
-                .navbar-brand:hover .navbar-stamp {
-                        background: var(--color-text-primary);
-                        color: var(--color-background);
-                }
-        }
+	@media (hover: hover) {
+		.navbar-brand:hover .navbar-stamp {
+			background: var(--color-text-primary);
+			color: var(--color-background);
+		}
+	}
 
+	/* Hamburger button (hidden on desktop) */
+	.menu-btn {
+		display: none;
+		background: none;
+		border: none;
+		color: inherit;
+		cursor: pointer;
+		padding: 6px;
+		margin-left: 12px;
+		align-items: center;
+		justify-content: center;
+	}
 
-        /* Hamburger button (hidden on desktop) */
-        .menu-btn {
-                display: none;
-                background: none;
-                border: none;
-                color: inherit;
-                cursor: pointer;
-                padding: 6px;
-                margin-left: 12px;
-                align-items: center;
-                justify-content: center;
-        }
+	.hamburger {
+		display: block;
+		width: 22px;
+		height: 2px;
+		background: var(--color-text-primary);
+		position: relative;
+		transition: transform 160ms ease-in-out;
+	}
+	.hamburger::before,
+	.hamburger::after {
+		content: "";
+		position: absolute;
+		left: 0;
+		width: 22px;
+		height: 2px;
+		background: var(--color-text-primary);
+		transition:
+			transform 160ms ease-in-out,
+			top 160ms ease-in-out,
+			opacity 160ms;
+	}
+	.hamburger::before {
+		top: -7px;
+	}
+	.hamburger::after {
+		top: 7px;
+	}
 
-        .hamburger {
-                display: block;
-                width: 22px;
-                height: 2px;
-                background: var(--color-text-primary);
-                position: relative;
-                transition: transform 160ms ease-in-out;
-        }
-        .hamburger::before,
-        .hamburger::after {
-                content: "";
-                position: absolute;
-                left: 0;
-                width: 22px;
-                height: 2px;
-                background: var(--color-text-primary);
-                transition:
-                        transform 160ms ease-in-out,
-                        top 160ms ease-in-out,
-                        opacity 160ms;
-        }
-        .hamburger::before {
-                top: -7px;
-        }
-        .hamburger::after {
-                top: 7px;
-        }
+	/* Desktop nav (flex row) */
+	.nav-list {
+		display: flex;
+		gap: 1.75rem;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		align-items: center;
+	}
+	.nav-list li a {
+		font-family: var(--font-mono);
+		font-size: 0.82rem;
+		color: var(--color-text-primary);
+		text-decoration: none;
+		font-weight: 500;
+		transition: opacity 0.25s;
+		border-radius: var(--radius-sm);
 
-        /* Desktop nav (flex row) */
-        .nav-list {
-                display: flex;
-                gap: 1.9rem;
-                list-style: none;
-                margin: 0;
-                padding: 0;
-                align-items: center;
-        }
-        .nav-list li a {
-                font-family: var(--font-mono);
-                font-size: 0.74rem;
-                color: var(--color-text-primary);
-                text-decoration: none;
-                font-weight: 500;
-                letter-spacing: 0.1em;
-                text-transform: uppercase;
-                transition: opacity 0.25s;
-                border-radius: var(--radius-sm);
+		&:hover {
+			opacity: 0.55;
+		}
+	}
 
-                &:hover {
-                        opacity: 0.55;
-                }
-        }
+	.theme-switch {
+		display: flex;
+		align-items: center;
+	}
 
-        .nav-idx {
-                font-size: 0.6rem;
-                color: var(--color-text-muted);
-                margin-right: 0.35rem;
-                font-weight: 400;
-        }
+	/* Mobile behavior */
+	@media (max-width: 768px) {
+		.menu-btn {
+			display: flex;
+		}
 
-        .theme-switch {
-                display: flex;
-                align-items: center;
-        }
+		/* Full-width sheet under the bar */
+		.nav-list {
+			display: none;
+			position: absolute;
+			top: 100%;
+			left: 0;
+			right: 0;
+			flex-direction: column;
+			align-items: stretch;
+			gap: 0;
+			padding: 0.5rem 0 1rem;
+			background: var(--color-background);
+			border-bottom: 1px solid var(--color-border);
+			box-shadow: 0 12px 24px var(--color-shadow);
+			z-index: 10;
+		}
 
-        /* Scroll progress hairline */
-        .nav-progress {
-                position: absolute;
-                left: 0;
-                bottom: -1px;
-                width: 100%;
-                height: 2px;
-                background: var(--color-text-primary);
-                transform: scaleX(0);
-                transform-origin: left;
-                pointer-events: none;
-        }
+		.navbar.is-open .nav-list {
+			display: flex;
+		}
 
-        /* Mobile behavior */
-        @media (max-width: 768px) {
-                .menu-btn {
-                        display: flex;
-                }
+		.navbar.is-open .hamburger {
+			background: transparent;
+		}
+		.navbar.is-open .hamburger::before {
+			transform: rotate(45deg);
+			top: 0;
+		}
+		.navbar.is-open .hamburger::after {
+			transform: rotate(-45deg);
+			top: 0;
+		}
 
-                /* Full-width sheet under the bar */
-                .nav-list {
-                        display: none;
-                        position: absolute;
-                        top: 100%;
-                        left: 0;
-                        right: 0;
-                        flex-direction: column;
-                        align-items: stretch;
-                        gap: 0;
-                        padding: 0.5rem 0 1rem;
-                        background: var(--color-background);
-                        border-bottom: 1px solid var(--color-border);
-                        box-shadow: 0 12px 24px var(--color-shadow);
-                        z-index: 10;
-                }
+		.nav-list li {
+			width: 100%;
+		}
+		.nav-list a {
+			display: block;
+			padding: 0.85rem clamp(16px, 4vw, 48px);
+			border-bottom: 1px solid var(--color-border);
+		}
+		.nav-list li:last-child a {
+			border-bottom: 0;
+		}
+		.theme-switch {
+			padding: 0.85rem clamp(16px, 4vw, 48px) 0;
+		}
+	}
 
-                .navbar.is-open .nav-list {
-                        display: flex;
-                }
+	.menu-btn:focus-visible {
+		outline: 2px solid var(--color-focus-ring);
+		outline-offset: 2px;
+		border-radius: var(--radius-sm);
+	}
 
-                .navbar.is-open .hamburger {
-                        background: transparent;
-                }
-                .navbar.is-open .hamburger::before {
-                        transform: rotate(45deg);
-                        top: 0;
-                }
-                .navbar.is-open .hamburger::after {
-                        transform: rotate(-45deg);
-                        top: 0;
-                }
+	@media (prefers-reduced-motion: reduce) {
+		.navbar,
+		.navbar-stamp {
+			transition: none;
+		}
+	}
 
-                .nav-list li {
-                        width: 100%;
-                }
-                .nav-list a {
-                        display: block;
-                        padding: 0.85rem clamp(16px, 4vw, 48px);
-                        border-bottom: 1px solid var(--color-border);
-                }
-                .nav-list li:last-child a {
-                        border-bottom: 0;
-                }
-                .theme-switch {
-                        padding: 0.85rem clamp(16px, 4vw, 48px) 0;
-                }
-        }
+	/* Active sheet underline */
+	.nav-list li a[data-section] {
+		position: relative;
+		padding-bottom: 4px;
+	}
 
-        .menu-btn:focus-visible {
-                outline: 2px solid var(--color-focus-ring);
-                outline-offset: 2px;
-                border-radius: var(--radius-sm);
-        }
+	.nav-list li a[data-section]::after {
+		content: "";
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		height: 1px;
+		background: var(--color-text-primary);
+		transform: scaleX(0);
+		transform-origin: center;
+		transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+		opacity: 0;
+	}
 
-        @media (prefers-reduced-motion: reduce) {
-                .navbar,
-                .navbar-stamp {
-                        transition: none;
-                }
-        }
+	.nav-list li a[data-section].is-active::after {
+		transform: scaleX(1);
+		opacity: 1;
+	}
 
-        /* Active section underline */
-        .nav-list li a[data-section] {
-                position: relative;
-                padding-bottom: 4px;
-        }
+	@media (max-width: 768px) {
+		.nav-list li a[data-section]::after {
+			display: none;
+		}
+	}
 
-        .nav-list li a[data-section]::after {
-                content: "";
-                position: absolute;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                height: 1px;
-                background: var(--color-text-primary);
-                transform: scaleX(0);
-                transform-origin: center;
-                transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-                opacity: 0;
-        }
-
-        .nav-list li a[data-section].is-active::after {
-                transform: scaleX(1);
-                opacity: 1;
-        }
-
-        @media (max-width: 768px) {
-                .nav-list li a[data-section]::after {
-                        display: none;
-                }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-                .nav-list li a[data-section]::after {
-                        transition: none;
-                }
-        }
+	@media (prefers-reduced-motion: reduce) {
+		.nav-list li a[data-section]::after {
+			transition: none;
+		}
+	}
 </style>
 
 <script>
-if (typeof window !== "undefined") {
-        // Scroll progress hairline
-        const progress = document.querySelector(".nav-progress");
-        if (progress instanceof HTMLElement) {
-                let ticking = false;
-                const update = () => {
-                        const max =
-                                document.documentElement.scrollHeight - window.innerHeight;
-                        const ratio = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
-                        progress.style.transform = `scaleX(${ratio})`;
-                        ticking = false;
-                };
-                window.addEventListener(
-                        "scroll",
-                        () => {
-                                if (!ticking) {
-                                        requestAnimationFrame(update);
-                                        ticking = true;
-                                }
-                        },
-                        { passive: true }
-                );
-                update();
-        }
-
-        // Mobile menu: the button toggles it (click, Enter, Space), choosing a link
-        // or pressing Escape closes it, and aria-expanded mirrors the state.
-        const nav = document.querySelector(".navbar");
-        const menuBtn = nav?.querySelector(".menu-btn");
-        if (nav instanceof HTMLElement && menuBtn instanceof HTMLButtonElement) {
-                const setOpen = (open: boolean) => {
-                        nav.classList.toggle("is-open", open);
-                        menuBtn.setAttribute("aria-expanded", String(open));
-                };
-                menuBtn.addEventListener("click", () => setOpen(!nav.classList.contains("is-open")));
-                nav.querySelectorAll(".nav-list a").forEach((a) =>
-                        a.addEventListener("click", () => setOpen(false))
-                );
-                document.addEventListener("keydown", (e) => {
-                        if (e.key === "Escape" && nav.classList.contains("is-open")) {
-                                setOpen(false);
-                                menuBtn.focus();
-                        }
-                });
-        }
-
-        // Active-section indicator
-        const navLinks = document.querySelectorAll('.nav-list a[data-section]');
-        const sectionMap = new Map();
-        navLinks.forEach((a) => {
-                if (!(a instanceof HTMLAnchorElement)) return;
-                const id = a.dataset.section;
-                if (id) sectionMap.set(id, a);
-        });
-
-        const sections = Array.from(sectionMap.keys())
-                .map((id) => document.getElementById(id))
-                .filter((el) => el !== null);
-
-        if (sections.length) {
-                const visible = new Map();
-                const observer = new IntersectionObserver(
-                        (entries) => {
-                                entries.forEach((entry) => {
-                                        visible.set(entry.target.id, entry.intersectionRatio);
-                                });
-                                let bestId = null;
-                                let bestRatio = 0;
-                                visible.forEach((ratio, id) => {
-                                        if (ratio > bestRatio) {
-                                                bestRatio = ratio;
-                                                bestId = id;
-                                        }
-                                });
-                                navLinks.forEach((a) => a.classList.remove('is-active'));
-                                if (bestId) {
-                                        const link = sectionMap.get(bestId);
-                                        if (link) link.classList.add('is-active');
-                                }
-                        },
-                        { threshold: [0.15, 0.4, 0.7] }
-                );
-                sections.forEach((s) => observer.observe(s));
-        }
-}
+	if (typeof window !== "undefined") {
+		// Mobile menu: the button toggles it (click, Enter, Space), choosing a link
+		// or pressing Escape closes it, and aria-expanded mirrors the state.
+		const nav = document.querySelector(".navbar");
+		const menuBtn = nav?.querySelector(".menu-btn");
+		if (nav instanceof HTMLElement && menuBtn instanceof HTMLButtonElement) {
+			const setOpen = (open: boolean) => {
+				nav.classList.toggle("is-open", open);
+				menuBtn.setAttribute("aria-expanded", String(open));
+			};
+			menuBtn.addEventListener("click", () => setOpen(!nav.classList.contains("is-open")));
+			nav.querySelectorAll(".nav-list a").forEach((a) =>
+				a.addEventListener("click", () => setOpen(false)),
+			);
+			document.addEventListener("keydown", (e) => {
+				if (e.key === "Escape" && nav.classList.contains("is-open")) {
+					setOpen(false);
+					menuBtn.focus();
+				}
+			});
+		}
+	}
 </script>

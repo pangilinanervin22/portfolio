@@ -94,7 +94,7 @@ test("theme toggle flips the theme, persists it, and keeps theme-color in sync",
 	await expect(toggle.locator("svg:visible")).toHaveCount(1);
 	expect(await page.evaluate(() => localStorage.getItem("theme"))).toBe(after);
 	const themeColor = await page.locator('meta[name="theme-color"]').getAttribute("content");
-	expect(themeColor).toBe(after === "dark" ? "#111110" : "#faf8f6");
+	expect(themeColor).toBe(after === "dark" ? "#0e2f63" : "#faf8f6");
 
 	await page.reload();
 	await expect(html).toHaveAttribute("data-theme", after);
@@ -171,11 +171,11 @@ test("web fonts are served and applied", async ({ page }) => {
 		[...document.fonts].filter((f) => f.status === "loaded").map((f) => f.family.replace(/["']/g, "")),
 	);
 	// The Fonts API hashes family names ("Outfit-d506c…") and adds "… fallback: Arial" faces.
-	for (const family of ["Outfit", "Sora", "JetBrains Mono"]) {
+	for (const family of ["Outfit", "JetBrains Mono"]) {
 		expect(loaded.some((f) => f.startsWith(family) && !f.includes("fallback"))).toBe(true);
 	}
 	expect(await page.locator("h1").evaluate((el) => getComputedStyle(el).fontFamily)).toContain("Outfit");
-	expect(await page.locator(".tagline").first().evaluate((el) => getComputedStyle(el).fontFamily)).toContain("Sora");
+	expect(await page.locator(".tagline").first().evaluate((el) => getComputedStyle(el).fontFamily)).toContain("Outfit");
 	expect(problems).toEqual([]);
 });
 
@@ -228,11 +228,10 @@ for (const theme of ["light", "dark"] as const) {
 		}, theme);
 		await page.goto("./");
 		await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
-		// Reveal the scroll-animated sections so their text is audited too, then
-		// wait for every finite animation/transition (hero fade-ins, reveals) to
-		// settle; axe would otherwise sample half-faded text as low contrast.
+		// Wait for every finite animation (the name drawing itself in, the hero
+		// fade-in) to settle; axe would otherwise sample outlined or half-faded
+		// text as low contrast.
 		await page.evaluate(async () => {
-			document.querySelectorAll("[data-reveal]").forEach((el) => el.classList.add("is-revealed"));
 			const finite = document
 				.getAnimations()
 				.filter((a) => a.effect?.getTiming().iterations !== Infinity);
@@ -248,3 +247,33 @@ for (const theme of ["light", "dark"] as const) {
 		expect(violations).toEqual([]);
 	});
 }
+
+test("the title block counts sheets as the page scrolls", async ({ page }) => {
+	await page.goto("./");
+	const counter = page.locator("[data-tb-index]");
+	const name = page.locator("[data-tb-name]");
+	await expect(counter).toHaveText("01");
+	await expect(name).toHaveText("Cover");
+
+	await page.locator("#experience").scrollIntoViewIfNeeded();
+	await expect(counter).toHaveText("03");
+	await expect(name).toHaveText("Experience");
+
+	// The last sheet is short, so reaching the end of the page must count as being on it.
+	await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+	await expect(counter).toHaveText("06");
+	await expect(name).toHaveText("Contact");
+});
+
+test("the hero dimension line measures the rendered name", async ({ page }) => {
+	await page.goto("./");
+	await page.evaluate(() => document.fonts.ready);
+	const label = page.locator(".name-dim-wrap .dim-label");
+	await expect(label).toHaveText(/^\d+ px$/);
+	const measured = Number((await label.textContent())!.replace(" px", ""));
+	const ink = await page.locator("h1 .name-line").evaluateAll((lines) => {
+		const rects = lines.map((l) => l.getBoundingClientRect());
+		return Math.max(...rects.map((r) => r.right)) - Math.min(...rects.map((r) => r.left));
+	});
+	expect(Math.abs(measured - ink)).toBeLessThan(2);
+});

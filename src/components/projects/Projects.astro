@@ -7,54 +7,57 @@ const [featured, ...rest] = projects;
 ---
 
 <section
-        id="projects"
-        class="projects-section"
-        aria-labelledby="projects-title"
+	id="projects"
+	class="projects-section"
+	aria-labelledby="projects-title"
+	data-sheet="05"
+	data-sheet-title="Work"
 >
-        <div class="rail">
-                <SectionHead
-                        number="04"
-                        title="Work"
-                        headingId="projects-title"
-                        meta={`${projects.length} builds`}
-                        intro="Things I've built across internship, freelance, and a couple of academic projects."
-                />
+	<div class="rail">
+		<SectionHead
+			number="05"
+			title="Work"
+			headingId="projects-title"
+			meta={`${projects.length} plates`}
+			intro="Things I've built across internship, freelance, and a couple of academic projects."
+		/>
 
-                <ul class="projects-grid" role="list">
-                        {featured && <ProjectCard project={featured} index={0} featured />}
-                        {rest.map((p, i) => <ProjectCard project={p} index={i + 1} />)}
-                </ul>
-        </div>
+		<ul class="plates" role="list">
+			{featured && <ProjectCard project={featured} index={0} featured />}
+			{rest.map((p, i) => <ProjectCard project={p} index={i + 1} />)}
+		</ul>
+	</div>
 </section>
 
 <style>
-        .projects-section {
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                padding: clamp(4rem, 10vh, 7rem) var(--gutter) 4rem;
-        }
+	.projects-section {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: clamp(4rem, 10vh, 7rem) var(--gutter) 4rem;
+	}
 
-        .rail {
-                max-width: var(--container);
-                width: 100%;
-        }
+	.rail {
+		max-width: var(--container);
+		width: 100%;
+	}
 
-        .projects-grid {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-                width: 100%;
-                display: grid;
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-                align-items: stretch;
-        }
+	/* Plates sit on the sheet with space between them, no boxes */
+	.plates {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		width: 100%;
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 3rem 2.5rem;
+		align-items: stretch;
+	}
 
-        @media (min-width: 768px) {
-                .projects-grid {
-                        grid-template-columns: repeat(2, 1fr);
-                }
-        }
+	@media (min-width: 768px) {
+		.plates {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
 </style>

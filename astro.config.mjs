@@ -17,6 +17,8 @@ export default defineConfig({
   // Self-hosted fonts through Astro's Fonts API: it writes the @font-face
   // rules, metric-matched fallbacks (no layout shift on swap) and preloads.
   // Files are the latin subsets from Fontsource, vendored in src/assets/fonts.
+  // Two families only: Outfit (variable) for display and body, JetBrains Mono
+  // for the instrument text (title block, captions, dimensions).
   fonts: [
     {
       provider: fontProviders.local(),
@@ -26,18 +28,6 @@ export default defineConfig({
       options: {
         variants: [
           { weight: "100 900", style: "normal", src: ["./src/assets/fonts/outfit-latin-wght-normal.woff2"] },
-        ],
-      },
-    },
-    {
-      provider: fontProviders.local(),
-      name: "Sora",
-      cssVariable: "--font-sora",
-      fallbacks: ["system-ui", "sans-serif"],
-      options: {
-        variants: [
-          { weight: 400, style: "normal", src: ["./src/assets/fonts/sora-latin-400-normal.woff2"] },
-          { weight: 500, style: "normal", src: ["./src/assets/fonts/sora-latin-500-normal.woff2"] },
         ],
       },
     },
@@ -55,5 +45,3 @@ export default defineConfig({
     },
   ],
 });
-
-

@@ -1,12 +1,12 @@
 export interface SkillTier {
-	label: string;       // CORE, OFTEN, SOMETIMES, TOOLS
+	label: string;       // Core, Often, Sometimes, Tools
 	context: string;     // "daily", "regular reach", "shipped at least once", "daily workflow"
 	skills: string[];
 }
 
 export const skillTiers: SkillTier[] = [
 	{
-		label: "CORE",
+		label: "Core",
 		context: "daily",
 		skills: [
 			"TypeScript",
@@ -29,7 +29,7 @@ export const skillTiers: SkillTier[] = [
 		],
 	},
 	{
-		label: "OFTEN",
+		label: "Often",
 		context: "regular reach",
 		skills: [
 			"NestJS",
@@ -46,7 +46,7 @@ export const skillTiers: SkillTier[] = [
 		],
 	},
 	{
-		label: "SOMETIMES",
+		label: "Sometimes",
 		context: "shipped at least once",
 		skills: [
 			"Laravel",
@@ -64,7 +64,7 @@ export const skillTiers: SkillTier[] = [
 		],
 	},
 	{
-		label: "TOOLS",
+		label: "Tools",
 		context: "daily workflow",
 		skills: [
 			"Git",

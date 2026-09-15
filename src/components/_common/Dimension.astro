@@ -1,0 +1,158 @@
+---
+// A drafting dimension line: a hairline with end ticks and the measured
+// length written above it. The length is real, read from the target element
+// at runtime, so the page measures itself the same way the cursor does.
+interface Props {
+	target: string; // CSS selector of the element to measure
+	axis?: "x" | "y";
+	class?: string;
+}
+
+const { target, axis = "x", class: className } = Astro.props;
+---
+
+<span
+	class:list={["dim", `dim--${axis}`, className]}
+	data-dim-target={target}
+	data-dim-axis={axis}
+	aria-hidden="true"
+>
+	<span class="dim-label"></span>
+</span>
+
+<style>
+	.dim {
+		--dim-len: 100%;
+		position: relative;
+		display: block;
+		background: var(--color-text-primary);
+	}
+
+	.dim::before,
+	.dim::after {
+		content: "";
+		position: absolute;
+		background: var(--color-text-primary);
+	}
+
+	/* Horizontal: ticks stand up through the line at both ends */
+	.dim--x {
+		width: var(--dim-len);
+		height: 1px;
+	}
+
+	.dim--x::before,
+	.dim--x::after {
+		top: -5px;
+		width: 1px;
+		height: 11px;
+	}
+
+	.dim--x::before {
+		left: 0;
+	}
+
+	.dim--x::after {
+		right: 0;
+	}
+
+	/* Vertical: ticks cross the line at top and bottom */
+	.dim--y {
+		width: 1px;
+		height: var(--dim-len);
+	}
+
+	.dim--y::before,
+	.dim--y::after {
+		left: -5px;
+		height: 1px;
+		width: 11px;
+	}
+
+	.dim--y::before {
+		top: 0;
+	}
+
+	.dim--y::after {
+		bottom: 0;
+	}
+
+	.dim-label {
+		position: absolute;
+		font-family: var(--font-mono);
+		font-size: 0.7rem;
+		line-height: 1;
+		white-space: nowrap;
+		color: var(--color-text-muted);
+	}
+
+	.dim-label:empty {
+		display: none;
+	}
+
+	/* Dimension text sits above a horizontal line, and reads bottom-to-top
+	   beside a vertical one, as on a drawing */
+	.dim--x .dim-label {
+		left: 50%;
+		bottom: 5px;
+		transform: translateX(-50%);
+	}
+
+	.dim--y .dim-label {
+		left: -0.55rem;
+		top: 50%;
+		transform: translate(-100%, -50%) rotate(-90deg);
+		transform-origin: right center;
+	}
+</style>
+
+<script>
+	const dims = Array.from(document.querySelectorAll<HTMLElement>(".dim[data-dim-target]"));
+
+	// Ink extent of the target: the union of its children when it has any (a
+	// heading split into lines), otherwise its own box.
+	const extent = (target: HTMLElement) => {
+		const parts = target.children.length ? Array.from(target.children) : [target];
+		let left = Infinity;
+		let right = -Infinity;
+		let top = Infinity;
+		let bottom = -Infinity;
+		for (const part of parts) {
+			const r = part.getBoundingClientRect();
+			left = Math.min(left, r.left);
+			right = Math.max(right, r.right);
+			top = Math.min(top, r.top);
+			bottom = Math.max(bottom, r.bottom);
+		}
+		return { left, right, top, bottom };
+	};
+
+	const measure = (dim: HTMLElement) => {
+		const target = document.querySelector<HTMLElement>(dim.dataset.dimTarget || "");
+		const host = dim.offsetParent instanceof HTMLElement ? dim.offsetParent : dim.parentElement;
+		if (!target || !host) return;
+		const box = extent(target);
+		const hostBox = host.getBoundingClientRect();
+		const vertical = dim.dataset.dimAxis === "y";
+		const length = vertical ? box.bottom - box.top : box.right - box.left;
+		dim.style.setProperty("--dim-len", `${length}px`);
+		if (vertical) {
+			dim.style.top = `${box.top - hostBox.top}px`;
+		} else {
+			dim.style.marginLeft = `${box.left - hostBox.left}px`;
+		}
+		const label = dim.querySelector(".dim-label");
+		if (label) label.textContent = `${Math.round(length)} px`;
+	};
+
+	if (dims.length) {
+		const all = () => dims.forEach(measure);
+		all();
+		document.fonts?.ready.then(all);
+		let frame = 0;
+		addEventListener("resize", () => {
+			cancelAnimationFrame(frame);
+			frame = requestAnimationFrame(all);
+		});
+	}
+</script>

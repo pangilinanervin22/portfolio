@@ -120,3 +120,12 @@
         transition: none;
     }
 }
+
+/* On the blueprint the difference blend would paint the cursor peach (the
+   complement of the blue), so there it is drawn plain white with a blue halo
+   that keeps it visible over white plates and inverted buttons. */
+html[data-theme="dark"] .cursor-cross,
+html[data-theme="dark"] .cursor-frame {
+    mix-blend-mode: normal;
+    filter: drop-shadow(0 0 1px #0e2f63) drop-shadow(0 0 1px #0e2f63);
+}

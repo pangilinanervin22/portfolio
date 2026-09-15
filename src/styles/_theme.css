@@ -37,14 +37,14 @@
     --color-secondary-alt: #3d3d3d;
 
     /* Text */
-    --color-text-primary: #111111;
+    --color-text-primary: #000000;
     --color-text-secondary: #555555;
     --color-text-muted: #707070; /* 4.7:1 on the page background (WCAG AA for small text) */
     --color-text-faint: #bbbbbb;
     --color-text-inverse: #ffffff;
 
     /* Accent — black is the accent in monochrome */
-    --color-accent: #111111;
+    --color-accent: #000000;
     --color-accent-hover: #333333;
     --color-accent-muted: #11111130;
     --color-accent-subtle: #11111112;
@@ -62,8 +62,8 @@
     --color-icon-inverse: #ffffff;
 
     /* States */
-    --color-focus-ring: #111111;
-    --color-outline: #111111;
+    --color-focus-ring: #000000;
+    --color-outline: #000000;
     --color-selection-bg: #000000;
     --color-selection-text: #ffffff;
 
@@ -79,9 +79,11 @@
 
     /* Font families */
     /* Families come from the Fonts API (astro.config fonts[]), which defines
-       --font-outfit / --font-sora / --font-jetbrains-mono with their fallbacks */
+       --font-outfit / --font-jetbrains-mono with their fallbacks. One sans for
+       display and body, one mono for the instrument (title block, captions,
+       dimensions). */
     --font-display: var(--font-outfit);
-    --font-body: var(--font-sora);
+    --font-body: var(--font-outfit);
     --font-mono: var(--font-jetbrains-mono);
 
     /* Layout */
@@ -91,9 +93,9 @@
     --radius-md: 4px;
 
     /* Drafting-sheet structure */
-    --color-rail-line: rgba(17, 17, 17, 0.10);
-    --color-rail-tick: rgba(17, 17, 17, 0.16);
-    --color-dot-grid: rgba(17, 17, 17, 0.055);
-    --color-ghost-stroke: rgba(17, 17, 17, 0.16);
+    --color-rail-line: rgba(0, 0, 0, 0.10);
+    --color-rail-tick: rgba(0, 0, 0, 0.16);
+    --color-dot-grid: rgba(0, 0, 0, 0.055);
+    --color-hatch: rgba(0, 0, 0, 0.11); /* letterbox hatching behind project plates */
     --grain-opacity: 0.130;
 }

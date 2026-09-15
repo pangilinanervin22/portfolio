@@ -8,13 +8,15 @@ import { experiences } from "../../data/experiences";
 	id="experience"
 	class="experience-section"
 	aria-labelledby="experience-title"
+	data-sheet="03"
+	data-sheet-title="Experience"
 >
 	<div class="rail">
 		<SectionHead
-			number="02"
+			number="03"
 			title="Experience"
 			headingId="experience-title"
-			meta={`${experiences.length} entries · 2023 to now`}
+			meta={`${experiences.length} entries, 2023 to now`}
 		/>
 
 		<ol class="ledger" role="list">
@@ -22,24 +24,12 @@ import { experiences } from "../../data/experiences";
 				experiences.map((item, i) => {
 					const isCurrent = item.period.includes("Present");
 					return (
-						<li
-							class={`entry ${isCurrent ? "entry--current" : ""}`}
-							data-reveal
-							style={`--reveal-delay: ${Math.min(i * 0.06, 0.24)}s`}
-						>
-							<article
-								class="entry-grid"
-								aria-labelledby={`exp-${i}-role`}
-							>
+						<li class={`entry ${isCurrent ? "entry--current" : ""}`}>
+							<article class="entry-grid" aria-labelledby={`exp-${i}-role`}>
 								<div class="entry-when">
 									<span class="entry-tick" aria-hidden="true" />
 									<span class="entry-period">{item.period}</span>
-									{isCurrent && (
-										<span class="now-badge">
-											<span class="visually-hidden">Current role:</span>
-											<span aria-hidden="true">//</span> NOW
-										</span>
-									)}
+									{isCurrent && <span class="visually-hidden">Current role</span>}
 								</div>
 
 								<div class="entry-body">
@@ -65,25 +55,18 @@ import { experiences } from "../../data/experiences";
 											<span class="location">{item.location}</span>
 										</p>
 									</header>
-									<p class="summary">
-										{item.summary}
-									</p>
+									<p class="summary">{item.summary}</p>
 									{item.highlights.length > 0 && (
 										<ul class="highlights" role="list">
 											{item.highlights.map((h) => (
-												<li>
-													<span class="hl-glyph" aria-hidden="true">→</span>
-													<span>{h}</span>
-												</li>
+												<li>{h}</li>
 											))}
 										</ul>
 									)}
 									{item.tech && (
 										<p class="tech-line">
-											<span class="visually-hidden">Technologies used:</span>
-											{item.tech.map((cur) => (
-												<span class="tech-item">{cur}</span>
-											))}
+											<span class="visually-hidden">Technologies used: </span>
+											{item.tech.join(", ")}
 										</p>
 									)}
 								</div>
@@ -149,7 +132,7 @@ import { experiences } from "../../data/experiences";
 		}
 	}
 
-	/* Left rail: chronology — the dates carry the timeline order */
+	/* Left rail: chronology, the dates carry the timeline order */
 	.entry-when {
 		display: flex;
 		align-items: center;
@@ -183,28 +166,10 @@ import { experiences } from "../../data/experiences";
 
 	.entry-period {
 		font-family: var(--font-mono);
-		font-size: 0.82rem;
+		font-size: 0.84rem;
 		font-weight: 500;
-		letter-spacing: 0.03em;
 		color: var(--color-text-primary);
 		white-space: nowrap;
-	}
-
-	.entry--current .entry-period {
-		font-weight: 600;
-	}
-
-	.now-badge {
-		font-family: var(--font-mono);
-		font-size: 0.62rem;
-		font-weight: 600;
-		letter-spacing: 0.08em;
-		color: var(--color-text-primary);
-		padding: 0.18rem 0.4rem;
-		border: 1px solid var(--color-text-primary);
-		border-radius: var(--radius-sm);
-		line-height: 1.4;
-		text-transform: uppercase;
 	}
 
 	/* Right column: company identity + detail */
@@ -239,9 +204,8 @@ import { experiences } from "../../data/experiences";
 		border-radius: var(--radius-sm);
 	}
 
-	/* The frame is wider than the widest logo's aspect ratio, so every logo
-	   is height-bound inside it: all three render at the same height and sit
-	   in an identical box, regardless of their differing proportions. */
+	/* The frame is wider than the widest logo, so every logo is height-bound
+	   inside it: all three render at the same height in an identical box. */
 	.entry-logo img {
 		display: block;
 		width: auto;
@@ -271,10 +235,9 @@ import { experiences } from "../../data/experiences";
 	.meta {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 0.65rem;
+		gap: 0.35rem 1.1rem;
 		font-family: var(--font-mono);
-		font-size: 0.78rem;
-		letter-spacing: 0.02em;
+		font-size: 0.8rem;
 		color: var(--color-text-muted);
 		margin: 0;
 	}
@@ -284,18 +247,11 @@ import { experiences } from "../../data/experiences";
 		font-weight: 500;
 	}
 
-	.meta .company::after {
-		content: "·";
-		margin-left: 0.6rem;
-		opacity: 0.55;
-	}
-
 	.summary {
 		margin: 0;
 		font-size: 1rem;
 		line-height: 1.65;
 		color: var(--color-text-secondary);
-		letter-spacing: 0.2px;
 		max-width: 72ch;
 	}
 
@@ -308,50 +264,37 @@ import { experiences } from "../../data/experiences";
 		gap: 0.45rem;
 	}
 
+	/* Leader-line bullets: a short rule instead of a glyph */
 	.highlights li {
-		display: grid;
-		grid-template-columns: auto 1fr;
-		gap: 0.65rem;
+		position: relative;
+		padding-left: 1.3rem;
 		font-size: 0.95rem;
 		line-height: 1.55;
 		color: var(--color-text-secondary);
 		max-width: 78ch;
 	}
 
-	.hl-glyph {
-		color: var(--color-text-muted);
-		font-family: var(--font-mono);
-		line-height: 1.55;
+	.highlights li::before {
+		content: "";
+		position: absolute;
+		left: 0;
+		top: 0.78em;
+		width: 0.65rem;
+		height: 1px;
+		background: var(--color-text-muted);
 	}
 
-	/* Tech as a ruled mono line instead of chips */
+	/* Tech as a mono line, comma separated */
 	.tech-line {
 		margin: 0.25rem 0 0;
 		font-family: var(--font-mono);
-		font-size: 0.75rem;
-		letter-spacing: 0.02em;
-		line-height: 1.9;
+		font-size: 0.78rem;
+		line-height: 1.8;
 		color: var(--color-text-muted);
 	}
 
-	.tech-item {
-		transition: color 0.2s ease;
-	}
-
-	.tech-item:not(:last-child)::after {
-		content: " · ";
-		color: var(--color-text-faint);
-	}
-
-	@media (hover: hover) {
-		.tech-item:hover {
-			color: var(--color-text-primary);
-		}
-	}
-
 	@media (prefers-reduced-motion: reduce) {
-		.entry-grid,
-		.tech-item {
+		.entry-grid {
 			transition: none;
 		}
 	}

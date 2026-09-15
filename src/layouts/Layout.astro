@@ -9,144 +9,142 @@ import CustomCursor from "../components/CustomCursor.astro";
 ---
 
 <html lang="en">
-        <head>
-                <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-                <!-- Fonts API output: @font-face rules, metric-matched fallbacks, and
-                     preloads for the two faces that paint the hero text -->
-                <Font cssVariable="--font-outfit" preload />
-                <Font cssVariable="--font-sora" preload={[{ weight: "400" }]} />
-                <Font cssVariable="--font-jetbrains-mono" />
-                <script is:inline>
-                        // Apply saved/system theme before first paint to avoid a light-mode flash,
-                        // and keep the browser chrome (theme-color) in step with it.
-                        (function () {
-                                try {
-                                        var t =
-                                                localStorage.getItem("theme") ||
-                                                (window.matchMedia("(prefers-color-scheme: dark)").matches
-                                                        ? "dark"
-                                                        : "light");
-                                        document.documentElement.setAttribute("data-theme", t);
-                                        var meta = document.querySelector('meta[name="theme-color"]');
-                                        if (meta) meta.setAttribute("content", t === "dark" ? "#111110" : "#faf8f6");
-                                } catch (e) {}
-                        })();
-                </script>
-                <noscript>
-                        <style>
-                                [data-reveal] {
-                                        opacity: 1 !important;
-                                        transform: none !important;
-                                        filter: none !important;
-                                }
-                        </style>
-                </noscript>
-        </head>
-        <body>
-                <a href="#main-content" class="skip-link">Skip to main content</a>
-                <div class="sheet-rails" aria-hidden="true"></div>
-                <CustomCursor />
-                <main id="main-content">
-                        <slot />
-                </main>
-                <Footer />
-        </body>
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<!-- Fonts API output: @font-face rules, metric-matched fallbacks, and a
+		     preload for the face that paints the hero name -->
+		<Font cssVariable="--font-outfit" preload />
+		<Font cssVariable="--font-jetbrains-mono" />
+		<script is:inline>
+			// Apply saved/system theme before first paint to avoid a light-mode flash,
+			// and keep the browser chrome (theme-color) in step with it.
+			(function () {
+				try {
+					var t =
+						localStorage.getItem("theme") ||
+						(window.matchMedia("(prefers-color-scheme: dark)").matches
+							? "dark"
+							: "light");
+					document.documentElement.setAttribute("data-theme", t);
+					var meta = document.querySelector('meta[name="theme-color"]');
+					if (meta) meta.setAttribute("content", t === "dark" ? "#0e2f63" : "#faf8f6");
+				} catch (e) {}
+			})();
+		</script>
+	</head>
+	<body>
+		<a href="#main-content" class="skip-link">Skip to main content</a>
+		<div class="sheet-rails" aria-hidden="true"></div>
+		<CustomCursor />
+		<main id="main-content">
+			<slot />
+		</main>
+		<Footer />
+	</body>
 </html>
 
 <style>
-        .skip-link {
-                position: absolute;
-                top: -100%;
-                left: 1rem;
-                z-index: 10000;
-                padding: 0.5rem 1rem;
-                background: var(--color-text-primary);
-                color: var(--color-background);
-                font-weight: 500;
-                border-radius: 0 0 var(--radius-md) var(--radius-md);
-                text-decoration: none;
-                transition: top 0.1s;
-        }
-        .skip-link:focus-visible {
-                top: 0;
-        }
+	.skip-link {
+		position: absolute;
+		top: -100%;
+		left: 1rem;
+		z-index: 10000;
+		padding: 0.5rem 1rem;
+		background: var(--color-text-primary);
+		color: var(--color-background);
+		font-weight: 500;
+		border-radius: 0 0 var(--radius-md) var(--radius-md);
+		text-decoration: none;
+		transition: top 0.1s;
+	}
+	.skip-link:focus-visible {
+		top: 0;
+	}
 
-        /* Drafting-sheet margin rails with ruler ticks, framing the content column */
-        .sheet-rails {
-                display: none;
-        }
+	/* Drafting-sheet margin rails with ruler ticks, framing the content column */
+	.sheet-rails {
+		display: none;
+	}
 
-        @media (min-width: 1360px) {
-                .sheet-rails {
-                        display: block;
-                        position: absolute;
-                        inset: 0;
-                        pointer-events: none;
-                        z-index: 3;
-                }
+	@media (min-width: 1360px) {
+		.sheet-rails {
+			display: block;
+			position: absolute;
+			inset: 0;
+			pointer-events: none;
+			z-index: 3;
+		}
 
-                .sheet-rails::before,
-                .sheet-rails::after {
-                        content: "";
-                        position: absolute;
-                        top: 0;
-                        bottom: 0;
-                        width: 8px;
-                        background-image: repeating-linear-gradient(
-                                to bottom,
-                                var(--color-rail-tick) 0 1px,
-                                transparent 1px 96px
-                        );
-                }
+		.sheet-rails::before,
+		.sheet-rails::after {
+			content: "";
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			width: 8px;
+			background-image: repeating-linear-gradient(
+				to bottom,
+				var(--color-rail-tick) 0 1px,
+				transparent 1px 96px
+			);
+		}
 
-                .sheet-rails::before {
-                        left: calc(50% - (var(--container) / 2) - 3.5rem);
-                        border-left: 1px solid var(--color-rail-line);
-                }
+		.sheet-rails::before {
+			left: calc(50% - (var(--container) / 2) - 3.5rem);
+			border-left: 1px solid var(--color-rail-line);
+		}
 
-                .sheet-rails::after {
-                        right: calc(50% - (var(--container) / 2) - 3.5rem);
-                        border-right: 1px solid var(--color-rail-line);
-                        background-position: right top;
-                }
-        }
+		.sheet-rails::after {
+			right: calc(50% - (var(--container) / 2) - 3.5rem);
+			border-right: 1px solid var(--color-rail-line);
+			background-position: right top;
+		}
+	}
 </style>
 
 <script>
-        // Single scroll-reveal observer for all [data-reveal] elements
-        if (typeof window !== "undefined") {
-                const reveal = () => {
-                        const targets = document.querySelectorAll("[data-reveal]");
-                        if (!targets.length) return;
+	// Sheet tracker: the numbered sheet sitting under the reading line (40% down
+	// the viewport) is the current one. It drives the active nav link and the
+	// sheet counter in the title block. One rAF-throttled scroll listener, no
+	// observers, so the answer is deterministic for very tall sections.
+	if (typeof window !== "undefined") {
+		const sheets = Array.from(document.querySelectorAll<HTMLElement>("[data-sheet]"));
+		const navLinks = Array.from(
+			document.querySelectorAll<HTMLAnchorElement>(".nav-list a[data-section]"),
+		);
+		const counter = document.querySelector<HTMLElement>("[data-tb-index]");
+		const title = document.querySelector<HTMLElement>("[data-tb-name]");
+		let current: HTMLElement | null = null;
+		let ticking = false;
 
-                        const reduced = window.matchMedia(
-                                "(prefers-reduced-motion: reduce)"
-                        ).matches;
+		const update = () => {
+			ticking = false;
+			if (!sheets.length) return;
+			const line = window.innerHeight * 0.4;
+			const atEnd =
+				window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+			let next = sheets[0];
+			for (const sheet of sheets) {
+				if (sheet.getBoundingClientRect().top <= line) next = sheet;
+			}
+			if (atEnd) next = sheets[sheets.length - 1];
+			if (next === current) return;
+			current = next;
+			for (const link of navLinks) {
+				link.classList.toggle("is-active", link.dataset.section === next.id);
+			}
+			if (counter) counter.textContent = next.dataset.sheet ?? "";
+			if (title) title.textContent = next.dataset.sheetTitle ?? "";
+		};
 
-                        if (reduced || !("IntersectionObserver" in window)) {
-                                targets.forEach((el) => el.classList.add("is-revealed"));
-                                return;
-                        }
+		const schedule = () => {
+			if (ticking) return;
+			ticking = true;
+			requestAnimationFrame(update);
+		};
 
-                        const io = new IntersectionObserver(
-                                (entries) => {
-                                        entries.forEach((entry) => {
-                                                if (entry.isIntersecting) {
-                                                        entry.target.classList.add("is-revealed");
-                                                        io.unobserve(entry.target);
-                                                }
-                                        });
-                                },
-                                { threshold: 0.1, rootMargin: "0px 0px -6% 0px" }
-                        );
-
-                        targets.forEach((el) => io.observe(el));
-                };
-
-                if (document.readyState === "loading") {
-                        addEventListener("DOMContentLoaded", reveal, { once: true });
-                } else {
-                        reveal();
-                }
-        }
+		addEventListener("scroll", schedule, { passive: true });
+		addEventListener("resize", schedule);
+		update();
+	}
 </script>
