@@ -48,26 +48,51 @@ import "../styles/SwitchTheme.css";
         const THEME_COLOR: Record<Theme, string> = { light: "#faf8f6", dark: "#111110" };
         const root = document.documentElement;
         const toggles = document.querySelectorAll<HTMLButtonElement>("[data-theme-toggle]");
+        const systemDark = matchMedia("(prefers-color-scheme: dark)");
 
         const current = (): Theme => (root.getAttribute("data-theme") === "dark" ? "dark" : "light");
 
-        const apply = (theme: Theme) => {
+        /** The visitor's explicit choice, or null if they have never used the toggle. */
+        const stored = (): Theme | null => {
+                try {
+                        const saved = localStorage.getItem("theme");
+                        return saved === "dark" || saved === "light" ? saved : null;
+                } catch {
+                        return null; // localStorage unavailable (private mode)
+                }
+        };
+
+        /** Paint a theme. Deliberately never writes storage, so it is safe on load. */
+        const render = (theme: Theme) => {
                 root.setAttribute("data-theme", theme);
                 document
                         .querySelector('meta[name="theme-color"]')
                         ?.setAttribute("content", THEME_COLOR[theme]);
+                const next: Theme = theme === "dark" ? "light" : "dark";
+                toggles.forEach((button) => button.setAttribute("aria-label", `Switch to ${next} theme`));
+        };
+
+        /** Paint a theme *and* remember it. Only ever reached from a real click. */
+        const choose = (theme: Theme) => {
+                render(theme);
                 try {
                         localStorage.setItem("theme", theme);
                 } catch {
                         // localStorage unavailable (private mode): the theme still applies
                 }
-                const next: Theme = theme === "dark" ? "light" : "dark";
-                toggles.forEach((button) => button.setAttribute("aria-label", `Switch to ${next} theme`));
         };
 
-        // Persist the system-derived theme and set the label on first load.
-        apply(current());
+        // Label the buttons for whatever the inline <head> script already painted. This
+        // must not persist: writing the system-derived theme here would freeze every
+        // first-time visitor on it and stop the site ever following their OS again.
+        render(current());
+
+        // With no explicit choice stored, keep following the OS as it changes.
+        systemDark.addEventListener("change", (event) => {
+                if (!stored()) render(event.matches ? "dark" : "light");
+        });
+
         toggles.forEach((button) =>
-                button.addEventListener("click", () => apply(current() === "dark" ? "light" : "dark")),
+                button.addEventListener("click", () => choose(current() === "dark" ? "light" : "dark")),
         );
 </script>

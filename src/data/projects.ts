@@ -19,11 +19,10 @@ export const projects: ProjectItem[] = [
         {
                 title: "Priceworth Furniture",
                 description:
-                        "Storefront and back office for an Australian furniture retailer: a Next.js front end over NestJS and Laravel services. At HEQS I owned the App Router migration (30%+ faster page loads), the technical SEO and dynamic sitemaps (~2,000 extra organic visits), and the CDN and SSR caching work that cut cloud spend by ~45%, with GitHub Actions pipelines deploying to Vercel, Heroku, AWS, and Azure.",
+                        "Storefront and back office for an Australian furniture retailer, selling mostly to homes and sometimes to larger companies. A Next.js front end over a NestJS API. Because it is a live commercial site, the App Router migration had to land incrementally with no downtime, which meant picking a rendering strategy per page type instead of converting everything at once.",
                 stack: [
                         "Next.js",
                         "NestJS",
-                        "Laravel",
                         "TypeScript",
                         "PostgreSQL",
                         "GitHub Actions",
@@ -40,16 +39,18 @@ export const projects: ProjectItem[] = [
         {
                 title: "Paysera Timekeeping System",
                 description:
-                        "Internship at FiveTwenty: led the backend of an enterprise timekeeping platform (role-based access, audit logging, API design) and contributed to frontend and DevOps, including Playwright + Jest E2E coverage and Docker on DigitalOcean. Now in daily production use by FiveTwenty's enterprise clients.",
+                        "Internship at FiveTwenty: led the backend of a corporate timekeeping platform used by 40+ employees (role-based access, audit logging, API design, Redis caching) and contributed to frontend and DevOps, including Jest, Supertest and Playwright coverage plus Docker on DigitalOcean with CI/CD. Now in daily production use by FiveTwenty's enterprise clients.",
                 stack: [
                         "React",
                         "ShadCN",
                         "Express",
                         "Prisma",
                         "PostgreSQL",
+                        "Redis",
                         "TypeScript",
                         "Docker",
                         "Jest",
+                        "Supertest",
                         "Playwright",
                         "DigitalOcean",
                 ],
@@ -60,7 +61,7 @@ export const projects: ProjectItem[] = [
         {
                 title: "Fair Write (Gender Fair Revision)",
                 description:
-                        "Group thesis project, a writing tool that flags biased terms and suggests inclusive alternatives in real time. I worked on the backend and NLP side: REST APIs, the bias-detection pipeline, and the LanguageTool + spaCy integration. The live demo is still online.",
+                        "Group thesis project, a writing tool that flags biased terms and suggests inclusive alternatives in real time. I worked on the backend and NLP side: REST APIs, the bias-detection pipeline, and the LanguageTool + spaCy integration, tuned for concurrent requests. The live demo is still online.",
                 stack: [
                         "Svelte",
                         "Tailwind",

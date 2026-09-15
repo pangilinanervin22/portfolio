@@ -101,6 +101,19 @@ test("theme toggle flips the theme, persists it, and keeps theme-color in sync",
 	expect(problems).toEqual([]);
 });
 
+test("a first visit paints a theme but never persists one", async ({ page, isMobile }) => {
+	// Writing the system-derived theme on load would freeze every first-time visitor on
+	// whatever their OS happened to be, and the site could never follow it again.
+	await page.goto("./");
+	await expect(page.locator("html")).toHaveAttribute("data-theme", /^(light|dark)$/);
+	expect(await page.evaluate(() => localStorage.getItem("theme"))).toBeNull();
+
+	// Only an actual click is a choice worth remembering.
+	await openMenuIfMobile(page, isMobile);
+	await page.getByRole("button", { name: /switch to .* theme/i }).click();
+	expect(await page.evaluate(() => localStorage.getItem("theme"))).not.toBeNull();
+});
+
 test("project screenshots are letterboxed, never stretched", async ({ page }) => {
 	await page.goto("./#projects");
 	const images = page.locator("#projects .media img");
@@ -175,6 +188,27 @@ test("resume button points at a downloadable PDF that exists", async ({ page }) 
 	const response = await page.request.get(href!);
 	expect(response.status()).toBe(200);
 	expect(response.headers()["content-type"]).toContain("pdf");
+});
+
+test("the share card exists and matches its declared dimensions", async ({ page }) => {
+	await page.goto("./");
+	const src = await page.locator('meta[property="og:image"]').getAttribute("content");
+	expect(src).toMatch(/\/og-card\.png$/);
+
+	// og:image is absolute against the production origin, so fetch it by path locally.
+	const response = await page.request.get(new URL(src!).pathname);
+	expect(response.status()).toBe(200);
+
+	// A square image under `summary_large_image` gets cropped; the declared size has to
+	// be the real size or scrapers letterbox it.
+	const png = await response.body();
+	expect([png.readUInt32BE(16), png.readUInt32BE(20)]).toEqual([1200, 630]);
+	await expect(page.locator('meta[property="og:image:width"]')).toHaveAttribute("content", "1200");
+	await expect(page.locator('meta[property="og:image:height"]')).toHaveAttribute("content", "630");
+	await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
+		"content",
+		"summary_large_image",
+	);
 });
 
 test("removed pages are gone", async ({ page }) => {
