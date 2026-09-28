@@ -7,6 +7,10 @@ export interface Props {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+// The home page URL, base path included. Google reads the site name only from
+// WebSite data on the home page, so that data has to name this URL.
+const homeURL = new URL(`${base}/`, Astro.site);
+const siteName = "Ervin Pangilinan";
 
 const {
         title,
@@ -24,16 +28,13 @@ const imageURL = new URL(image, Astro.url);
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="generator" content={Astro.generator} />
 
-<link
-        rel="icon"
-        type="image/svg+xml"
-        href={`${base}/favicon.svg`}
-        />
-<link
-        rel="icon"
-        type="image/png"
-        href={`${base}/favicon.png`}
-        />
+<!-- One drawing (the nav's EP stamp, filled) at the size each consumer asks for:
+     search engines a PNG over 48px, tabs the SVG, older clients the .ico, iOS the
+     full-bleed touch icon. -->
+<link rel="icon" type="image/png" sizes="96x96" href={`${base}/favicon-96x96.png`} />
+<link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+<link rel="shortcut icon" href={`${base}/favicon.ico`} />
+<link rel="apple-touch-icon" href={`${base}/apple-touch-icon.png`} />
 <link rel="manifest" href={`${base}/site.webmanifest`} />
 <meta name="theme-color" content="#faf8f6" />
 
@@ -56,12 +57,12 @@ const imageURL = new URL(image, Astro.url);
 <!-- Google Site Verification -->
 <meta
         name="google-site-verification"
-        content={import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION || "4aFpYvci_2_xrY743KT0AuVT3BCSrDBJfc6JsSqZsPc"}
+        content={import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION || "ZAZnHzErtDf-Tl6SnI5HEUHKm2jJA0-30Tqcyj_BczY"}
 />
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
-<meta property="og:site_name" content="Ervin Pangilinan" />
+<meta property="og:site_name" content={siteName} />
 <meta property="og:locale" content="en_US" />
 <meta property="og:url" content={Astro.url} />
 <meta property="og:title" content={title} />
@@ -86,7 +87,19 @@ const imageURL = new URL(image, Astro.url);
         content="Ervin Pangilinan, full-stack developer"
 />
 
-<!-- JSON-LD Structured Data -->
+<!-- JSON-LD Structured Data. Without WebSite data Google guesses the name shown
+     above the result, and on the vercel.app host it guessed "Vercel". -->
+<script
+        is:inline
+        type="application/ld+json"
+        set:html={JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "WebSite",
+                name: siteName,
+                alternateName: `${siteName} Portfolio`,
+                url: homeURL.href,
+        })}
+/>
 <script
         is:inline
         type="application/ld+json"
@@ -114,8 +127,7 @@ const imageURL = new URL(image, Astro.url);
                 },
                 jobTitle: "Full-stack Developer",
                 description: description,
-                url:
-                        Astro.site?.href || `https://pangilinanervin22.github.io/portfolio/`,
+                url: homeURL.href,
                 sameAs: [
                         "https://github.com/pangilinanervin22",
                         "https://www.linkedin.com/in/pangilinanervin22",

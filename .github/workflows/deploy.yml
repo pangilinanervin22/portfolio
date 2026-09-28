@@ -1,10 +1,15 @@
 name: Deploy to GitHub Pages
 
+# The portfolio lives at https://pangilinanervin22.vercel.app (Vercel builds every
+# push to `main`). GitHub Pages only forwards the old address,
+# pangilinanervin22.github.io/portfolio, to it: this publishes the one page in
+# .github/pages-redirect, as index.html and again as 404.html so deep links forward too.
 on:
-        # Trigger the workflow every time you push to the `main` branch
-        # Using a different branch name? Replace `main` with your branch’s name
         push:
                 branches: [main]
+                paths:
+                        - ".github/pages-redirect/**"
+                        - ".github/workflows/deploy.yml"
         # Allows you to run this workflow manually from the Actions tab on GitHub.
         workflow_dispatch:
 
@@ -20,14 +25,12 @@ jobs:
                 steps:
                         - name: Checkout your repository using git
                           uses: actions/checkout@v4
-                        - name: Install, build, and upload your site
-                          uses: withastro/action@v3
-                          env:
-                            DEFAULT_PATH: https://pangilinanervin22.github.io/
-                            DEFAULT_BASE: /portfolio
-                            PUBLIC_GOOGLE_SITE_VERIFICATION: 4aFpYvci_2_xrY743KT0AuVT3BCSrDBJfc6JsSqZsPc
+                        - name: Serve the forwarding page for every path
+                          run: cp .github/pages-redirect/index.html .github/pages-redirect/404.html
+                        - name: Upload the forwarding page
+                          uses: actions/upload-pages-artifact@v3
                           with:
-                            node-version: 22
+                            path: .github/pages-redirect
 
         deploy:
                 needs: build

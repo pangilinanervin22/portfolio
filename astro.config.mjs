@@ -6,10 +6,12 @@ import sitemap from "@astrojs/sitemap";
 const env = loadEnv(process.env.NODE_ENV ?? "development", process.cwd(), "");
 
 export default defineConfig({
-  site: env.DEFAULT_PATH || "https://pangilinanervin22.github.io/",
-  base: env.DEFAULT_BASE || "/portfolio",
+  // Production is Vercel, at the root. GitHub Pages only forwards the old
+  // /portfolio address there (.github/workflows/deploy.yml).
+  site: env.DEFAULT_PATH || "https://pangilinanervin22.vercel.app/",
+  base: env.DEFAULT_BASE || "/",
   integrations: [
-    // On a single-page site with a base path the sitemap plugin emits both
+    // With a base path (the smoke-test build) the sitemap plugin emits both
     // "/portfolio" and "/portfolio/"; keep only the canonical trailing-slash URL.
     sitemap({ filter: (page) => page.endsWith("/") }),
   ],
