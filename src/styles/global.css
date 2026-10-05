@@ -13,13 +13,23 @@
  body {
  	margin: 0;
  	padding: 0;
- 	overflow-y: scroll;
- 	overflow-x: hidden;
  	display: block;
  	width: 100%;
  	background-color: var(--color-background);
  	box-sizing: border-box;
  	color: var(--color-text-primary);
+ }
+
+ /* Only the root scrolls. `overflow: hidden` on body would make body its own
+    scroll container, and the sticky nav would stick to a box that never
+    scrolls (i.e. not at all); `clip` contains stray overflow without that. */
+ html {
+ 	overflow-y: scroll;
+ 	overflow-x: hidden;
+ }
+
+ body {
+ 	overflow-x: clip;
  }
 
  /* The drafting cursor replaces the native one entirely, but only once the
@@ -125,6 +135,11 @@
  	outline: 0;
  	vertical-align: baseline;
  	box-sizing: border-box;
+ }
+
+ /* The body face is set once and inherited. Setting it on `*` would reset every
+    nested span to the body face, so a mono label lost its face on every child. */
+ body {
  	font-family: var(--font-body);
  }
 

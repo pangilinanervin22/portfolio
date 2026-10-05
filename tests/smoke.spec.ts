@@ -71,6 +71,25 @@ test("nav links scroll within the page instead of reloading it", async ({ page, 
 	).toBe(true);
 });
 
+test("the nav stays stuck to the top while the page scrolls", async ({ page }) => {
+	// `overflow: hidden` on body turns it into a scroll container that never scrolls,
+	// and the sticky nav then rides away with the page without any error to notice.
+	await page.goto("./");
+	await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+	await expect
+		.poll(() => page.locator(".navbar").evaluate((el) => Math.round(el.getBoundingClientRect().top)))
+		.toBe(0);
+});
+
+test("the sticky nav keeps its backdrop blur in the production CSS", async ({ page }) => {
+	// The minifier reduces `backdrop-filter` + `-webkit-backdrop-filter` to the
+	// prefixed form alone when the unprefixed one comes first, and Chromium and
+	// Firefox ignore that. Only a production build shows it, which is what runs here.
+	await page.goto("./");
+	const blur = await page.locator(".navbar").evaluate((el) => getComputedStyle(el).backdropFilter);
+	expect(blur).toContain("blur");
+});
+
 test("mobile menu is keyboard-operable and closes after choosing a link", async ({ page, isMobile }) => {
 	test.skip(!isMobile, "the hamburger only exists on small screens");
 	await page.goto("./");
@@ -187,6 +206,12 @@ test("web fonts are served and applied", async ({ page }) => {
 	}
 	expect(await page.locator("h1").evaluate((el) => getComputedStyle(el).fontFamily)).toContain("Outfit");
 	expect(await page.locator(".tagline").first().evaluate((el) => getComputedStyle(el).fontFamily)).toContain("Outfit");
+	// The faces have to reach nested spans too. A `font-family` on `*` resets every
+	// child to the body face, so a mono label's inner spans quietly rendered in Outfit.
+	const family = (selector: string) =>
+		page.locator(selector).first().evaluate((el) => getComputedStyle(el).fontFamily);
+	expect(await family("[data-tb-index]")).toContain("JetBrains Mono");
+	expect(await family(".portrait-caption span")).toContain("JetBrains Mono");
 	expect(problems).toEqual([]);
 });
 

@@ -44,8 +44,10 @@ import SwitchTheme from "./SwitchTheme.astro";
 		top: 0;
 		z-index: 100;
 		background: var(--color-background-blur);
-		backdrop-filter: blur(12px);
+		/* Prefixed first: in the other order the minifier keeps only the prefixed
+		   form, which Chromium and Firefox ignore */
 		-webkit-backdrop-filter: blur(12px);
+		backdrop-filter: blur(12px);
 		border-bottom: 1px solid var(--color-border);
 	}
 
