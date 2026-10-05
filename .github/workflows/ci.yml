@@ -5,8 +5,10 @@ on:
         push:
         workflow_dispatch:
 
+# Built under a base path on purpose, like playwright.config.ts: it catches link
+# and asset bugs that a root build hides.
 env:
-        DEFAULT_PATH: https://pangilinanervin22.github.io/
+        DEFAULT_PATH: https://pangilinanervin22.vercel.app/
         DEFAULT_BASE: /portfolio
 
 jobs:

@@ -1,7 +1,9 @@
 import { defineConfig, devices } from "@playwright/test";
 
-// The smoke tests run against the *production* build (base path `/portfolio`),
-// because the dev server's `/` base hides a whole class of link/asset bugs.
+// The smoke tests run against a production build served under a base path
+// (`/portfolio`), although the live site sits at the root: the dev server's `/`
+// base hides a whole class of link/asset bugs, and a build that works under a
+// base path works at the root too.
 const BASE = "/portfolio";
 const PORT = 4173;
 const ORIGIN = `http://localhost:${PORT}`;
@@ -30,7 +32,7 @@ export default defineConfig({
 		reuseExistingServer: !process.env.CI,
 		timeout: 120_000,
 		env: {
-			DEFAULT_PATH: "https://pangilinanervin22.github.io/",
+			DEFAULT_PATH: "https://pangilinanervin22.vercel.app/",
 			DEFAULT_BASE: BASE,
 		},
 	},

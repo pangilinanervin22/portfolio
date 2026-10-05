@@ -2,7 +2,7 @@
 
 Personal portfolio built as a single-page static site with [Astro](https://astro.build). The design is a monochrome "drafting sheet": the page reads as a numbered drawing set (sheets 01 to 06) with a title block in the corner that counts sheets as you scroll, dimension lines that measure the page itself, dot-grid paper, film grain, ruler-tick margin rails, hairline rules instead of boxed cards, and inversion as the only hover colour. Dark mode is a blueprint: white lines on Prussian blue.
 
-**Live site:** <https://pangilinanervin22.github.io/portfolio>
+**Live site:** <https://pangilinanervin22.vercel.app>
 
 ## Stack
 
@@ -32,8 +32,9 @@ All commands are run from the root of the project:
 ```text
 /
 ├── .github/workflows/ci.yml       # astro check + build + Playwright smoke tests on every push/PR
-├── .github/workflows/deploy.yml   # Build + deploy to GitHub Pages on push to main
-├── public/
+├── .github/workflows/deploy.yml   # Publishes the page that forwards the old GitHub Pages address
+├── .github/pages-redirect/        # That page: sends every old path on to the live site
+├── public/                        # Favicon set, share card, résumé PDF
 ├── src/
 │   ├── assets/                    # Portrait, project screenshots, tech + company logos
 │   ├── components/
@@ -63,18 +64,23 @@ The page is six sheets in order: **Welcome** (cover sheet), **Introduction**, **
 - **Title block**: the ruled box in the bottom-right corner (static at the foot of the cover sheet on small screens) carries the name, role, sheet counter and revision date. A small scroll listener in `Layout.astro` keeps the counter and the active nav link on the current sheet.
 - **Motion**: one moment only. On load the name draws itself in outline and fills, then the dimension line under it extends. There are no scroll reveals. Everything respects `prefers-reduced-motion`.
 - **Imagery as plates**: the portrait renders grayscale until hover, carries a `fig. 01` caption and a vertical dimension of its rendered height; project screenshots sit on hatched ground in 16:9 plates (`object-fit: contain`), never cropped or stretched. All raster images go through `astro:assets` and ship as sized WebP.
-- **SEO**: `BaseHead.astro` handles Open Graph/Twitter meta, canonical URLs, and JSON-LD (`Person`); a sitemap is generated at build time (submit `/portfolio/sitemap-index.xml` in Search Console; a project GitHub Pages site has no origin-level `robots.txt`), and `site.webmanifest` is generated from the base path.
+- **SEO**: `BaseHead.astro` handles Open Graph/Twitter meta, canonical URLs, and JSON-LD: `WebSite`, which gives search results the site name (without it Google showed the host, "Vercel"), and `Person`. A sitemap is generated at build time (submit `https://pangilinanervin22.vercel.app/sitemap-index.xml` in Search Console), and `site.webmanifest` is generated from the base path.
+- **Icons**: the favicon set in `public/` (SVG, `.ico` with 16/32/48 frames, PNGs at 96, 180, 192 and 512) is one drawing: the nav's EP stamp, filled, with the letters traced from Outfit 800.
 
 ## Configuration
 
 Site URL and base path are read from environment variables in `astro.config.mjs` (create a `.env` file at the root to override locally):
 
-| Variable                          | Default                                | Purpose                             |
-| :-------------------------------- | :------------------------------------- | :---------------------------------- |
-| `DEFAULT_PATH`                    | `https://pangilinanervin22.github.io/` | Canonical site URL                  |
-| `DEFAULT_BASE`                    | `/portfolio`                           | Base path for all assets and routes |
-| `PUBLIC_GOOGLE_SITE_VERIFICATION` | hardcoded fallback                     | Google Search Console verification  |
+| Variable                          | Default                                 | Purpose                             |
+| :-------------------------------- | :-------------------------------------- | :---------------------------------- |
+| `DEFAULT_PATH`                    | `https://pangilinanervin22.vercel.app/` | Canonical site URL                  |
+| `DEFAULT_BASE`                    | `/`                                     | Base path for all assets and routes |
+| `PUBLIC_GOOGLE_SITE_VERIFICATION` | hardcoded fallback                      | Google Search Console verification  |
+
+The smoke tests and CI build under `/portfolio` on purpose: a base path exposes link and asset bugs that a root build hides, and a build that works under a base path also works at the root.
 
 ## Deployment
 
-Every push to `main` triggers `.github/workflows/deploy.yml`, which builds the site with the official Astro action (Node 22) and publishes it to GitHub Pages. The workflow can also be run manually from the Actions tab.
+Vercel builds and deploys every push to `main`; the live site is <https://pangilinanervin22.vercel.app>.
+
+The site used to live on GitHub Pages at `https://pangilinanervin22.github.io/portfolio`. That address now only forwards: `.github/workflows/deploy.yml` publishes `.github/pages-redirect/index.html` (also as `404.html`), which sends every old path, `#section` included, to the same place on Vercel. The workflow runs when that page or the workflow changes, or manually from the Actions tab.

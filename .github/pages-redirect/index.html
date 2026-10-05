@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<title>Ervin Pangilinan</title>
+		<!-- The portfolio moved to pangilinanervin22.vercel.app. GitHub Pages cannot
+		     send a 301, so this page forwards itself, keeping the path and #section.
+		     deploy.yml also publishes it as 404.html, so deep links forward too. -->
+		<script>
+			location.replace(
+				"https://pangilinanervin22.vercel.app" +
+					(location.pathname.replace(/^\/portfolio(?=\/|$)/, "") || "/") +
+					location.search +
+					location.hash,
+			);
+		</script>
+		<!-- Only without JS: a bare refresh would race the script and drop the #section -->
+		<noscript><meta http-equiv="refresh" content="0; url=https://pangilinanervin22.vercel.app/" /></noscript>
+		<link rel="canonical" href="https://pangilinanervin22.vercel.app/" />
+		<!-- Keeps the old address verified in Search Console -->
+		<meta name="google-site-verification" content="4aFpYvci_2_xrY743KT0AuVT3BCSrDBJfc6JsSqZsPc" />
+		<!-- Old links shared before the move still get a proper card -->
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="Ervin Pangilinan" />
+		<meta property="og:title" content="Ervin Pangilinan" />
+		<meta property="og:url" content="https://pangilinanervin22.vercel.app/" />
+		<meta property="og:image" content="https://pangilinanervin22.vercel.app/og-card.png" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<style>
+			body {
+				margin: 3rem 1.5rem;
+				font: 16px/1.5 system-ui, sans-serif;
+				background: #faf8f6;
+				color: #111111;
+			}
+			a {
+				color: inherit;
+			}
+		</style>
+	</head>
+	<body>
+		<p>
+			This portfolio moved to
+			<a href="https://pangilinanervin22.vercel.app/">pangilinanervin22.vercel.app</a>.
+		</p>
+	</body>
+</html>

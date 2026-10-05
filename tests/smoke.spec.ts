@@ -14,6 +14,17 @@ function watchForProblems(page: Page): string[] {
 	return problems;
 }
 
+/** Pixel size from a PNG's IHDR chunk. */
+function pngSize(png: Buffer): [number, number] {
+	return [png.readUInt32BE(16), png.readUInt32BE(20)];
+}
+
+/** Frame widths listed in an .ico directory (a stored 0 means 256). */
+function icoSizes(ico: Buffer): number[] {
+	const count = ico.readUInt16LE(4);
+	return Array.from({ length: count }, (_, i) => ico[6 + 16 * i] || 256);
+}
+
 /** The theme toggle and nav links live inside the hamburger sheet on small screens. */
 async function openMenuIfMobile(page: Page, isMobile: boolean) {
 	if (isMobile) await page.getByRole("button", { name: "Menu" }).click();
@@ -209,6 +220,68 @@ test("the share card exists and matches its declared dimensions", async ({ page 
 		"content",
 		"summary_large_image",
 	);
+});
+
+test("icons for tabs, search results and home screens exist at the sizes they declare", async ({ page }) => {
+	// Each consumer asks for a different file (tabs take the SVG, search engines a PNG
+	// larger than 48px, iOS the apple-touch icon, older clients the .ico), so a missing
+	// file or a wrong size only shows up in the one place that uses it.
+	await page.goto("./");
+	const fetchLink = async (selector: string) => {
+		const link = page.locator(selector);
+		await expect(link, selector).toHaveCount(1);
+		const href = (await link.getAttribute("href"))!;
+		const response = await page.request.get(href);
+		expect(response.status(), href).toBe(200);
+		return { response, sizes: await link.getAttribute("sizes") };
+	};
+
+	const svg = await fetchLink('link[rel="icon"][type="image/svg+xml"]');
+	expect(svg.response.headers()["content-type"]).toContain("image/svg+xml");
+
+	const png = await fetchLink('link[rel="icon"][type="image/png"]');
+	const [width, height] = pngSize(await png.response.body());
+	expect(png.sizes).toBe(`${width}x${height}`);
+	expect(width).toBe(height);
+	expect(width).toBeGreaterThan(48);
+
+	const touch = await fetchLink('link[rel="apple-touch-icon"]');
+	expect(pngSize(await touch.response.body())).toEqual([180, 180]);
+
+	const ico = await fetchLink('link[rel~="icon"][href$=".ico"]');
+	expect(icoSizes(await ico.response.body())).toEqual(expect.arrayContaining([16, 32]));
+});
+
+test("the web manifest lists 192 and 512 icons that exist at those sizes", async ({ page }) => {
+	// Android and install prompts need both sizes; a manifest entry whose file is
+	// missing or a different size is silently skipped.
+	await page.goto("./");
+	const href = (await page.locator('link[rel="manifest"]').getAttribute("href"))!;
+	const manifest = await (await page.request.get(href)).json();
+	const pngs: string[] = [];
+	for (const icon of manifest.icons as { src: string; sizes: string; type: string }[]) {
+		const response = await page.request.get(icon.src);
+		expect(response.status(), icon.src).toBe(200);
+		if (icon.type === "image/png") {
+			const [w, h] = pngSize(await response.body());
+			expect(`${w}x${h}`, icon.src).toBe(icon.sizes);
+			pngs.push(icon.sizes);
+		}
+	}
+	expect(pngs).toEqual(expect.arrayContaining(["192x192", "512x512"]));
+});
+
+test("the home page tells search engines the site's name", async ({ page }) => {
+	// Without WebSite data Google guesses the name above the result, and on a shared
+	// host it guessed the host ("Vercel"). The data only counts on the home page and
+	// must point at the home page URL.
+	await page.goto("./");
+	const blocks = await page.locator('script[type="application/ld+json"]').allTextContents();
+	const items = blocks.map((b) => JSON.parse(b)).flatMap((d) => d["@graph"] ?? [d]);
+	const site = items.find((d) => d["@type"] === "WebSite");
+	expect(site?.name).toBe("Ervin Pangilinan");
+	expect(site?.url).toBe(await page.locator('link[rel="canonical"]').getAttribute("href"));
+	await expect(page.locator('meta[property="og:site_name"]')).toHaveAttribute("content", "Ervin Pangilinan");
 });
 
 test("removed pages are gone", async ({ page }) => {
