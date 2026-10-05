@@ -363,6 +363,86 @@ test("the title block counts sheets as the page scrolls", async ({ page }) => {
 	await expect(name).toHaveText("Contact");
 });
 
+test("the title block never covers text, on the cover or past it", async ({ page, isMobile }) => {
+	test.skip(isMobile, "the block is static on small screens");
+	// Fixed to the corner, the full block sat on top of project descriptions. It now
+	// stays full only while the cover is under it and shrinks to the sheet counter in
+	// the margin after that; narrower screens keep it static on the cover.
+	for (const width of [1280, 1440, 1920]) {
+		await page.setViewportSize({ width, height: 900 });
+		await page.goto("./");
+		await page.evaluate(() => document.fonts.ready);
+		const max = await page.evaluate(() => document.documentElement.scrollHeight - innerHeight);
+		for (let y = 0; y <= max + 250; y += 250) {
+			await page.evaluate((top) => window.scrollTo(0, top), Math.min(y, max));
+			// let the rAF-throttled tracker catch up
+			await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+			const covered = await page.evaluate(() => {
+				const block = document.querySelector(".title-block")!;
+				if (getComputedStyle(block).position !== "fixed") return [];
+				const box = block.getBoundingClientRect();
+				const hits: string[] = [];
+				const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+				const range = document.createRange();
+				for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+					const text = node.textContent?.trim();
+					const el = node.parentElement;
+					if (!text || !el || block.contains(el)) continue;
+					if (el.closest(".navbar, .visually-hidden, .cursor-frame, .skip-link")) continue;
+					range.selectNodeContents(node);
+					for (const r of range.getClientRects()) {
+						const overlaps =
+							r.width > 0 && r.left < box.right && r.right > box.left && r.top < box.bottom && r.bottom > box.top;
+						if (overlaps) hits.push(text.slice(0, 40));
+					}
+				}
+				return hits;
+			});
+			expect(covered, `${width}px wide, scrolled to ${Math.min(y, max)}`).toEqual([]);
+		}
+	}
+
+	// Past the cover on a wide screen, the counter is what remains.
+	await page.setViewportSize({ width: 1440, height: 900 });
+	await page.goto("./");
+	await expect(page.locator(".title-block")).not.toHaveClass(/is-compact/);
+	await page.locator("#projects").scrollIntoViewIfNeeded();
+	await expect(page.locator(".title-block")).toHaveClass(/is-compact/);
+	await expect(page.locator("[data-tb-index]")).toBeVisible();
+	await expect(page.locator("[data-tb-name]")).toHaveText("Work");
+});
+
+test("the colophon keeps the space between the year and the name", async ({ page }) => {
+	// Astro trims the whitespace at a line break that touches a tag: "© 2026Ervin".
+	await page.goto("./");
+	const footer = await page.locator("footer").innerText();
+	expect(footer).toMatch(/© \d{4} Ervin Pangilinan/);
+});
+
+test("the contact sheet ends on the address, large, on one line and copyable", async ({
+	page,
+	context,
+	isMobile,
+}) => {
+	await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+	await page.goto("./");
+	const mail = page.locator(".cta-mail");
+	await mail.scrollIntoViewIfNeeded();
+	await expect(mail).toHaveAttribute("href", "mailto:pangilinanervin22@gmail.com");
+	const fit = await mail.evaluate((el) => {
+		const r = el.getBoundingClientRect();
+		const size = parseFloat(getComputedStyle(el).fontSize);
+		return { size, oneLine: r.height < size * 1.8, inside: r.left >= 0 && r.right <= document.documentElement.clientWidth };
+	});
+	expect(fit.oneLine).toBe(true);
+	expect(fit.inside).toBe(true);
+	if (!isMobile) expect(fit.size).toBeGreaterThanOrEqual(56);
+
+	await page.getByRole("button", { name: "Copy address" }).click();
+	await expect(page.getByRole("button", { name: "Copied" })).toBeVisible();
+	expect(await page.evaluate(() => navigator.clipboard.readText())).toBe("pangilinanervin22@gmail.com");
+});
+
 test("the hero dimension line measures the rendered name", async ({ page }) => {
 	await page.goto("./");
 	await page.evaluate(() => document.fonts.ready);

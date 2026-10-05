@@ -114,12 +114,32 @@ import CustomCursor from "../components/CustomCursor.astro";
 		);
 		const counter = document.querySelector<HTMLElement>("[data-tb-index]");
 		const title = document.querySelector<HTMLElement>("[data-tb-name]");
+		const block = document.querySelector<HTMLElement>(".title-block");
+		const wide = window.matchMedia("(min-width: 1440px)");
+		let fullReach = 0; // how far the full block reaches up from the viewport bottom
 		let current: HTMLElement | null = null;
 		let ticking = false;
+
+		// The fixed block stays full only while the cover is all that can sit under
+		// it: once the cover's bottom edge rises past the full block's top, the next
+		// sheet's text would slide beneath, so it shrinks to the sheet counter.
+		const fitBlock = () => {
+			if (!block || !sheets.length) return;
+			if (!wide.matches) {
+				block.classList.remove("is-compact");
+				return;
+			}
+			if (!block.classList.contains("is-compact")) {
+				fullReach = window.innerHeight - block.getBoundingClientRect().top;
+			}
+			const coverBottom = sheets[0].getBoundingClientRect().bottom;
+			block.classList.toggle("is-compact", coverBottom < window.innerHeight - fullReach);
+		};
 
 		const update = () => {
 			ticking = false;
 			if (!sheets.length) return;
+			fitBlock();
 			const line = window.innerHeight * 0.4;
 			const atEnd =
 				window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
@@ -145,6 +165,7 @@ import CustomCursor from "../components/CustomCursor.astro";
 
 		addEventListener("scroll", schedule, { passive: true });
 		addEventListener("resize", schedule);
+		wide.addEventListener("change", schedule);
 		update();
 	}
 </script>

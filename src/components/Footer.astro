@@ -4,6 +4,7 @@ import { updatedAt } from "../lib/updated";
 const year = new Date().getFullYear();
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const resumeHref = `${base}/Ervin_Pangilinan_Resume.pdf`;
+const email = "pangilinanervin22@gmail.com";
 const buildDate = updatedAt.toLocaleDateString("en-US", {
 	year: "numeric",
 	month: "short",
@@ -20,6 +21,8 @@ const buildDate = updatedAt.toLocaleDateString("en-US", {
 >
 	<h2 id="footer-heading" class="visually-hidden">Site footer</h2>
 
+	<!-- The last sheet answers the cover: the page opens on the name set large
+	     and closes on the address, set as large as the column allows -->
 	<section class="cta-block" aria-labelledby="cta-heading">
 		<p class="cta-rule" aria-hidden="true">
 			<span class="cta-num">Sheet 06</span>
@@ -28,86 +31,72 @@ const buildDate = updatedAt.toLocaleDateString("en-US", {
 		<h3 id="cta-heading" class="cta-headline">
 			Want to talk about code, projects, or anything in between?
 		</h3>
-		<a class="cta-mail" href="mailto:pangilinanervin22@gmail.com">pangilinanervin22@gmail.com</a>
+		<a class="cta-mail" href={`mailto:${email}`}>{email}</a>
 		<div class="cta-secondary">
-			<a class="cta-link" href={resumeHref} download>Resume</a>
-			<a
-				class="cta-link"
-				href="https://www.linkedin.com/in/pangilinanervin22"
-				target="_blank"
-				rel="me noopener noreferrer"
-			>
-				LinkedIn
-			</a>
-			<a
-				class="cta-link"
-				href="https://github.com/pangilinanervin22"
-				target="_blank"
-				rel="me noopener noreferrer"
-			>
-				GitHub
-			</a>
+			<!-- Shown by the script only where the clipboard API exists -->
+			<button class="cta-copy" type="button" data-copy={email} hidden>Copy address</button>
+			<!-- grouped so a narrow screen wraps the three links together -->
+			<span class="cta-links">
+				<a class="cta-link" href={resumeHref} download>Resume</a>
+				<a
+					class="cta-link"
+					href="https://www.linkedin.com/in/pangilinanervin22"
+					target="_blank"
+					rel="me noopener noreferrer"
+				>
+					LinkedIn
+				</a>
+				<a
+					class="cta-link"
+					href="https://github.com/pangilinanervin22"
+					target="_blank"
+					rel="me noopener noreferrer"
+				>
+					GitHub
+				</a>
+			</span>
+			<span class="visually-hidden" role="status" data-copy-status></span>
 		</div>
 	</section>
 
-	<div class="footer-inner">
-		<div class="cluster primary">
-			<p class="brand">
-				&copy; {year}
-				<span class="name">Ervin Pangilinan</span>
-			</p>
-			<p class="tagline">Full-stack developer, Manila, Philippines</p>
-		</div>
-
-		<nav aria-label="Footer navigation" class="mini-nav">
-			<h3 class="heading">Navigate</h3>
-			<ul class="mini-list">
-				<li><a href="#welcome">Home</a></li>
-				<li><a href="#introduction">About</a></li>
-				<li><a href="#experience">Experience</a></li>
-				<li><a href="#projects">Work</a></li>
-			</ul>
-		</nav>
-
-		<nav aria-label="Social links" class="social-nav">
-			<h3 class="heading">Connect</h3>
-			<ul class="social-list">
-				<li>
-					<a href="https://github.com/pangilinanervin22" rel="me noopener noreferrer" target="_blank"
-						>GitHub</a
-					>
-				</li>
-				<li>
-					<a href="mailto:pangilinanervin22@gmail.com">Email</a>
-				</li>
-				<li>
-					<a
-						href="https://www.linkedin.com/in/pangilinanervin22"
-						rel="me noopener noreferrer"
-						target="_blank">LinkedIn</a
-					>
-				</li>
-			</ul>
-		</nav>
-
-		<div class="meta-block">
-			<p class="meta">
-				Built with <a href="https://astro.build" target="_blank" rel="noopener noreferrer">Astro</a
-				>, TypeScript and CSS.
-			</p>
-			<p class="meta">Updated {buildDate}.</p>
-			<p class="meta">
-				<button id="backToTopBtn" class="top-btn" type="button">Back to top</button>
-			</p>
-		</div>
+	<div class="colophon">
+		<p class="colophon-col">
+			<span>&copy; {year}{" "}<span class="name">Ervin Pangilinan</span></span>
+			<span>Manila, Philippines</span>
+		</p>
+		<p class="colophon-col colophon-col--end">
+			<span>Updated {buildDate}</span>
+			<button id="backToTopBtn" class="top-btn" type="button">Back to top</button>
+		</p>
 	</div>
 </footer>
 
 <script>
-	const btn = document.getElementById("backToTopBtn");
-	if (btn) {
-		btn.addEventListener("click", () => {
-			window.scrollTo({ top: 0, behavior: "smooth" });
+	const top = document.getElementById("backToTopBtn");
+	top?.addEventListener("click", () => {
+		const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+		window.scrollTo({ top: 0, behavior: still ? "auto" : "smooth" });
+	});
+
+	const copy = document.querySelector<HTMLButtonElement>("[data-copy]");
+	const status = document.querySelector<HTMLElement>("[data-copy-status]");
+	if (copy && navigator.clipboard?.writeText) {
+		const address = copy.dataset.copy ?? "";
+		let reset: number | undefined;
+		copy.hidden = false;
+		copy.addEventListener("click", async () => {
+			try {
+				await navigator.clipboard.writeText(address);
+			} catch {
+				return; // permission refused: the mailto link above still works
+			}
+			copy.textContent = "Copied";
+			if (status) status.textContent = "Email address copied";
+			window.clearTimeout(reset);
+			reset = window.setTimeout(() => {
+				copy.textContent = "Copy address";
+				if (status) status.textContent = "";
+			}, 2000);
 		});
 	}
 </script>
@@ -120,165 +109,6 @@ const buildDate = updatedAt.toLocaleDateString("en-US", {
 		font-size: 0.95rem;
 		color: var(--color-text-muted);
 		border-top: 1px solid var(--color-border);
-	}
-
-	/* On desktop the fixed title block sits in the bottom margin of the
-	   sheet, so the last sheet leaves that margin clear */
-	@media (min-width: 1024px) {
-		.footer-container {
-			padding-bottom: 10.5rem;
-		}
-	}
-
-	.footer-inner {
-		max-width: var(--container);
-		width: 100%;
-		margin-inline: auto;
-		display: grid;
-		gap: 2rem;
-		padding-top: 2.5rem;
-		border-top: 1px solid var(--color-border);
-	}
-	@media (min-width: 640px) {
-		.footer-inner {
-			grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-			align-items: start;
-		}
-	}
-	@media (min-width: 960px) {
-		.footer-inner {
-			grid-template-columns: 1.3fr 1fr 1fr 1.4fr;
-		}
-	}
-
-	.primary {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-	}
-	.brand {
-		margin: 0;
-		font-weight: 500;
-	}
-	.brand .name {
-		color: var(--color-text-primary);
-		font-weight: 500;
-	}
-	.tagline {
-		margin: 0;
-		font-size: 0.88rem;
-		line-height: 1.4;
-		max-width: 28ch;
-		color: var(--color-text-secondary);
-	}
-
-	.heading {
-		font-family: var(--font-mono);
-		margin: 0 0 0.65rem;
-		font-size: 0.78rem;
-		font-weight: 500;
-		color: var(--color-text-muted);
-	}
-
-	.mini-nav,
-	.social-nav {
-		display: flex;
-		flex-direction: column;
-	}
-	.mini-list,
-	.social-list {
-		list-style: none;
-		margin: 0;
-		padding: 0;
-		display: flex;
-		flex-direction: column;
-		gap: 0.45rem;
-	}
-	.mini-list a,
-	.social-list a {
-		position: relative;
-		text-decoration: none;
-		color: var(--color-text-secondary);
-		font-weight: 500;
-		padding: 2px 0;
-	}
-	.mini-list a::after,
-	.social-list a::after {
-		content: "";
-		position: absolute;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		height: 1px;
-		background: currentColor;
-		transform: scaleX(0);
-		transform-origin: left;
-		transition: transform 0.25s ease;
-		opacity: 0.5;
-	}
-	.mini-list a:hover::after,
-	.mini-list a:focus-visible::after,
-	.social-list a:hover::after,
-	.social-list a:focus-visible::after {
-		transform: scaleX(1);
-	}
-	.mini-list a:focus-visible,
-	.social-list a:focus-visible {
-		outline: 2px solid var(--color-focus-ring);
-		outline-offset: 2px;
-		border-radius: var(--radius-sm);
-	}
-
-	.meta-block {
-		display: flex;
-		flex-direction: column;
-		gap: 0.4rem;
-	}
-	/* No opacity here: it would push the muted colour below AA contrast */
-	.meta {
-		font-family: var(--font-mono);
-		margin: 0;
-		font-size: 0.78rem;
-		line-height: 1.5;
-	}
-	.meta a {
-		color: var(--color-text-secondary);
-		text-decoration: none;
-	}
-	.meta a:hover {
-		text-decoration: underline;
-	}
-
-	.top-btn {
-		background: none;
-		border: none;
-		padding: 0;
-		font: inherit;
-		color: var(--color-text-secondary);
-		cursor: pointer;
-		position: relative;
-	}
-	.top-btn::after {
-		content: "";
-		position: absolute;
-		left: 0;
-		right: 0;
-		bottom: -1px;
-		height: 1px;
-		background: currentColor;
-		transform: scaleX(0);
-		transform-origin: left;
-		transition: transform 0.25s ease;
-		opacity: 0.5;
-	}
-	.top-btn:hover::after,
-	.top-btn:focus-visible::after {
-		transform: scaleX(1);
-	}
-	.top-btn:focus-visible {
-		outline: 2px solid var(--color-focus-ring);
-		outline-offset: 2px;
-		border-radius: var(--radius-sm);
 	}
 
 	.visually-hidden {
@@ -298,12 +128,14 @@ const buildDate = updatedAt.toLocaleDateString("en-US", {
 	.cta-block {
 		max-width: var(--container);
 		width: 100%;
-		margin: 0 auto 2.75rem;
+		margin: 0 auto clamp(3rem, 7vh, 4.5rem);
 		padding: clamp(3.5rem, 8vh, 5.5rem) 0 0;
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
 		gap: 1.25rem;
+		/* the address sizes itself to this column (cqi below) */
+		container-type: inline-size;
 	}
 
 	.cta-rule {
@@ -329,30 +161,35 @@ const buildDate = updatedAt.toLocaleDateString("en-US", {
 		background: var(--color-border);
 	}
 
+	/* A lead-in now: the address below carries the weight */
 	.cta-headline {
 		font-family: var(--font-display);
-		font-size: clamp(1.6rem, 3.4vw, 2.6rem);
-		font-weight: 700;
-		line-height: 1.15;
-		letter-spacing: -0.025em;
+		font-size: clamp(1.3rem, 2.3vw, 1.75rem);
+		font-weight: 600;
+		line-height: 1.2;
+		letter-spacing: -0.02em;
 		color: var(--color-text-primary);
 		margin: 0;
-		max-width: 26ch;
+		max-width: 24em;
+		text-wrap: balance;
 	}
 
+	/* Set like the hero name, and as large as fits on one line of the column:
+	   the address is 12.7em wide in this face and tracking, so 100cqi / 13.2
+	   fills about 96% of it */
 	.cta-mail {
 		display: inline-block;
-		margin-top: 0.5rem;
-		font-family: var(--font-mono);
-		font-size: clamp(1.05rem, 2.8vw, 1.9rem);
-		font-weight: 500;
-		letter-spacing: -0.01em;
+		margin-top: clamp(0.25rem, 1.5vw, 1rem);
+		font-family: var(--font-display);
+		font-size: min(6rem, calc(100cqi / 13.2));
+		font-weight: 700;
+		letter-spacing: -0.045em;
+		line-height: 1.05;
+		white-space: nowrap;
 		color: var(--color-text-primary);
 		text-decoration: none;
-		border-bottom: 2px solid var(--color-text-primary);
-		padding-bottom: 0.3rem;
-		max-width: 100%;
-		overflow-wrap: anywhere;
+		border-bottom: 2px solid currentColor;
+		padding-bottom: 0.08em;
 		transition: opacity 0.2s ease;
 	}
 
@@ -369,10 +206,48 @@ const buildDate = updatedAt.toLocaleDateString("en-US", {
 
 	.cta-secondary {
 		display: flex;
-		align-items: baseline;
-		gap: 1.4rem;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.75rem 1.4rem;
+		margin-top: 0.5rem;
 		font-family: var(--font-mono);
 		font-size: 0.84rem;
+	}
+
+	/* Outline control: inverts on hover like the hero's links */
+	.cta-links {
+		display: flex;
+		align-items: center;
+		gap: 1.4rem;
+	}
+
+	.cta-copy {
+		font: inherit;
+		font-weight: 500;
+		color: var(--color-text-primary);
+		background: transparent;
+		padding: 0.45rem 0.8rem;
+		border: 1px solid var(--color-text-primary);
+		border-radius: var(--radius-sm);
+		cursor: pointer;
+		min-width: 9.5em;
+		transition:
+			color 0.2s ease,
+			background-color 0.2s ease;
+	}
+
+	.cta-copy[hidden] {
+		display: none;
+	}
+
+	.cta-copy:hover {
+		color: var(--color-background);
+		background: var(--color-text-primary);
+	}
+
+	.cta-copy:focus-visible {
+		outline: 2px solid var(--color-focus-ring);
+		outline-offset: 2px;
 	}
 
 	.cta-link {
@@ -392,11 +267,82 @@ const buildDate = updatedAt.toLocaleDateString("en-US", {
 		border-radius: var(--radius-sm);
 	}
 
+	/* Colophon: the sheet's notes, two short columns */
+	.colophon {
+		max-width: var(--container);
+		width: 100%;
+		margin-inline: auto;
+		padding-top: 1.5rem;
+		border-top: 1px solid var(--color-border);
+		display: grid;
+		gap: 0.75rem 2rem;
+		font-family: var(--font-mono);
+		font-size: 0.78rem;
+		line-height: 1.6;
+	}
+
+	@media (min-width: 640px) {
+		.colophon {
+			grid-template-columns: 1fr auto;
+		}
+
+		.colophon-col--end {
+			text-align: right;
+			align-items: flex-end;
+		}
+	}
+
+	/* No opacity here: it would push the muted colour below AA contrast */
+	.colophon-col {
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.colophon .name {
+		color: var(--color-text-primary);
+	}
+
+	.top-btn {
+		background: none;
+		border: none;
+		padding: 0;
+		font: inherit;
+		color: var(--color-text-secondary);
+		cursor: pointer;
+		position: relative;
+	}
+
+	.top-btn::after {
+		content: "";
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: -1px;
+		height: 1px;
+		background: currentColor;
+		transform: scaleX(0);
+		transform-origin: left;
+		transition: transform 0.25s ease;
+		opacity: 0.5;
+	}
+
+	.top-btn:hover::after,
+	.top-btn:focus-visible::after {
+		transform: scaleX(1);
+	}
+
+	.top-btn:focus-visible {
+		outline: 2px solid var(--color-focus-ring);
+		outline-offset: 2px;
+		border-radius: var(--radius-sm);
+	}
+
 	@media (prefers-reduced-motion: reduce) {
-		.mini-list a::after,
-		.social-list a::after,
 		.top-btn::after,
 		.cta-mail,
+		.cta-copy,
 		.cta-link {
 			transition: none;
 		}

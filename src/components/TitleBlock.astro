@@ -1,9 +1,10 @@
 ---
 // The title block of the drawing set: the ruled box every drafting sheet
 // carries in its corner, with the drawing title, sheet number and revision.
-// On desktop it is fixed to the bottom-right of the viewport and the sheet
-// counter ticks over as sections scroll past (see the tracker in Layout).
-// On small screens it sits statically at the foot of the cover sheet.
+// On wide screens it is fixed to the bottom-right of the viewport: full while
+// the cover is under it, then only the sheet counter, which fits in the right
+// margin clear of the text (the tracker in Layout sets `.is-compact` and ticks
+// the counter over). Narrower screens keep it static on the cover sheet.
 import { SITE_TITLE, SITE_ROLE } from "../consts";
 import { updatedIso } from "../lib/updated";
 
@@ -48,16 +49,81 @@ const total = String(sheets).padStart(2, "0");
 		margin-top: 2.75rem;
 	}
 
+	/* Below 1440px the margin has no room for a fixed block, so it sits in the
+	   cover's bottom-right corner, where a printed title block would be */
 	@media (min-width: 1024px) {
 		.title-block {
-			position: fixed;
-			right: 1.25rem;
-			bottom: 1.25rem;
 			width: 20rem;
 			max-width: none;
+			margin-left: auto;
+		}
+	}
+
+	@media (min-width: 1440px) {
+		.title-block {
+			position: fixed;
+			right: 1rem;
+			bottom: 1rem;
 			margin: 0;
 			z-index: 90;
 			background: var(--color-background);
+		}
+
+		/* Past the cover: the sheet counter alone, narrow enough for the margin */
+		.title-block.is-compact {
+			width: auto;
+		}
+
+		.is-compact .tb {
+			grid-template-columns: auto;
+		}
+
+		.is-compact .tb-drawing,
+		.is-compact .tb-now,
+		.is-compact .tb-rev {
+			display: none;
+		}
+
+		.is-compact .tb-sheet {
+			min-width: 0;
+			border-left: 0;
+			padding: 0.45rem 0.6rem 0.5rem;
+		}
+
+		.is-compact .tb-sheet .tb-key {
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			overflow: hidden;
+			clip-path: inset(50%);
+			white-space: nowrap;
+		}
+
+		.is-compact .tb-sub {
+			font-size: 0.6875rem;
+		}
+	}
+
+	/* The swap between full block and counter fades rather than jumps */
+	@media (min-width: 1440px) and (prefers-reduced-motion: no-preference) {
+		.title-block .tb {
+			animation: tb-full 0.2s ease-out;
+		}
+
+		.title-block.is-compact .tb {
+			animation-name: tb-compact;
+		}
+	}
+
+	@keyframes tb-full {
+		from {
+			opacity: 0;
+		}
+	}
+
+	@keyframes tb-compact {
+		from {
+			opacity: 0;
 		}
 	}
 
