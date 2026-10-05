@@ -431,7 +431,7 @@ test("the hero's results are figures the page states, visibly, further down", as
 	for (const figure of figures) expect(below).toContain(figure);
 });
 
-test("experience entries lead with the employer and fold the longer lists", async ({ page }) => {
+test("experience entries lead with the employer and show every highlight", async ({ page }) => {
 	await page.goto("./");
 	const entries = page.locator("#experience .entry");
 	await expect(entries).toHaveCount(4);
@@ -439,18 +439,10 @@ test("experience entries lead with the employer and fold the longer lists", asyn
 	await expect(entries.nth(1).locator("h3")).toHaveText("HEQS Group");
 	await expect(entries.nth(0).locator(".role")).toHaveText("Full-stack Developer");
 
-	// Two highlights show; the rest wait behind a native disclosure, nothing is cut.
-	const first = entries.nth(0);
-	await expect(first.locator(".highlights > li:visible")).toHaveCount(2);
-	const summary = first.locator("details.more > summary");
-	await expect(summary).toHaveText(/Show 3 more/);
-	await summary.click();
-	await expect(first.locator(".highlights > li:visible")).toHaveCount(5);
-
-	// An entry can show more before the fold (keyHighlights) when the hero cites it.
-	const heqs = entries.nth(1);
-	await expect(heqs.locator(".highlights > li:visible")).toHaveCount(3);
-	await expect(heqs.locator("details.more > summary")).toHaveText(/Show 2 more/);
+	// No fold: the owner wants every highlight in view, with no "Show more" control.
+	await expect(page.locator("#experience details, #experience summary")).toHaveCount(0);
+	await expect(entries.nth(0).locator(".highlights > li:visible")).toHaveCount(5);
+	await expect(entries.nth(1).locator(".highlights > li:visible")).toHaveCount(5);
 });
 
 test("About lists what I build as ruled rows and keeps what I'm exploring", async ({ page }) => {

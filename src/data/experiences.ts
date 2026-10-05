@@ -9,9 +9,6 @@ export interface ExperienceItem {
 	location: string;
 	summary: string;
 	highlights: string[];
-	/** Highlights shown before the "Show N more" fold (default 2). Raise it when
-	 *  the hero's results column cites a figure from a later highlight. */
-	keyHighlights?: number;
 	tech?: string[];
 	logo?: ImageMetadata;
 	logoAlt?: string;
@@ -52,7 +49,6 @@ export const experiences: ExperienceItem[] = [
 		logoAlt: "HEQS Group company logo",
 		period: "Aug 2025 – Feb 2026",
 		location: "Sydney, Australia, remote",
-		keyHighlights: 3,
 		summary: "Built and optimized production web applications across TypeScript, Next.js, NestJS, and Laravel.",
 		highlights: [
 			"Migrated legacy Pages Router to App Router: 30%+ faster page loads and improved Core Web Vitals",

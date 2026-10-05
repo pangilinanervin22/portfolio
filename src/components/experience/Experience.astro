@@ -2,14 +2,6 @@
 import { Image } from "astro:assets";
 import SectionHead from "../_common/SectionHead.astro";
 import { experiences } from "../../data/experiences";
-
-// Highlights shown before the fold: two, or the entry's `keyHighlights`. A list
-// only folds when at least two would hide behind it: "Show 1 more" costs as
-// much space as the line it hides.
-const split = (highlights: string[], shown = 2) =>
-	highlights.length > shown + 1
-		? [highlights.slice(0, shown), highlights.slice(shown)]
-		: [highlights, []];
 ---
 
 <section
@@ -31,7 +23,6 @@ const split = (highlights: string[], shown = 2) =>
 			{
 				experiences.map((item, i) => {
 					const isCurrent = item.period.includes("Present");
-					const [shown, folded] = split(item.highlights, item.keyHighlights);
 					return (
 						<li class={`entry ${isCurrent ? "entry--current" : ""}`}>
 							<article class="entry-grid" aria-labelledby={`exp-${i}-company`}>
@@ -64,25 +55,12 @@ const split = (highlights: string[], shown = 2) =>
 										<p class="location">{item.location}</p>
 									</header>
 									<p class="summary">{item.summary}</p>
-									{shown.length > 0 && (
+									{item.highlights.length > 0 && (
 										<ul class="highlights" role="list">
-											{shown.map((h) => (
+											{item.highlights.map((h) => (
 												<li>{h}</li>
 											))}
 										</ul>
-									)}
-									{folded.length > 0 && (
-										<details class="more">
-											<summary>
-												<span class="more-closed">Show {folded.length} more</span>
-												<span class="more-open">Show fewer</span>
-											</summary>
-											<ul class="highlights" role="list">
-												{folded.map((h) => (
-													<li>{h}</li>
-												))}
-											</ul>
-										</details>
 									)}
 									{item.tech && (
 										<p class="tech-line">
@@ -253,46 +231,6 @@ const split = (highlights: string[], shown = 2) =>
 		font-family: var(--font-mono);
 		font-size: 0.8rem;
 		color: var(--color-text-muted);
-	}
-
-	/* The fold: a native disclosure, so it works without script and by keyboard */
-	.more > summary {
-		display: inline-flex;
-		align-items: center;
-		min-height: 2rem;
-		font-family: var(--font-mono);
-		font-size: 0.8rem;
-		font-weight: 500;
-		color: var(--color-text-primary);
-		cursor: pointer;
-		list-style: none;
-		border-bottom: 1px solid currentColor;
-	}
-
-	.more > summary::-webkit-details-marker {
-		display: none;
-	}
-
-	.more > summary:hover {
-		color: var(--color-text-secondary);
-	}
-
-	.more > summary:focus-visible {
-		outline: 2px solid var(--color-focus-ring);
-		outline-offset: 3px;
-	}
-
-	.more-open,
-	.more[open] .more-closed {
-		display: none;
-	}
-
-	.more[open] .more-open {
-		display: inline;
-	}
-
-	.more[open] > summary {
-		margin-bottom: 0.85rem;
 	}
 
 	.summary {
