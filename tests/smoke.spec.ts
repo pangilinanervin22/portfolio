@@ -426,7 +426,7 @@ test("the hero's results are figures the page states, visibly, further down", as
 	// (innerText leaves out the contents of a closed <details>).
 	await page.goto("./");
 	const figures = await page.locator("#welcome .results .fig").allTextContents();
-	expect(figures).toEqual(["~30,000", "~45%", "30%+", "40+"]);
+	expect(figures).toEqual(["~30,000", "~45%", "30%+", "~2,000+"]);
 	const below = (await page.locator("#experience, #projects").allInnerTexts()).join(" ");
 	for (const figure of figures) expect(below).toContain(figure);
 });
@@ -446,6 +446,11 @@ test("experience entries lead with the employer and fold the longer lists", asyn
 	await expect(summary).toHaveText(/Show 3 more/);
 	await summary.click();
 	await expect(first.locator(".highlights > li:visible")).toHaveCount(5);
+
+	// An entry can show more before the fold (keyHighlights) when the hero cites it.
+	const heqs = entries.nth(1);
+	await expect(heqs.locator(".highlights > li:visible")).toHaveCount(3);
+	await expect(heqs.locator("details.more > summary")).toHaveText(/Show 2 more/);
 });
 
 test("About lists what I build as ruled rows and keeps what I'm exploring", async ({ page }) => {

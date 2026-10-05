@@ -3,12 +3,12 @@ import { Image } from "astro:assets";
 import SectionHead from "../_common/SectionHead.astro";
 import { experiences } from "../../data/experiences";
 
-// Highlights shown before the fold. A list only folds when at least two would
-// hide behind it: "Show 1 more" costs as much space as the line it hides.
-const SHOWN = 2;
-const split = (highlights: string[]) =>
-	highlights.length > SHOWN + 1
-		? [highlights.slice(0, SHOWN), highlights.slice(SHOWN)]
+// Highlights shown before the fold: two, or the entry's `keyHighlights`. A list
+// only folds when at least two would hide behind it: "Show 1 more" costs as
+// much space as the line it hides.
+const split = (highlights: string[], shown = 2) =>
+	highlights.length > shown + 1
+		? [highlights.slice(0, shown), highlights.slice(shown)]
 		: [highlights, []];
 ---
 
@@ -31,7 +31,7 @@ const split = (highlights: string[]) =>
 			{
 				experiences.map((item, i) => {
 					const isCurrent = item.period.includes("Present");
-					const [shown, folded] = split(item.highlights);
+					const [shown, folded] = split(item.highlights, item.keyHighlights);
 					return (
 						<li class={`entry ${isCurrent ? "entry--current" : ""}`}>
 							<article class="entry-grid" aria-labelledby={`exp-${i}-company`}>
