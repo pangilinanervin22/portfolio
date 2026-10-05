@@ -365,11 +365,19 @@ test("the title block counts sheets as the page scrolls", async ({ page }) => {
 
 test("the title block never covers text, on the cover or past it", async ({ page, isMobile }) => {
 	test.skip(isMobile, "the block is static on small screens");
+	test.setTimeout(120_000); // five screen sizes, every 250px of the page
 	// Fixed to the corner, the full block sat on top of project descriptions. It now
 	// stays full only while the cover is under it and shrinks to the sheet counter in
 	// the margin after that; narrower screens keep it static on the cover.
-	for (const width of [1280, 1440, 1920]) {
-		await page.setViewportSize({ width, height: 900 });
+	// 1440x760 and 1600x800 are a 1440 or 1600 laptop once the browser takes its share
+	for (const [width, height] of [
+		[1280, 900],
+		[1440, 900],
+		[1440, 760],
+		[1600, 800],
+		[1920, 900],
+	]) {
+		await page.setViewportSize({ width, height });
 		await page.goto("./");
 		await page.evaluate(() => document.fonts.ready);
 		const max = await page.evaluate(() => document.documentElement.scrollHeight - innerHeight);
@@ -398,7 +406,7 @@ test("the title block never covers text, on the cover or past it", async ({ page
 				}
 				return hits;
 			});
-			expect(covered, `${width}px wide, scrolled to ${Math.min(y, max)}`).toEqual([]);
+			expect(covered, `${width}x${height}, scrolled to ${Math.min(y, max)}`).toEqual([]);
 		}
 	}
 
@@ -410,6 +418,53 @@ test("the title block never covers text, on the cover or past it", async ({ page
 	await expect(page.locator(".title-block")).toHaveClass(/is-compact/);
 	await expect(page.locator("[data-tb-index]")).toBeVisible();
 	await expect(page.locator("[data-tb-name]")).toHaveText("Work");
+});
+
+test("the hero's results are figures the page states, visibly, further down", async ({ page }) => {
+	// The results column repeats numbers from the experience and project copy. It must
+	// never show a number that copy does not, and the copy must show it without a click
+	// (innerText leaves out the contents of a closed <details>).
+	await page.goto("./");
+	const figures = await page.locator("#welcome .results .fig").allTextContents();
+	expect(figures).toEqual(["~30,000", "~45%", "30%+", "40+"]);
+	const below = (await page.locator("#experience, #projects").allInnerTexts()).join(" ");
+	for (const figure of figures) expect(below).toContain(figure);
+});
+
+test("experience entries lead with the employer and fold the longer lists", async ({ page }) => {
+	await page.goto("./");
+	const entries = page.locator("#experience .entry");
+	await expect(entries).toHaveCount(4);
+	await expect(entries.nth(0).locator("h3")).toHaveText("Cosmic Society");
+	await expect(entries.nth(1).locator("h3")).toHaveText("HEQS Group");
+	await expect(entries.nth(0).locator(".role")).toHaveText("Full-stack Developer");
+
+	// Two highlights show; the rest wait behind a native disclosure, nothing is cut.
+	const first = entries.nth(0);
+	await expect(first.locator(".highlights > li:visible")).toHaveCount(2);
+	const summary = first.locator("details.more > summary");
+	await expect(summary).toHaveText(/Show 3 more/);
+	await summary.click();
+	await expect(first.locator(".highlights > li:visible")).toHaveCount(5);
+});
+
+test("About lists what I build as ruled rows and keeps what I'm exploring", async ({ page }) => {
+	await page.goto("./");
+	const about = page.locator("#introduction");
+	await expect(about.locator(".build-row")).toHaveCount(4);
+	await expect(about.locator(".skill-card")).toHaveCount(0);
+	await expect(about).toContainText("AI automation pipelines");
+});
+
+test("on phones the hero links sit in two even rows", async ({ page, isMobile }) => {
+	test.skip(!isMobile, "the desktop links sit in one row");
+	await page.goto("./");
+	const boxes = await page
+		.locator(".text-links a")
+		.evaluateAll((els) => els.map((el) => el.getBoundingClientRect()).map((r) => ({ top: Math.round(r.top), width: Math.round(r.width) })));
+	expect(boxes).toHaveLength(4);
+	expect(new Set(boxes.map((b) => b.top)).size).toBe(2);
+	expect(Math.max(...boxes.map((b) => b.width)) - Math.min(...boxes.map((b) => b.width))).toBeLessThanOrEqual(1);
 });
 
 test("the colophon keeps the space between the year and the name", async ({ page }) => {

@@ -2,6 +2,14 @@
 import { Image } from "astro:assets";
 import SectionHead from "../_common/SectionHead.astro";
 import { experiences } from "../../data/experiences";
+
+// Highlights shown before the fold. A list only folds when at least two would
+// hide behind it: "Show 1 more" costs as much space as the line it hides.
+const SHOWN = 2;
+const split = (highlights: string[]) =>
+	highlights.length > SHOWN + 1
+		? [highlights.slice(0, SHOWN), highlights.slice(SHOWN)]
+		: [highlights, []];
 ---
 
 <section
@@ -23,45 +31,58 @@ import { experiences } from "../../data/experiences";
 			{
 				experiences.map((item, i) => {
 					const isCurrent = item.period.includes("Present");
+					const [shown, folded] = split(item.highlights);
 					return (
 						<li class={`entry ${isCurrent ? "entry--current" : ""}`}>
-							<article class="entry-grid" aria-labelledby={`exp-${i}-role`}>
+							<article class="entry-grid" aria-labelledby={`exp-${i}-company`}>
 								<div class="entry-when">
 									<span class="entry-tick" aria-hidden="true" />
 									<span class="entry-period">{item.period}</span>
 									{isCurrent && <span class="visually-hidden">Current role</span>}
+									{item.logo && (
+										<span class="entry-logo">
+											<Image
+												src={item.logo}
+												width={Math.min(item.logo.width, 280)}
+												format="webp"
+												quality={85}
+												alt={item.logoAlt || `${item.company} logo`}
+												loading="lazy"
+												decoding="async"
+											/>
+										</span>
+									)}
 								</div>
 
 								<div class="entry-body">
+									{/* The employer leads: it is what differs from one entry to the next */}
 									<header class="entry-head">
-										{item.logo && (
-											<span class="entry-logo" data-cursor>
-												<Image
-													src={item.logo}
-													width={Math.min(item.logo.width, 280)}
-													format="webp"
-													quality={85}
-													alt={item.logoAlt || `${item.company} logo`}
-													loading="lazy"
-													decoding="async"
-												/>
-											</span>
-										)}
-										<h3 id={`exp-${i}-role`} class="role">
-											{item.role}
+										<h3 id={`exp-${i}-company`} class="company">
+											{item.company}
 										</h3>
-										<p class="meta">
-											<span class="company">{item.company}</span>
-											<span class="location">{item.location}</span>
-										</p>
+										<p class="role">{item.role}</p>
+										<p class="location">{item.location}</p>
 									</header>
 									<p class="summary">{item.summary}</p>
-									{item.highlights.length > 0 && (
+									{shown.length > 0 && (
 										<ul class="highlights" role="list">
-											{item.highlights.map((h) => (
+											{shown.map((h) => (
 												<li>{h}</li>
 											))}
 										</ul>
+									)}
+									{folded.length > 0 && (
+										<details class="more">
+											<summary>
+												<span class="more-closed">Show {folded.length} more</span>
+												<span class="more-open">Show fewer</span>
+											</summary>
+											<ul class="highlights" role="list">
+												{folded.map((h) => (
+													<li>{h}</li>
+												))}
+											</ul>
+										</details>
 									)}
 									{item.tech && (
 										<p class="tech-line">
@@ -113,22 +134,14 @@ import { experiences } from "../../data/experiences";
 		display: grid;
 		grid-template-columns: 1fr;
 		gap: 1rem 2.5rem;
-		padding: 2rem 0.75rem;
-		margin-inline: -0.75rem;
-		transition: background-color 0.25s ease;
+		padding: 2rem 0;
 	}
 
+	/* No hover tint: an entry is not a link, so it does not act like one */
 	@media (min-width: 850px) {
 		.entry-grid {
 			grid-template-columns: 168px minmax(0, 1fr);
-			padding: 2.5rem 1rem;
-			margin-inline: -1rem;
-		}
-	}
-
-	@media (hover: hover) {
-		.entry:hover .entry-grid {
-			background-color: var(--color-accent-subtle);
+			padding: 2.5rem 0;
 		}
 	}
 
@@ -187,42 +200,38 @@ import { experiences } from "../../data/experiences";
 		gap: 0.45rem;
 	}
 
-	/* Company logo as a full-colour letterhead mark. A neutral, near-white
-	   plate keeps the three mixed-background logos (black / blue / transparent)
-	   reading consistently in both themes. */
+	/* Company logo as a small stamp in the rail, drawn in the sheet's ink: the
+	   logos' white grounds multiply away on paper, and on the blueprint the
+	   inverted image screens onto the blue, so no white plate sits on the print */
 	.entry-logo {
 		display: inline-flex;
 		align-items: center;
-		justify-content: center;
-		box-sizing: border-box;
-		width: 122px;
-		height: 52px;
-		margin-bottom: 0.35rem;
-		padding: 9px 12px;
-		background: var(--gray-0);
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-sm);
+		height: 30px;
 	}
 
-	/* The frame is wider than the widest logo, so every logo is height-bound
-	   inside it: all three render at the same height in an identical box. */
 	.entry-logo img {
 		display: block;
 		width: auto;
 		height: auto;
-		max-width: 100%;
+		max-width: 104px;
 		max-height: 100%;
 		object-fit: contain;
+		filter: grayscale(1) contrast(1.15);
+		mix-blend-mode: multiply;
+	}
+
+	:global(:root[data-theme="dark"]) .entry-logo img {
+		filter: grayscale(1) invert(1) contrast(1.15);
+		mix-blend-mode: screen;
 	}
 
 	@media (min-width: 850px) {
 		.entry-logo {
-			width: 138px;
-			height: 58px;
+			margin-top: 0.35rem;
 		}
 	}
 
-	.role {
+	.company {
 		font-family: var(--font-display);
 		font-size: clamp(1.35rem, 1.2vw + 1.05rem, 1.7rem);
 		line-height: 1.2;
@@ -232,19 +241,58 @@ import { experiences } from "../../data/experiences";
 		margin: 0;
 	}
 
-	.meta {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.35rem 1.1rem;
+	.role {
+		margin: 0;
+		font-size: 1rem;
+		font-weight: 500;
+		color: var(--color-text-primary);
+	}
+
+	.location {
+		margin: 0;
 		font-family: var(--font-mono);
 		font-size: 0.8rem;
 		color: var(--color-text-muted);
-		margin: 0;
 	}
 
-	.meta .company {
-		color: var(--color-text-secondary);
+	/* The fold: a native disclosure, so it works without script and by keyboard */
+	.more > summary {
+		display: inline-flex;
+		align-items: center;
+		min-height: 2rem;
+		font-family: var(--font-mono);
+		font-size: 0.8rem;
 		font-weight: 500;
+		color: var(--color-text-primary);
+		cursor: pointer;
+		list-style: none;
+		border-bottom: 1px solid currentColor;
+	}
+
+	.more > summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.more > summary:hover {
+		color: var(--color-text-secondary);
+	}
+
+	.more > summary:focus-visible {
+		outline: 2px solid var(--color-focus-ring);
+		outline-offset: 3px;
+	}
+
+	.more-open,
+	.more[open] .more-closed {
+		display: none;
+	}
+
+	.more[open] .more-open {
+		display: inline;
+	}
+
+	.more[open] > summary {
+		margin-bottom: 0.85rem;
 	}
 
 	.summary {
@@ -293,9 +341,4 @@ import { experiences } from "../../data/experiences";
 		color: var(--color-text-muted);
 	}
 
-	@media (prefers-reduced-motion: reduce) {
-		.entry-grid {
-			transition: none;
-		}
-	}
 </style>

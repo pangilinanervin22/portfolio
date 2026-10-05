@@ -8,6 +8,16 @@ import Dimension from "./_common/Dimension.astro";
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const resumeHref = `${base}/Ervin_Pangilinan_Resume.pdf`;
+
+// Measured results, repeated from the experience and project copy in src/data.
+// Never add a number here that the copy does not state: a smoke test checks
+// that each one appears further down the page.
+const results = [
+	{ figure: "~30,000", what: "peak users at large-scale events", where: "Cosmic Society" },
+	{ figure: "~45%", what: "cut in cloud costs", where: "HEQS Group" },
+	{ figure: "30%+", what: "faster page loads", where: "HEQS Group" },
+	{ figure: "40+", what: "employees on a timekeeping platform", where: "FiveTwenty IT Services" },
+];
 ---
 
 <section
@@ -81,12 +91,17 @@ const resumeHref = `${base}/Ervin_Pangilinan_Resume.pdf`;
 					</nav>
 				</div>
 
-				<aside class="hero-side" aria-label="Currently exploring">
-					<p class="exploring-label">Currently exploring</p>
-					<ul class="exploring-list">
-						<li>AI automation pipelines</li>
-						<li>Distributed system design</li>
-						<li>Cheaper infra at scale</li>
+				<aside class="hero-side results" aria-label="Results in production">
+					<ul class="results-list" role="list">
+						{
+							results.map((r) => (
+								<li class="result">
+									<strong class="fig">{r.figure}</strong>
+									<span class="result-what">{r.what}</span>
+									<span class="result-where">{r.where}</span>
+								</li>
+							))
+						}
 					</ul>
 				</aside>
 			</div>
@@ -173,6 +188,16 @@ const resumeHref = `${base}/Ervin_Pangilinan_Resume.pdf`;
 		}
 	}
 
+	/* From 1440px the full title block is fixed in the viewport's bottom-right
+	   corner while the cover is on screen. The row stops short of its column
+	   (block 20rem + 1rem offset + 1rem air, from the container's right edge
+	   at 50vw + 600px), so on a short screen the results never run under it. */
+	@media (min-width: 1440px) {
+		.hero-grid {
+			margin-right: max(0px, calc(980px - 50vw));
+		}
+	}
+
 	.hero-main {
 		display: flex;
 		flex-direction: column;
@@ -243,7 +268,8 @@ const resumeHref = `${base}/Ervin_Pangilinan_Resume.pdf`;
 		height: 14px;
 	}
 
-	/* Currently exploring: side panel with a hairline rail */
+	/* Results: a ruled schedule, the figure set large and what it measured
+	   beside it, with where it was measured underneath */
 	@media (min-width: 1024px) {
 		.hero-side {
 			border-left: 1px solid var(--color-border);
@@ -251,26 +277,68 @@ const resumeHref = `${base}/Ervin_Pangilinan_Resume.pdf`;
 		}
 	}
 
-	.exploring-label {
-		font-family: var(--font-mono);
-		font-size: 0.8rem;
-		font-weight: 500;
-		color: var(--color-text-primary);
-		margin: 0 0 1rem;
-		line-height: 1;
-	}
-
-	.exploring-list {
+	.results-list {
 		list-style: none;
 		padding: 0;
 		margin: 0;
-		display: flex;
-		flex-direction: column;
-		gap: 0.75rem;
-		font-family: var(--font-mono);
-		font-size: 0.84rem;
+	}
+
+	.result {
+		display: grid;
+		/* wide enough for "~30,000", the widest figure, so every label lines up */
+		grid-template-columns: 7.75rem minmax(0, 1fr);
+		grid-template-areas:
+			"fig what"
+			"fig where";
+		column-gap: 1rem;
+		align-items: baseline;
+		padding: 0.7rem 0;
+		border-top: 1px solid var(--color-border);
+	}
+
+	.result:first-child {
+		border-top: 0;
+		padding-top: 0;
+	}
+
+	.result .fig {
+		grid-area: fig;
+		font-family: var(--font-display);
+		font-size: 1.75rem;
+		font-weight: 700;
+		letter-spacing: -0.03em;
+		line-height: 1.1;
+		font-variant-numeric: tabular-nums;
+		color: var(--color-text-primary);
+	}
+
+	.result-what {
+		grid-area: what;
+		font-size: 0.95rem;
+		line-height: 1.35;
 		color: var(--color-text-secondary);
-		line-height: 1.4;
+	}
+
+	.result-where {
+		grid-area: where;
+		margin-top: 0.2rem;
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		color: var(--color-text-muted);
+	}
+
+	/* Phones: four equal buttons in two rows instead of a ragged wrap */
+	@media (max-width: 520px) {
+		.text-links {
+			display: grid;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 0.75rem;
+		}
+
+		.text-link {
+			justify-content: center;
+			padding-block: 0.65rem;
+		}
 	}
 
 	/* The drawing moment. Reduced motion gets the finished sheet at once. */
@@ -342,9 +410,6 @@ const resumeHref = `${base}/Ervin_Pangilinan_Resume.pdf`;
 		}
 		.tagline {
 			font-size: 1rem;
-		}
-		.exploring-list {
-			font-size: 0.78rem;
 		}
 	}
 

@@ -42,8 +42,8 @@ All commands are run from the root of the project:
 │   │   ├── CustomCursor.astro     # Drafting-instrument cursor (vanilla script)
 │   │   ├── SwitchTheme.astro      # Theme toggle (vanilla script)
 │   │   ├── TitleBlock.astro       # Sheet counter, revision date, name and role
-│   │   ├── experience/            # Work-history ledger
-│   │   ├── introduction/          # About section with the portrait plate and skill cards
+│   │   ├── experience/            # Work-history ledger, employer first, longer lists folded
+│   │   ├── introduction/          # About section with the portrait plate and "What I build" rows
 │   │   ├── projects/              # Project plates on hatched ground
 │   │   └── technology/            # Stack tiers
 │   ├── data/                      # experiences.ts, projects.ts, technologies.ts

@@ -1,14 +1,27 @@
 ---
 import { Image } from "astro:assets";
 import introImage from "../../assets/me.jpg";
-import SkillCard from "./skill_card.astro";
 import SectionHead from "../_common/SectionHead.astro";
 import Dimension from "../_common/Dimension.astro";
 
-import gameIcon from "../../assets/skill/game.svg";
-import webIcon from "../../assets/skill/web.svg";
-import mobileIcon from "../../assets/skill/mobile.svg";
-import devOpsIcon from "../../assets/skill/devops.svg";
+const builds = [
+	{
+		title: "Web platforms",
+		detail: "Production apps in TypeScript, Next.js, NestJS. Server-rendered, SPA, or hybrid.",
+	},
+	{
+		title: "Mobile apps",
+		detail: "Cross-platform with React Native + Expo. Offline-first, secure releases.",
+	},
+	{
+		title: "DevOps & deploys",
+		detail: "CI/CD pipelines, Docker containers, cloud hosting on Vercel, AWS, Azure, DigitalOcean, Heroku.",
+	},
+	{
+		title: "Game dev",
+		detail: "Small 2D Unity prototypes when I want to think about something different.",
+	},
+];
 ---
 
 <section
@@ -68,38 +81,22 @@ import devOpsIcon from "../../assets/skill/devops.svg";
 			The rest of my time goes to whatever I'm learning right now.
 		</p>
 
+		<p class="exploring">
+			<span class="exploring-label">Currently exploring</span>{" "}AI automation pipelines, distributed system design, cheaper infra at scale.
+		</p>
 		<section class="introduction-skills" aria-labelledby="skills-heading">
 			<h3 id="skills-heading">What I build</h3>
-			<ul class="skills-list" role="list">
-				<li>
-					<SkillCard
-						title="Web platforms"
-						content="Production apps in TypeScript, Next.js, NestJS. Server-rendered, SPA, or hybrid."
-						icon={webIcon}
-					/>
-				</li>
-				<li>
-					<SkillCard
-						title="Mobile apps"
-						content="Cross-platform with React Native + Expo. Offline-first, secure releases."
-						icon={mobileIcon}
-					/>
-				</li>
-				<li>
-					<SkillCard
-						title="DevOps & deploys"
-						content="CI/CD pipelines, Docker containers, cloud hosting on Vercel, AWS, Azure, DigitalOcean, Heroku."
-						icon={devOpsIcon}
-					/>
-				</li>
-				<li>
-					<SkillCard
-						title="Game dev"
-						content="Small 2D Unity prototypes when I want to think about something different."
-						icon={gameIcon}
-					/>
-				</li>
-			</ul>
+			<!-- Ruled schedule rows: not links, so no boxes and no hover -->
+			<dl class="build-list">
+				{
+					builds.map((b) => (
+						<div class="build-row">
+							<dt>{b.title}</dt>
+							<dd>{b.detail}</dd>
+						</div>
+					))
+				}
+			</dl>
 		</section>
 	</div>
 </section>
@@ -238,27 +235,56 @@ import devOpsIcon from "../../assets/skill/devops.svg";
 		line-height: 1;
 	}
 
-	/* Collapsed-border quadrant: 1px gaps on a hairline backdrop */
-	.skills-list {
-		list-style: none;
-		padding: 1px;
+	.exploring {
 		margin: 0;
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1px;
-		background: var(--color-border);
-		border-radius: var(--radius-sm);
+		font-size: 0.95rem;
+		line-height: 1.6;
+		color: var(--color-text-secondary);
+		max-width: 42em;
 	}
 
-	.skills-list > li {
-		display: flex;
-		min-width: 0;
+	.exploring-label {
+		font-family: var(--font-mono);
+		font-size: 0.8rem;
+		font-weight: 500;
+		color: var(--color-text-primary);
+		margin-right: 0.5rem;
+	}
+
+	/* What I build: ruled schedule rows, title left and detail right */
+	.build-list {
+		margin: 0;
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.build-row {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		gap: 0.25rem 1.5rem;
+		padding: 0.9rem 0;
+		border-top: 1px solid var(--color-border);
 	}
 
 	@media (min-width: 640px) {
-		.skills-list {
-			grid-template-columns: repeat(2, 1fr);
+		.build-row {
+			grid-template-columns: 11rem minmax(0, 1fr);
+			align-items: baseline;
 		}
+	}
+
+	.build-row dt {
+		font-family: var(--font-display);
+		font-size: 1.05rem;
+		font-weight: 600;
+		letter-spacing: -0.01em;
+		color: var(--color-text-primary);
+	}
+
+	.build-row dd {
+		margin: 0;
+		font-size: 0.95rem;
+		line-height: 1.55;
+		color: var(--color-text-secondary);
 	}
 
 	@media (prefers-reduced-motion: reduce) {

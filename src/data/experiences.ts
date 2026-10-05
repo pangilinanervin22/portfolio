@@ -21,7 +21,7 @@ export const experiences: ExperienceItem[] = [
 		logo: cosmicSocietyLogo,
 		logoAlt: "Cosmic Society company logo",
 		period: "Mar 2026 – Present",
-		location: "Berlin, Germany · Remote (via Penbrothers, Manila)",
+		location: "Berlin, Germany, remote (via Penbrothers, Manila)",
 		summary: "Building a multi-brand event and retail-activation platform on Next.js, Supabase and Tailwind, serving ~30,000 peak users at large-scale events.",
 		highlights: [
 			"Fixed two cross-brand privilege-escalation vulnerabilities in the Postgres row-level security layer",
@@ -48,12 +48,12 @@ export const experiences: ExperienceItem[] = [
 		logo: heqsLogo,
 		logoAlt: "HEQS Group company logo",
 		period: "Aug 2025 – Feb 2026",
-		location: "Sydney, Australia · Remote",
+		location: "Sydney, Australia, remote",
 		summary: "Built and optimized production web applications across TypeScript, Next.js, NestJS, and Laravel.",
 		highlights: [
 			"Migrated legacy Pages Router to App Router: 30%+ faster page loads and improved Core Web Vitals",
-			"Technical SEO and dynamic sitemaps drove ~2,000+ additional organic page visits",
 			"Cut cloud costs ~45% with CDN-based asset caching and SSR strategies",
+			"Technical SEO and dynamic sitemaps drove ~2,000+ additional organic page visits",
 			"CI/CD pipelines via GitHub Actions across Vercel, Heroku, AWS, and Azure",
 			"Cross-functional collaboration with IT, marketing, SEO, and sales on UI/UX and production design",
 		],
@@ -75,7 +75,7 @@ export const experiences: ExperienceItem[] = [
 		logo: fiveTwentyLogo,
 		logoAlt: "FiveTwenty IT Services company logo",
 		period: "Jun 2024 – Jun 2025",
-		location: "Alabang, Muntinlupa · Hybrid (started as IT Intern, on-site)",
+		location: "Alabang, Muntinlupa, hybrid (started as IT Intern, on-site)",
 		summary: "Built enterprise-grade applications end-to-end; started as IT intern, transitioned to full-stack.",
 		highlights: [
 			"Engineered enterprise apps in TypeScript, React, Express, and PostgreSQL; containerized with Docker on DigitalOcean",
