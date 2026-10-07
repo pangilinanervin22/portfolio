@@ -431,6 +431,29 @@ test("the hero's results are figures the page states, visibly, further down", as
 	for (const figure of figures) expect(below).toContain(figure);
 });
 
+test("the page says, from the first line, that the work spans countries", async ({ page }) => {
+	await page.goto("./");
+	// Hero: a status line right above the name.
+	const status = page.locator("#welcome .hero-status");
+	await expect(status).toHaveText("Full-stack developer in Manila, remote for teams in Berlin and Sydney");
+	expect(await status.evaluate((el) => el.nextElementSibling?.tagName)).toBe("H1");
+	// Every city it names is one the experience entries list (no invented offices).
+	const locations = (await page.locator("#experience .location").allTextContents()).join(" ");
+	for (const city of ["Berlin", "Sydney"]) expect(locations).toContain(city);
+
+	// Experience head and About copy say the same.
+	await expect(page.locator("#experience .s-meta")).toHaveText("Teams in Germany, Australia and the Philippines");
+	const about = page.locator("#introduction .introduction-description");
+	await expect(about).toContainText("Cosmic Society, a Berlin company");
+	await expect(about).toContainText("Since 2025 I've worked remotely from Manila for teams in Berlin and Sydney.");
+
+	// The longer note must not run off a phone screen.
+	const overflow = await page
+		.locator("#experience .s-rule")
+		.evaluate((el) => el.scrollWidth - el.clientWidth);
+	expect(overflow).toBeLessThanOrEqual(0);
+});
+
 test("experience entries lead with the employer and show every highlight", async ({ page }) => {
 	await page.goto("./");
 	const entries = page.locator("#experience .entry");

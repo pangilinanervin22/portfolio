@@ -31,6 +31,7 @@ const results = [
 		<header class="content">
 			<!-- The cover sheet's one moment of motion: the name is drawn in outline
 			     and then filled, and the dimension line under it is drawn after. -->
+			<p class="hero-status">Full-stack developer in Manila, remote for teams in Berlin and Sydney</p>
 			<h1 id="welcome-heading" class="name">
 				<span class="name-line">Ervin</span>
 				<span class="name-line name-line--shift">Pangilinan</span>
@@ -140,6 +141,16 @@ const results = [
 
 	.content {
 		width: 100%;
+	}
+
+	/* Status line over the name: where the work happens, in the instrument face */
+	.hero-status {
+		margin: 0 0 clamp(1rem, 2vw, 1.5rem);
+		font-family: var(--font-mono);
+		font-size: 0.84rem;
+		font-weight: 500;
+		line-height: 1.5;
+		color: var(--color-text-primary);
 	}
 
 	/* Name: two-line staircase, each line shrink-wrapped so the dimension

@@ -56,6 +56,19 @@ const { number, title, headingId, meta, intro } = Astro.props as Props;
 		color: var(--color-text-muted);
 	}
 
+	/* A longer note wraps under itself on a phone instead of running off the rule */
+	@media (max-width: 640px) {
+		.s-line {
+			min-width: 1rem;
+		}
+
+		.s-meta {
+			white-space: normal;
+			text-align: right;
+			line-height: 1.4;
+		}
+	}
+
 	.s-title {
 		font-family: var(--font-display);
 		font-size: clamp(2.75rem, 6vw, 4.25rem);
