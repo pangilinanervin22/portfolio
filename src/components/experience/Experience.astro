@@ -30,24 +30,24 @@ import { experiences } from "../../data/experiences";
 									<span class="entry-tick" aria-hidden="true" />
 									<span class="entry-period">{item.period}</span>
 									{isCurrent && <span class="visually-hidden">Current role</span>}
-									{item.logo && (
-										<span class="entry-logo">
-											<Image
-												src={item.logo}
-												width={Math.min(item.logo.width, 280)}
-												format="webp"
-												quality={85}
-												alt={item.logoAlt || `${item.company} logo`}
-												loading="lazy"
-												decoding="async"
-											/>
-										</span>
-									)}
 								</div>
 
 								<div class="entry-body">
 									{/* The employer leads: it is what differs from one entry to the next */}
 									<header class="entry-head">
+										{item.logo && (
+											<span class="entry-logo" data-cursor>
+												<Image
+													src={item.logo}
+													width={Math.min(item.logo.width, 280)}
+													format="webp"
+													quality={85}
+													alt={item.logoAlt || `${item.company} logo`}
+													loading="lazy"
+													decoding="async"
+												/>
+											</span>
+										)}
 										<h3 id={`exp-${i}-company`} class="company">
 											{item.company}
 										</h3>
@@ -178,34 +178,38 @@ import { experiences } from "../../data/experiences";
 		gap: 0.45rem;
 	}
 
-	/* Company logo as a small stamp in the rail, drawn in the sheet's ink: the
-	   logos' white grounds multiply away on paper, and on the blueprint the
-	   inverted image screens onto the blue, so no white plate sits on the print */
+	/* Company logo as a full-colour letterhead mark. A neutral, near-white
+	   plate keeps the three mixed-background logos (black / blue / transparent)
+	   reading consistently in both themes. */
 	.entry-logo {
 		display: inline-flex;
 		align-items: center;
-		height: 30px;
+		justify-content: center;
+		box-sizing: border-box;
+		width: 122px;
+		height: 52px;
+		margin-bottom: 0.35rem;
+		padding: 9px 12px;
+		background: var(--gray-0);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-sm);
 	}
 
+	/* The frame is wider than the widest logo, so every logo is height-bound
+	   inside it: all three render at the same height in an identical box. */
 	.entry-logo img {
 		display: block;
 		width: auto;
 		height: auto;
-		max-width: 104px;
+		max-width: 100%;
 		max-height: 100%;
 		object-fit: contain;
-		filter: grayscale(1) contrast(1.15);
-		mix-blend-mode: multiply;
-	}
-
-	:global(:root[data-theme="dark"]) .entry-logo img {
-		filter: grayscale(1) invert(1) contrast(1.15);
-		mix-blend-mode: screen;
 	}
 
 	@media (min-width: 850px) {
 		.entry-logo {
-			margin-top: 0.35rem;
+			width: 138px;
+			height: 58px;
 		}
 	}
 

@@ -439,6 +439,16 @@ test("experience entries lead with the employer and show every highlight", async
 	await expect(entries.nth(1).locator("h3")).toHaveText("HEQS Group");
 	await expect(entries.nth(0).locator(".role")).toHaveText("Full-stack Developer");
 
+	// Logos stay in full colour on their plates, above the employer name: the owner
+	// rejected an ink-drawn (grayscale, inverted on the blueprint) treatment in the rail.
+	const logo = entries.nth(0).locator(".entry-head > .entry-logo");
+	await expect(logo).toBeVisible();
+	expect(await logo.locator("img").evaluate((el) => getComputedStyle(el).filter)).toBe("none");
+	expect(
+		await logo.evaluate((el) => el.nextElementSibling?.tagName),
+		"the logo sits directly above the employer heading",
+	).toBe("H3");
+
 	// No fold: the owner wants every highlight in view, with no "Show more" control.
 	await expect(page.locator("#experience details, #experience summary")).toHaveCount(0);
 	await expect(entries.nth(0).locator(".highlights > li:visible")).toHaveCount(5);
