@@ -446,7 +446,7 @@ test("the page says, from the first line, that the work spans countries", async 
 	const about = page.locator("#introduction .introduction-description");
 	await expect(about).toContainText("Cosmic Society, a Berlin company");
 	await expect(about).toContainText(
-		"Since 2025 I've worked remotely from Manila, first with a team in Sydney and now with one in Berlin.",
+		"I've worked remotely from Manila, first with a team in Sydney and now with one in Berlin.",
 	);
 
 	// The longer note must not run off a phone screen.
