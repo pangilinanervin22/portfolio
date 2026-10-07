@@ -13,7 +13,7 @@ const { project: p, index: i, featured = false } = Astro.props as Props;
 const plate = String(i + 1).padStart(2, "0");
 ---
 
-<li class={`plate${featured ? " plate--featured" : ""}`}>
+<li class={`plate${featured ? " plate--featured" : ""}`} data-reveal>
 	<article class="plate-inner" aria-labelledby={`proj-${i}-title`}>
 		{
 			p.image && (
@@ -34,6 +34,7 @@ const plate = String(i + 1).padStart(2, "0");
 						}
 						loading="lazy"
 						decoding="async"
+						data-develop
 					/>
 					<figcaption class="visually-hidden">{p.imageAlt || p.title}</figcaption>
 				</figure>

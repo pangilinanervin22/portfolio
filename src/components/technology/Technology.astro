@@ -24,7 +24,7 @@ const tierClass = (label: string) => `tier tier--${label.toLowerCase()}`;
 		<div class="tiers">
 			{
 				skillTiers.map((tier) => (
-					<div class={tierClass(tier.label)}>
+					<div class={tierClass(tier.label)} data-reveal>
 						<div class="tier-side">
 							<p class="tier-name">{tier.label}</p>
 							<p class="tier-context">{tier.context}</p>

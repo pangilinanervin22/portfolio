@@ -10,10 +10,10 @@ interface Props {
 const { number, title, headingId, meta, intro } = Astro.props as Props;
 ---
 
-<header class="s-head">
+<header class="s-head" data-reveal>
 	<p class="s-rule" aria-hidden="true">
 		<span class="s-num">Sheet {number}</span>
-		<span class="s-line"></span>
+		<span class="s-line" data-draw></span>
 		{meta && <span class="s-meta">{meta}</span>}
 	</p>
 	<h2 id={headingId} class="s-title">{title}</h2>

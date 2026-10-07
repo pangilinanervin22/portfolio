@@ -40,7 +40,7 @@ const builds = [
 		/>
 	</div>
 
-	<div class="introduction-image-container">
+	<div class="introduction-image-container" data-reveal>
 		<figure class="introduction-image" data-cursor>
 			<Image
 				src={introImage}
@@ -54,6 +54,7 @@ const builds = [
 				densities={[1, 1.5, 2]}
 				sizes="(max-width: 480px) 280px, (max-width: 768px) 360px, (max-width: 1024px) 380px, 380px"
 				class="intro-portrait"
+				data-develop
 			/>
 			<figcaption class="portrait-caption">
 				<span>Manila, 2026</span>
@@ -66,7 +67,7 @@ const builds = [
 		</div>
 	</div>
 
-	<div class="introduction-content">
+	<div class="introduction-content" data-reveal>
 		<p class="introduction-description">
 			I write software, mostly for the web. Started in 2021 as a hobby and it turned into a
 			career. Today I'm at Cosmic Society, a Berlin company, building a multi-brand event and
@@ -160,7 +161,11 @@ const builds = [
 		border-radius: 0;
 		display: block;
 		filter: grayscale(1) contrast(1.04);
-		transition: filter 0.45s ease;
+		/* clip-path is the scroll "develop" from global.css, listed here because
+		   this rule's own transition would otherwise replace it */
+		transition:
+			filter 0.45s ease,
+			clip-path 1.1s cubic-bezier(0.22, 0.61, 0.36, 1) calc(var(--reveal-delay, 0ms) + 0.2s);
 	}
 
 	@media (hover: hover) {

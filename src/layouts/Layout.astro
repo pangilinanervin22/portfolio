@@ -116,6 +116,7 @@ import CustomCursor from "../components/CustomCursor.astro";
 		const title = document.querySelector<HTMLElement>("[data-tb-name]");
 		const block = document.querySelector<HTMLElement>(".title-block");
 		const wide = window.matchMedia("(min-width: 1440px)");
+		const still = window.matchMedia("(prefers-reduced-motion: reduce)");
 		let footGap = 0; // the full block's distance from the viewport bottom
 		let current: HTMLElement | null = null;
 		let ticking = false;
@@ -149,12 +150,29 @@ import CustomCursor from "../components/CustomCursor.astro";
 			}
 			if (atEnd) next = sheets[sheets.length - 1];
 			if (next === current) return;
+			const first = current === null;
 			current = next;
 			for (const link of navLinks) {
 				link.classList.toggle("is-active", link.dataset.section === next.id);
 			}
 			if (counter) counter.textContent = next.dataset.sheet ?? "";
 			if (title) title.textContent = next.dataset.sheetTitle ?? "";
+			// The counter rolls to the new sheet rather than jumping (not on load)
+			if (!first) {
+				roll(counter, 0);
+				roll(title, 60);
+			}
+		};
+
+		const roll = (el: HTMLElement | null, delay: number) => {
+			if (!el || still.matches || !el.animate) return;
+			el.animate(
+				[
+					{ transform: "translateY(0.6em)", opacity: 0 },
+					{ transform: "none", opacity: 1 },
+				],
+				{ duration: 280, delay, easing: "cubic-bezier(0.22, 0.61, 0.36, 1)", fill: "backwards" },
+			);
 		};
 
 		const schedule = () => {
@@ -167,5 +185,34 @@ import CustomCursor from "../components/CustomCursor.astro";
 		addEventListener("resize", schedule);
 		wide.addEventListener("change", schedule);
 		update();
+
+		// Scroll reveals: blocks that start below the fold wait (.reveal-pending,
+		// styled in global.css) and draw in once as they enter the view. Blocks
+		// already on screen, reduced motion and browsers without the observer
+		// skip it, so nothing is ever left hidden. Blocks that arrive together
+		// are staggered a little, top to bottom.
+		if (!still.matches && "IntersectionObserver" in window) {
+			const pending = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]")).filter(
+				(el) => el.getBoundingClientRect().top > window.innerHeight,
+			);
+			const io = new IntersectionObserver(
+				(entries) => {
+					entries
+						.filter((e) => e.isIntersecting)
+						.sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+						.forEach((e, i) => {
+							const el = e.target as HTMLElement;
+							el.style.setProperty("--reveal-delay", `${Math.min(i, 4) * 90}ms`);
+							el.classList.remove("reveal-pending");
+							io.unobserve(el);
+						});
+				},
+				{ rootMargin: "0px 0px -8% 0px" },
+			);
+			for (const el of pending) {
+				el.classList.add("reveal-pending");
+				io.observe(el);
+			}
+		}
 	}
 </script>

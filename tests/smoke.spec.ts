@@ -326,10 +326,13 @@ for (const theme of ["light", "dark"] as const) {
 		}, theme);
 		await page.goto("./");
 		await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
-		// Wait for every finite animation (the name drawing itself in, the hero
-		// fade-in) to settle; axe would otherwise sample outlined or half-faded
-		// text as low contrast.
+		// Reveal the sheets still waiting below the fold so their text is audited
+		// too, then wait for every finite animation and transition (the name
+		// drawing itself in, the hero fade-in, the reveals) to settle; axe would
+		// otherwise sample outlined or half-faded text as low contrast.
 		await page.evaluate(async () => {
+			document.querySelectorAll(".reveal-pending").forEach((el) => el.classList.remove("reveal-pending"));
+			await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
 			const finite = document
 				.getAnimations()
 				.filter((a) => a.effect?.getTiming().iterations !== Infinity);
@@ -425,8 +428,9 @@ test("the hero's results are figures the page states, visibly, further down", as
 	// never show a number that copy does not, and the copy must show it without a click
 	// (innerText leaves out the contents of a closed <details>).
 	await page.goto("./");
+	// The figures count up on load; they must land on exactly these.
+	await expect(page.locator("#welcome .results .fig")).toHaveText(["~30,000", "~45%", "30%+", "~2,000+"]);
 	const figures = await page.locator("#welcome .results .fig").allTextContents();
-	expect(figures).toEqual(["~30,000", "~45%", "30%+", "~2,000+"]);
 	const below = (await page.locator("#experience, #projects").allInnerTexts()).join(" ");
 	for (const figure of figures) expect(below).toContain(figure);
 });
@@ -497,6 +501,30 @@ test("on phones the hero links sit in two even rows", async ({ page, isMobile })
 	expect(boxes).toHaveLength(4);
 	expect(new Set(boxes.map((b) => b.top)).size).toBe(2);
 	expect(Math.max(...boxes.map((b) => b.width)) - Math.min(...boxes.map((b) => b.width))).toBeLessThanOrEqual(1);
+});
+
+test("sheets draw in once as they scroll into view", async ({ page }) => {
+	await page.goto("./");
+	// Below the fold a plate waits: faded, its screenshot not yet developed.
+	const plate = page.locator("#projects .plate").first();
+	await expect(plate).toHaveClass(/reveal-pending/);
+	const shot = plate.locator("img[data-develop]");
+	expect(await shot.evaluate((el) => getComputedStyle(el).clipPath)).toContain("100%");
+
+	await plate.scrollIntoViewIfNeeded();
+	await expect(plate).not.toHaveClass(/reveal-pending/);
+	await expect.poll(() => plate.evaluate((el) => getComputedStyle(el).opacity)).toBe("1");
+	await expect.poll(() => shot.evaluate((el) => getComputedStyle(el).clipPath)).toBe("inset(0px)");
+	// The section rule draws itself to full length.
+	const rule = page.locator("#projects .s-line");
+	await expect.poll(() => rule.evaluate((el) => getComputedStyle(el).transform)).toMatch(/^(none|matrix\(1, 0, 0, 1, 0, 0\))$/);
+});
+
+test("with reduced motion nothing waits and the figures are final at once", async ({ page }) => {
+	await page.emulateMedia({ reducedMotion: "reduce" });
+	await page.goto("./");
+	await expect(page.locator(".reveal-pending")).toHaveCount(0);
+	expect(await page.locator("#welcome .results .fig").allTextContents()).toEqual(["~30,000", "~45%", "30%+", "~2,000+"]);
 });
 
 test("the colophon keeps the space between the year and the name", async ({ page }) => {

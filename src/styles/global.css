@@ -348,3 +348,46 @@
  *::-webkit-scrollbar-corner {
  	background: transparent;
  }
+
+ /* Scroll reveals (the observer is in Layout.astro). Only blocks that start
+    below the fold get .reveal-pending, and only when motion is allowed, so
+    without script, or with reduced motion, nothing is ever hidden. A block
+    fades up a short way, its [data-draw] rules draw left to right and its
+    [data-develop] images develop top to bottom, once. */
+ [data-reveal] {
+ 	transition:
+ 		opacity 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) var(--reveal-delay, 0ms),
+ 		transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) var(--reveal-delay, 0ms);
+ }
+
+ [data-reveal].reveal-pending {
+ 	opacity: 0;
+ 	transform: translateY(14px);
+ }
+
+ [data-draw] {
+ 	transform-origin: left center;
+ 	transition: transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) calc(var(--reveal-delay, 0ms) + 0.15s);
+ }
+
+ .reveal-pending [data-draw] {
+ 	transform: scaleX(0);
+ }
+
+ /* Resting value is an explicit inset, so the clip can interpolate */
+ [data-develop] {
+ 	clip-path: inset(0 0 0 0);
+ 	transition: clip-path 1.1s cubic-bezier(0.22, 0.61, 0.36, 1) calc(var(--reveal-delay, 0ms) + 0.2s);
+ }
+
+ .reveal-pending [data-develop] {
+ 	clip-path: inset(0 0 100% 0);
+ }
+
+ @media (prefers-reduced-motion: reduce) {
+ 	[data-reveal],
+ 	[data-draw],
+ 	[data-develop] {
+ 		transition: none;
+ 	}
+ }

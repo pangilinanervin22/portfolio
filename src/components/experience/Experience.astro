@@ -24,7 +24,7 @@ import { experiences } from "../../data/experiences";
 				experiences.map((item, i) => {
 					const isCurrent = item.period.includes("Present");
 					return (
-						<li class={`entry ${isCurrent ? "entry--current" : ""}`}>
+						<li class={`entry ${isCurrent ? "entry--current" : ""}`} data-reveal>
 							<article class="entry-grid" aria-labelledby={`exp-${i}-company`}>
 								<div class="entry-when">
 									<span class="entry-tick" aria-hidden="true" />

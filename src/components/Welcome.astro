@@ -121,6 +121,45 @@ const results = [
 			once: true,
 		});
 	});
+
+	// The results count up once, from zero to the figure the server rendered,
+	// when they come into view (on a first screen, after the name has drawn).
+	// Without script or with reduced motion the final numbers simply stay.
+	const list = document.querySelector<HTMLElement>(".results-list");
+	const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+	if (list && !still && "IntersectionObserver" in window) {
+		const figures = Array.from(list.querySelectorAll<HTMLElement>(".fig")).flatMap((el) => {
+			const text = el.textContent ?? "";
+			const m = text.match(/^(\D*)([\d,]+)(.*)$/);
+			if (!m) return [];
+			return [{ el, text, pre: m[1], n: Number(m[2].replace(/,/g, "")), post: m[3], comma: m[2].includes(",") }];
+		});
+		type Figure = (typeof figures)[number];
+		const show = (f: Figure, v: number) => {
+			f.el.textContent = f.pre + (f.comma ? v.toLocaleString("en-US") : String(v)) + f.post;
+		};
+		// The row is still fading in at this point, so the zeros are never seen early
+		figures.forEach((f) => show(f, 0));
+
+		const run = () => {
+			const start = performance.now();
+			const tick = (now: number) => {
+				const t = Math.min(1, (now - start) / 1200);
+				const eased = 1 - Math.pow(1 - t, 3);
+				figures.forEach((f) => show(f, Math.round(f.n * eased)));
+				if (t < 1) requestAnimationFrame(tick);
+				else figures.forEach((f) => (f.el.textContent = f.text));
+			};
+			requestAnimationFrame(tick);
+		};
+
+		const io = new IntersectionObserver((entries) => {
+			if (!entries.some((e) => e.isIntersecting)) return;
+			io.disconnect();
+			setTimeout(run, Math.max(0, 1200 - performance.now()));
+		});
+		io.observe(list);
+	}
 </script>
 
 <style>

@@ -178,6 +178,11 @@ const total = String(sheets).padStart(2, "0");
 		white-space: nowrap;
 	}
 
+	/* inline-block so the sheet number can roll in when the sheet changes */
+	[data-tb-index] {
+		display: inline-block;
+	}
+
 	.tb-of {
 		color: var(--color-text-muted);
 		font-weight: 400;
