@@ -435,17 +435,19 @@ test("the page says, from the first line, that the work spans countries", async 
 	await page.goto("./");
 	// Hero: a status line right above the name.
 	const status = page.locator("#welcome .hero-status");
-	await expect(status).toHaveText("Full-stack developer in Manila, remote for teams in Berlin and Sydney");
+	// Present tense names the current team only: Sydney (HEQS) was the previous job.
+	await expect(status).toHaveText("Full-stack developer in Manila, remote for a team in Berlin");
 	expect(await status.evaluate((el) => el.nextElementSibling?.tagName)).toBe("H1");
-	// Every city it names is one the experience entries list (no invented offices).
-	const locations = (await page.locator("#experience .location").allTextContents()).join(" ");
-	for (const city of ["Berlin", "Sydney"]) expect(locations).toContain(city);
+	// The city it names is the current entry's (no invented offices).
+	await expect(page.locator("#experience .entry--current .location")).toContainText("Berlin");
 
 	// Experience head and About copy say the same.
 	await expect(page.locator("#experience .s-meta")).toHaveText("Teams in Germany, Australia and the Philippines");
 	const about = page.locator("#introduction .introduction-description");
 	await expect(about).toContainText("Cosmic Society, a Berlin company");
-	await expect(about).toContainText("Since 2025 I've worked remotely from Manila for teams in Berlin and Sydney.");
+	await expect(about).toContainText(
+		"Since 2025 I've worked remotely from Manila, first with a team in Sydney and now with one in Berlin.",
+	);
 
 	// The longer note must not run off a phone screen.
 	const overflow = await page
