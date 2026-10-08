@@ -1,8 +1,9 @@
-/* Blueprint. The dark theme is a cyanotype sheet: white lines on Prussian
-   blue. It stays monochrome (one hue, no accent), so every device that
-   inverts black<->white on the light sheet inverts white<->blue here through
-   the same tokens. Muted text is tuned to pass WCAG AA on both the sheet and
-   the surface tone. */
+/* Ink. The dark theme is the light sheet inverted: warm white lines on a
+   warm near-black that pairs with the off-white paper (it replaced a
+   blueprint blue on 2026-10-08, by the owner's choice). It stays monochrome (one hue, no
+   accent), so every device that inverts black<->white on the light sheet
+   inverts here through the same tokens. Muted text is tuned to pass WCAG AA
+   on both the sheet and the surface tone. */
 :root[data-theme='dark'] {
     /* Grayscale scale (keep same canonical values) */
     --gray-0: #eeeeee;
@@ -21,71 +22,71 @@
     --gray-950: #0a0a0a;
     --gray-1000: #000000;
 
-    /* Base: the blue of the print */
-    --color-background: #0e2f63;
-    --color-background-alt: #12376f;
-    --color-surface: #12376f;
-    --color-surface-alt: #173f7d;
-    --color-surface-muted: #1c4787;
-    --color-border: rgba(242, 246, 252, 0.2);
-    --color-background-blur: rgba(14, 47, 99, 0.82);
+    /* Base: the ink sheet */
+    --color-background: #111110;
+    --color-background-alt: #191917;
+    --color-surface: #191917;
+    --color-surface-alt: #21211f;
+    --color-surface-muted: #292927;
+    --color-border: rgba(245, 244, 240, 0.16);
+    --color-background-blur: rgba(17, 17, 16, 0.86);
 
     /* Primary / semantic (inverted vs light theme) */
-    --color-primary: #f2f6fc;
-    --color-primary-80: #dde7f5;
-    --color-primary-60: #b7c8e3;
-    --color-primary-40: #7f98c2;
-    --color-primary-20: #3f5f96;
-    --color-primary-10: #25457c;
+    --color-primary: #f5f4f0;
+    --color-primary-80: #e2e0da;
+    --color-primary-60: #bdbab2;
+    --color-primary-40: #8a877f;
+    --color-primary-20: #45433f;
+    --color-primary-10: #2a2927;
 
-    --color-secondary: #173f7d;
-    --color-secondary-alt: #1c4787;
+    --color-secondary: #21211f;
+    --color-secondary-alt: #292927;
 
     /* Text: the white lines */
-    --color-text-primary: #f2f6fc;
-    --color-text-secondary: #c6d4ea;
-    --color-text-muted: #9bb1d2; /* 6.0:1 on the sheet, 5.3:1 on the surface (WCAG AA) */
-    --color-text-faint: #5b78a8; /* decorative only, never for readable text */
-    --color-text-inverse: #0e2f63;
+    --color-text-primary: #f5f4f0;
+    --color-text-secondary: #cfcdc6;
+    --color-text-muted: #9a988f; /* 6.5:1 on the sheet, 6.1:1 on the surface (WCAG AA) */
+    --color-text-faint: #5f5d57; /* decorative only, never for readable text */
+    --color-text-inverse: #111110;
 
-    /* Accent: white is the accent on a blueprint */
+    /* Accent: white is the accent on the ink sheet */
     --color-accent: #ffffff;
-    --color-accent-hover: #dde7f5;
-    --color-accent-muted: rgba(255, 255, 255, 0.19);
-    --color-accent-subtle: rgba(255, 255, 255, 0.07);
+    --color-accent-hover: #e2e0da;
+    --color-accent-muted: rgba(255, 255, 255, 0.16);
+    --color-accent-subtle: rgba(255, 255, 255, 0.06);
 
     /* Links */
-    --color-link: #f2f6fc;
-    --color-link-hover: #dde7f5;
+    --color-link: #f5f4f0;
+    --color-link-hover: #e2e0da;
     --color-link-active: #ffffff;
-    --color-link-visited: #dde7f5;
-    --color-link-underline: #7f98c2;
+    --color-link-visited: #e2e0da;
+    --color-link-underline: #8a877f;
 
     /* Icons */
-    --color-icon: #dde7f5;
-    --color-icon-muted: #7f98c2;
-    --color-icon-inverse: #0e2f63;
+    --color-icon: #e2e0da;
+    --color-icon-muted: #8a877f;
+    --color-icon-inverse: #111110;
 
     /* States */
     --color-focus-ring: #ffffff;
-    --color-outline: #f2f6fc;
-    --color-selection-bg: #f2f6fc;
-    --color-selection-text: #0e2f63;
+    --color-outline: #f5f4f0;
+    --color-selection-bg: #f5f4f0;
+    --color-selection-text: #111110;
 
     /* Shadows / depth */
-    --color-shadow-soft: rgba(0, 0, 0, 0.18);
-    --color-shadow: rgba(0, 0, 0, 0.28);
-    --color-shadow-strong: rgba(0, 0, 0, 0.38);
-    --color-backdrop: rgba(4, 18, 44, 0.72);
+    --color-shadow-soft: rgba(0, 0, 0, 0.3);
+    --color-shadow: rgba(0, 0, 0, 0.45);
+    --color-shadow-strong: rgba(0, 0, 0, 0.6);
+    --color-backdrop: rgba(0, 0, 0, 0.72);
 
     /* Gradients */
-    --gradient-soft: linear-gradient(180deg, #12376f, #0e2f63);
-    --gradient-inset: linear-gradient(180deg, #173f7d, #12376f);
+    --gradient-soft: linear-gradient(180deg, #191917, #111110);
+    --gradient-inset: linear-gradient(180deg, #21211f, #191917);
 
     /* Drafting-sheet structure, drawn in white */
-    --color-rail-line: rgba(242, 246, 252, 0.14);
-    --color-rail-tick: rgba(242, 246, 252, 0.24);
-    --color-dot-grid: rgba(242, 246, 252, 0.09);
-    --color-hatch: rgba(242, 246, 252, 0.14);
-    --grain-opacity: 0.14;
+    --color-rail-line: rgba(245, 244, 240, 0.12);
+    --color-rail-tick: rgba(245, 244, 240, 0.22);
+    --color-dot-grid: rgba(245, 244, 240, 0.07);
+    --color-hatch: rgba(245, 244, 240, 0.12);
+    --grain-opacity: 0.12;
 }

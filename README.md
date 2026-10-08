@@ -1,6 +1,6 @@
 # Ervin Pangilinan Portfolio
 
-Personal portfolio built as a single-page static site with [Astro](https://astro.build). The design is a monochrome "drafting sheet": the page reads as a numbered drawing set (sheets 01 to 06) with a title block in the corner that counts sheets as you scroll, dimension lines that measure the page itself, dot-grid paper, film grain, ruler-tick margin rails, hairline rules instead of boxed cards, and inversion as the only hover colour. Dark mode is a blueprint: white lines on Prussian blue.
+Personal portfolio built as a single-page static site with [Astro](https://astro.build). The design is a monochrome "drafting sheet": the page reads as a numbered drawing set (sheets 01 to 06) with a title block in the corner that counts sheets as you scroll, dimension lines that measure the page itself, dot-grid paper, film grain, ruler-tick margin rails, hairline rules instead of boxed cards, and inversion as the only hover colour. Dark mode is the ink sheet: warm white lines on a warm near-black.
 
 **Live site:** <https://pangilinanervin22.vercel.app>
 
@@ -50,7 +50,7 @@ All commands are run from the root of the project:
 │   ├── layouts/Layout.astro       # Base head, fonts, sheet tracker, sheet rails
 │   ├── lib/updated.ts             # Last-commit date for the title block and footer
 │   ├── pages/                     # index.astro, dynamic site.webmanifest.ts
-│   ├── styles/                    # global.css, _theme.css (sheet), _theme_dark.css (blueprint)
+│   ├── styles/                    # global.css, _theme.css (sheet), _theme_dark.css (ink)
 │   └── consts.ts                  # Site title, role and description
 ├── tests/                         # Playwright smoke tests (see playwright.config.ts)
 └── astro.config.mjs

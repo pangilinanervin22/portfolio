@@ -124,7 +124,7 @@ test("theme toggle flips the theme, persists it, and keeps theme-color in sync",
 	await expect(toggle.locator("svg:visible")).toHaveCount(1);
 	expect(await page.evaluate(() => localStorage.getItem("theme"))).toBe(after);
 	const themeColor = await page.locator('meta[name="theme-color"]').getAttribute("content");
-	expect(themeColor).toBe(after === "dark" ? "#0e2f63" : "#faf8f6");
+	expect(themeColor).toBe(after === "dark" ? "#111110" : "#faf8f6");
 
 	await page.reload();
 	await expect(html).toHaveAttribute("data-theme", after);
@@ -469,7 +469,7 @@ test("experience entries lead with the employer and show every highlight", async
 	await expect(entries.nth(0).locator(".role")).toHaveText("Full-stack Developer");
 
 	// Logos stay in full colour on their plates, above the employer name: the owner
-	// rejected an ink-drawn (grayscale, inverted on the blueprint) treatment in the rail.
+	// rejected an ink-drawn (grayscale, inverted in the dark theme) treatment in the rail.
 	const logo = entries.nth(0).locator(".entry-head > .entry-logo");
 	await expect(logo).toBeVisible();
 	expect(await logo.locator("img").evaluate((el) => getComputedStyle(el).filter)).toBe("none");

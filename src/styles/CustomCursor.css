@@ -121,11 +121,11 @@
     }
 }
 
-/* On the blueprint the difference blend would paint the cursor peach (the
-   complement of the blue), so there it is drawn plain white with a blue halo
-   that keeps it visible over white plates and inverted buttons. */
+/* On the ink sheet the cursor is drawn plain white with a near-black halo,
+   which keeps it visible over the white logo plates and inverted buttons
+   (a difference blend would flip it to black over those). */
 html[data-theme="dark"] .cursor-cross,
 html[data-theme="dark"] .cursor-frame {
     mix-blend-mode: normal;
-    filter: drop-shadow(0 0 1px #0e2f63) drop-shadow(0 0 1px #0e2f63);
+    filter: drop-shadow(0 0 1px #111110) drop-shadow(0 0 1px #111110);
 }

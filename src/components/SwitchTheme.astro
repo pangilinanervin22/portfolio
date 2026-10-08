@@ -45,7 +45,7 @@ import "../styles/SwitchTheme.css";
 <script>
         type Theme = "light" | "dark";
 
-        const THEME_COLOR: Record<Theme, string> = { light: "#faf8f6", dark: "#0e2f63" };
+        const THEME_COLOR: Record<Theme, string> = { light: "#faf8f6", dark: "#111110" };
         const root = document.documentElement;
         const toggles = document.querySelectorAll<HTMLButtonElement>("[data-theme-toggle]");
         const systemDark = matchMedia("(prefers-color-scheme: dark)");

@@ -27,7 +27,7 @@ import CustomCursor from "../components/CustomCursor.astro";
 							: "light");
 					document.documentElement.setAttribute("data-theme", t);
 					var meta = document.querySelector('meta[name="theme-color"]');
-					if (meta) meta.setAttribute("content", t === "dark" ? "#0e2f63" : "#faf8f6");
+					if (meta) meta.setAttribute("content", t === "dark" ? "#111110" : "#faf8f6");
 				} catch (e) {}
 			})();
 		</script>
