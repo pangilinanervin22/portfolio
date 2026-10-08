@@ -17,7 +17,8 @@ import CustomCursor from "../components/CustomCursor.astro";
 		<Font cssVariable="--font-jetbrains-mono" />
 		<script is:inline>
 			// Apply saved/system theme before first paint to avoid a light-mode flash,
-			// and keep the browser chrome (theme-color) in step with it.
+			// and keep the browser chrome (theme-color) and the tab icon in step with
+			// it (favicon-light.svg / favicon-dark.svg; SwitchTheme swaps them after).
 			(function () {
 				try {
 					var t =
@@ -28,6 +29,12 @@ import CustomCursor from "../components/CustomCursor.astro";
 					document.documentElement.setAttribute("data-theme", t);
 					var meta = document.querySelector('meta[name="theme-color"]');
 					if (meta) meta.setAttribute("content", t === "dark" ? "#111110" : "#faf8f6");
+					var icon = document.querySelector('link[rel="icon"][type="image/svg+xml"]');
+					if (icon)
+						icon.setAttribute(
+							"href",
+							icon.getAttribute("href").replace(/favicon(-light|-dark)?\.svg$/, "favicon-" + t + ".svg"),
+						);
 				} catch (e) {}
 			})();
 		</script>

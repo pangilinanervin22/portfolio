@@ -131,6 +131,36 @@ test("theme toggle flips the theme, persists it, and keeps theme-color in sync",
 	expect(problems).toEqual([]);
 });
 
+test("the tab icon follows the site's theme", async ({ page, isMobile }) => {
+	// Light sheet: the ink stamp. Dark sheet: the inverse, so it stays visible on a
+	// dark tab strip. It is picked before paint and swapped by the toggle.
+	await page.goto("./");
+	const html = page.locator("html");
+	const icon = page.locator('link[rel="icon"][type="image/svg+xml"]');
+	const theme = (await html.getAttribute("data-theme")) as "light" | "dark";
+	await expect(icon).toHaveAttribute("href", new RegExp(`/favicon-${theme}\\.svg$`));
+
+	await openMenuIfMobile(page, isMobile);
+	await page.getByRole("button", { name: /switch to .* theme/i }).click();
+	const other = theme === "dark" ? "light" : "dark";
+	await expect(icon).toHaveAttribute("href", new RegExp(`/favicon-${other}\\.svg$`));
+
+	// Both variants exist; the dark one is the paper-coloured tile.
+	for (const t of ["light", "dark"] as const) {
+		const href = (await icon.getAttribute("href"))!.replace(/favicon-(light|dark)\.svg$/, `favicon-${t}.svg`);
+		const response = await page.request.get(href);
+		expect(response.status(), href).toBe(200);
+		expect(response.headers()["content-type"]).toContain("image/svg+xml");
+		const svg = await response.text();
+		expect(svg).toContain(t === "dark" ? 'fill="#f5f4f0"' : 'fill="#111111"');
+	}
+	// Without script the plain favicon.svg follows the browser's dark mode itself.
+	const fallback = await page.request.get(
+		(await icon.getAttribute("href"))!.replace(/favicon-(light|dark)\.svg$/, "favicon.svg"),
+	);
+	expect(await fallback.text()).toContain("prefers-color-scheme: dark");
+});
+
 test("a first visit paints a theme but never persists one", async ({ page, isMobile }) => {
 	// Writing the system-derived theme on load would freeze every first-time visitor on
 	// whatever their OS happened to be, and the site could never follow it again.

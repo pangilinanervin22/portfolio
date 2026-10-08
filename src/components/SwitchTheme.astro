@@ -68,6 +68,12 @@ import "../styles/SwitchTheme.css";
                 document
                         .querySelector('meta[name="theme-color"]')
                         ?.setAttribute("content", THEME_COLOR[theme]);
+                // The tab icon follows the theme too: the ink stamp on light, its inverse on dark
+                const icon = document.querySelector<HTMLLinkElement>('link[rel="icon"][type="image/svg+xml"]');
+                const href = icon?.getAttribute("href");
+                if (icon && href) {
+                        icon.setAttribute("href", href.replace(/favicon(-light|-dark)?\.svg$/, `favicon-${theme}.svg`));
+                }
                 const next: Theme = theme === "dark" ? "light" : "dark";
                 toggles.forEach((button) => button.setAttribute("aria-label", `Switch to ${next} theme`));
         };
